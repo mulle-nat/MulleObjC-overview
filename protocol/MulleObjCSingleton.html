@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>MulleObjCSingleton</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="mulleobjcsingleton">MulleObjCSingleton</h1>
+<p>The <code>MulleObjCSingleton</code> protocol provides support for implementing the Singleton design pattern in mulle-objc. It ensures that a class has only one instance and provides a global point of access to it.</p>
+<h2 id="optional-methods">Optional Methods</h2>
+<ul>
+<li><code>initialize</code> - Class initialization method</li>
+<li><code>sharedInstance</code> - Returns the singleton instance</li>
+</ul>
+<h2 id="key-features">Key Features</h2>
+<ol>
+<li>
+<p><strong>Instance Creation</strong></p>
+<ul>
+<li>Must use <code>sharedInstance</code> for access</li>
+<li><code>alloc</code> creates separate instance</li>
+<li>Cannot perform <code>-mullePerformFinalize</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Thread Safety</strong></p>
+<ul>
+<li>Must be thread-safe</li>
+<li>Subclass responsible for thread safety</li>
+<li>No default <code>MulleObjCThreadSafe</code> conformance</li>
+</ul>
+</li>
+</ol>
+<h2 id="global-functions">Global Functions</h2>
+<h3 id="creation-and-marking">Creation and Marking</h3>
+<pre><code class="language-objc"><span class="hljs-comment">// Create singleton instance</span>
+<span class="hljs-type">id</span> MulleObjCSingletonCreate(Class <span class="hljs-keyword">self</span>);
+
+<span class="hljs-comment">// Mark class as singleton</span>
+<span class="hljs-type">void</span> MulleObjCSingletonMarkClassAsSingleton(Class <span class="hljs-keyword">self</span>);
+</code></pre>
+<h3 id="instance-checking">Instance Checking</h3>
+<pre><code class="language-objc"><span class="hljs-comment">// Check if instance is singleton</span>
+<span class="hljs-type">BOOL</span> MulleObjCInstanceIsSingleton(<span class="hljs-type">id</span> obj);
+</code></pre>
+<h3 id="ephemeral-control">Ephemeral Control</h3>
+<pre><code class="language-objc"><span class="hljs-comment">// Set singleton as ephemeral</span>
+<span class="hljs-type">void</span> MulleObjCSingletonSetEphemeral(<span class="hljs-type">BOOL</span> flag);
+</code></pre>
+<h2 id="implementation-example">Implementation Example</h2>
+<pre><code class="language-objc"><span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">MySingleton</span> : <span class="hljs-title">NSObject</span> &lt;<span class="hljs-title">MulleObjCSingleton</span>&gt;</span>
+<span class="hljs-keyword">@end</span>
+
+<span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">MySingleton</span></span>
+
++ (<span class="hljs-type">void</span>)initialize
+{
+    <span class="hljs-comment">// Must call if overriding initialize</span>
+    MulleObjCSingletonMarkClassAsSingleton(<span class="hljs-keyword">self</span>);
+}
+
+<span class="hljs-comment">// Optional: Protocol implements this automatically</span>
++ (<span class="hljs-keyword">instancetype</span>)sharedInstance
+{
+    <span class="hljs-keyword">return</span> MulleObjCSingletonCreate(<span class="hljs-keyword">self</span>);
+}
+
+<span class="hljs-comment">// Implement thread-safe initialization</span>
+- (<span class="hljs-keyword">instancetype</span>)init
+{
+    <span class="hljs-keyword">self</span> = [<span class="hljs-variable language_">super</span> init];
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">self</span>) {
+        <span class="hljs-comment">// Thread-safe initialization</span>
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>;
+}
+
+<span class="hljs-keyword">@end</span>
+</code></pre>
+<h2 id="usage-guidelines">Usage Guidelines</h2>
+<ol>
+<li>
+<p><strong>Initialization</strong></p>
+<ul>
+<li>Override <code>initialize</code> if needed</li>
+<li>Call <code>MulleObjCSingletonMarkClassAsSingleton</code></li>
+<li>Implement thread-safe init</li>
+</ul>
+</li>
+<li>
+<p><strong>Access Control</strong></p>
+<ul>
+<li>Use <code>sharedInstance</code> for access</li>
+<li>Avoid direct allocation</li>
+<li>Consider thread safety</li>
+</ul>
+</li>
+<li>
+<p><strong>Environment Control</strong></p>
+<ul>
+<li>Use <code>MULLE_OBJC_EPHEMERAL_SINGLETON</code> environment variable</li>
+<li>Set before singleton initialization</li>
+</ul>
+</li>
+</ol>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li>Ensure thread-safe initialization</li>
+<li>Implement proper memory management</li>
+<li>Consider lazy initialization</li>
+<li>Document thread safety guarantees</li>
+<li>Handle inheritance carefully</li>
+</ol>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Cannot finalize singletons</li>
+<li>Ephemeral setting must be early</li>
+<li>Thread safety is mandatory</li>
+<li>Separate instances possible via alloc</li>
+</ul>
+
+            
+            
+        </body>
+        </html>

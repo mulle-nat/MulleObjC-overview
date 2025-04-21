@@ -1,0 +1,35 @@
+<h1 id="nszone">NSZone</h1>
+<p>The <code>NSZone</code> structure provides legacy support for zone-based memory allocation. In modern mulle-objc, zones are deprecated and all zone functions are implemented as pass-through to standard memory allocation.</p>
+<h2 id="structure">Structure</h2>
+<pre><code class="language-objc"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> {
+    <span class="hljs-type">void</span> *unused;  <span class="hljs-comment">// empty would be not C11</span>
+} <span class="hljs-built_in">NSZone</span>;
+</code></pre>
+<h2 id="functions">Functions</h2>
+<h3 id="zone-management">Zone Management</h3>
+<ul>
+<li><code>NSDefaultMallocZone()</code> - Returns the default allocation zone (returns NULL)</li>
+<li><code>NSCreateZone(startSize, granularity, canFree)</code> - Creates a new zone (returns NULL)</li>
+<li><code>NSRecycleZone(zone)</code> - Recycles a zone (no-op)</li>
+<li><code>NSSetZoneName(zone, name)</code> - Sets a zone's name (no-op)</li>
+<li><code>NSZoneFromPointer(p)</code> - Gets zone containing pointer (returns NULL)</li>
+</ul>
+<h3 id="memory-allocation">Memory Allocation</h3>
+<ul>
+<li><code>NSZoneMalloc(zone, size)</code> - Allocates memory from a zone (uses mulle_malloc)</li>
+<li><code>NSZoneCalloc(zone, numElems, byteSize)</code> - Allocates zeroed memory</li>
+<li><code>NSZoneRealloc(zone, p, size)</code> - Reallocates memory block</li>
+<li><code>NSZoneFree(zone, p)</code> - Frees memory allocated from zone</li>
+</ul>
+<h3 id="object-zone-access">Object Zone Access</h3>
+<ul>
+<li><code>mulle_objc_object_zone()</code> - Returns zone of an object (returns NULL)</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<p>All zone functions are provided for compatibility with legacy code. In modern mulle-objc:</p>
+<ul>
+<li>Zones are not used for memory management</li>
+<li>All zone creation functions return NULL</li>
+<li>Memory allocation functions pass through to standard allocation</li>
+<li>Zone management functions are no-ops</li>
+</ul>

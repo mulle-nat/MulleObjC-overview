@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>MulleObject Functions</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="mulleobject-functions">MulleObject Functions</h1>
+<p>Core functions for the MulleObject base class in mulle-objc.</p>
+<h2 id="object-creation">Object Creation</h2>
+<h3 id="initialization">Initialization</h3>
+<pre><code class="language-c">id <span class="hljs-title function_">MulleObjectInit</span><span class="hljs-params">(id self)</span>;
+id <span class="hljs-title function_">MulleObjectAlloc</span><span class="hljs-params">(Class cls)</span>;
+id <span class="hljs-title function_">MulleObjectAllocWithZone</span><span class="hljs-params">(Class cls, NSZone *zone)</span>;
+</code></pre>
+<h3 id="object-copying">Object Copying</h3>
+<pre><code class="language-c">id <span class="hljs-title function_">MulleObjectCopy</span><span class="hljs-params">(id self)</span>;
+id <span class="hljs-title function_">MulleObjectCopyWithZone</span><span class="hljs-params">(id self, NSZone *zone)</span>;
+</code></pre>
+<h2 id="runtime-operations">Runtime Operations</h2>
+<h3 id="method-resolution">Method Resolution</h3>
+<pre><code class="language-c">BOOL <span class="hljs-title function_">MulleObjectResolveInstanceMethod</span><span class="hljs-params">(Class cls, SEL sel)</span>;
+BOOL <span class="hljs-title function_">MulleObjectResolveClassMethod</span><span class="hljs-params">(Class cls, SEL sel)</span>;
+</code></pre>
+<h3 id="message-forwarding">Message Forwarding</h3>
+<pre><code class="language-c">id <span class="hljs-title function_">MulleObjectForwardingTargetForSelector</span><span class="hljs-params">(id self, SEL sel)</span>;
+<span class="hljs-type">void</span> <span class="hljs-title function_">MulleObjectForwardInvocation</span><span class="hljs-params">(id self, NSInvocation *invocation)</span>;
+</code></pre>
+<h2 id="object-description">Object Description</h2>
+<h3 id="string-representation">String Representation</h3>
+<pre><code class="language-c">NSString *<span class="hljs-title function_">MulleObjectDescription</span><span class="hljs-params">(id self)</span>;
+NSString *<span class="hljs-title function_">MulleObjectDebugDescription</span><span class="hljs-params">(id self)</span>;
+</code></pre>
+<h3 id="hash-and-equality">Hash and Equality</h3>
+<pre><code class="language-c">NSUInteger <span class="hljs-title function_">MulleObjectHash</span><span class="hljs-params">(id self)</span>;
+BOOL <span class="hljs-title function_">MulleObjectIsEqual</span><span class="hljs-params">(id self, id other)</span>;
+</code></pre>
+<h2 id="memory-management">Memory Management</h2>
+<h3 id="reference-counting">Reference Counting</h3>
+<pre><code class="language-c">id <span class="hljs-title function_">MulleObjectRetain</span><span class="hljs-params">(id self)</span>;
+<span class="hljs-type">void</span> <span class="hljs-title function_">MulleObjectRelease</span><span class="hljs-params">(id self)</span>;
+id <span class="hljs-title function_">MulleObjectAutorelease</span><span class="hljs-params">(id self)</span>;
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li>Override appropriate methods</li>
+<li>Handle memory management</li>
+<li>Implement proper description</li>
+<li>Consider hash/equality rules</li>
+<li>Document overrides</li>
+</ol>
+<h2 id="thread-safety">Thread Safety</h2>
+<ul>
+<li>Basic operations are thread-safe</li>
+<li>Consider subclass requirements</li>
+<li>Handle concurrent access</li>
+<li>Implement proper synchronization</li>
+</ul>
+
+            
+            
+        </body>
+        </html>

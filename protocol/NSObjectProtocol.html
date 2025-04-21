@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>NSObjectProtocol</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="nsobjectprotocol">NSObjectProtocol</h1>
+<p>The <code>NSObjectProtocol</code> defines the core behavior and interface that all Objective-C objects should support. It provides fundamental operations for object introspection, method invocation, and memory management.</p>
+<h2 id="core-methods">Core Methods</h2>
+<h3 id="object-introspection">Object Introspection</h3>
+<ul>
+<li><code>self</code> - Returns the receiver</li>
+<li><code>class</code> - Returns the class of an instance or class</li>
+<li><code>superclass</code> - Returns the superclass of the instance</li>
+<li><code>isProxy</code> - Indicates if the receiver is a proxy object</li>
+<li><code>isKindOfClass:</code> - Tests if receiver inherits from or is a given class</li>
+<li><code>isMemberOfClass:</code> - Tests if receiver is exactly of given class</li>
+<li><code>conformsToProtocol:</code> - Tests if receiver implements a protocol</li>
+<li><code>respondsToSelector:</code> - Tests if receiver implements a method</li>
+<li><code>hash</code> - Returns hash value for use in collections</li>
+<li><code>isEqual:</code> - Tests equality with another object</li>
+</ul>
+<h3 id="method-resolution">Method Resolution</h3>
+<ul>
+<li><code>instanceMethodForSelector:</code> - Returns implementation of an instance method</li>
+<li><code>methodForSelector:</code> - Returns implementation for a method</li>
+<li><code>performSelector:</code> - Performs method specified by selector</li>
+<li><code>performSelector:withObject:</code> - Performs method with one argument</li>
+<li><code>performSelector:withObject:withObject:</code> - Performs method with two arguments</li>
+</ul>
+<h3 id="memory-management">Memory Management</h3>
+<ul>
+<li><code>alloc</code> - Allocates instance memory</li>
+<li><code>init</code> - Initializes newly allocated instance</li>
+<li><code>new</code> - Combines alloc and init</li>
+<li><code>dealloc</code> - Deallocates instance memory</li>
+<li><code>finalize</code> - Performs cleanup before deallocation</li>
+<li><code>autorelease</code> - Adds object to autorelease pool</li>
+<li><code>zone</code> - Returns allocation zone (deprecated)</li>
+</ul>
+<h3 id="string-representation">String Representation</h3>
+<ul>
+<li><code>UTF8String</code> - Returns C string representation</li>
+<li><code>description</code> - Returns object description (inherited from NSObject)</li>
+</ul>
+<h3 id="mulle-specific-extensions">Mulle-specific Extensions</h3>
+<ul>
+<li><code>instantiate</code> - Automatic allocation and initialization support</li>
+<li><code>immutableInstance</code> - Returns immutable version of instance</li>
+<li><code>mullePerformFinalize</code> - Explicitly triggers finalization</li>
+<li><code>mulleIsFinalized</code> - Checks if object has been finalized</li>
+<li><code>_pushToParentAutoreleasePool</code> - Internal autorelease pool management</li>
+</ul>
+<h2 id="property-observation">Property Observation</h2>
+<p>The protocol also defines <code>MullePropertyObserving</code> for objects that use observable properties:</p>
+<ul>
+<li><code>willChange</code> - Called before observable property changes</li>
+</ul>
+<h2 id="thread-safety">Thread Safety</h2>
+<p>Many methods are marked as thread-safe using <code>MULLE_OBJC_THREADSAFE_METHOD</code>. These methods can be safely called from any thread without additional synchronization.</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>This protocol is adopted by NSObject, making these methods available to most Objective-C classes</li>
+<li>Some methods are mulle-objc specific extensions to support features like AAO (Automatic Allocation and Initialization)</li>
+<li>The <code>zone</code> method is deprecated as zones have no meaning in modern mulle-objc</li>
+</ul>
+
+            
+            
+        </body>
+        </html>

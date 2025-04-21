@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>NSZone</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="nszone">NSZone</h1>
+<h2 id="overview">Overview</h2>
+<p><code>NSZone</code> is a legacy memory management structure in mulle-objc that provides zone-based memory allocation compatibility. It implements a simplified approach that maps all operations to standard memory functions while maintaining compatibility.</p>
+<h2 id="key-features">Key Features</h2>
+<ul>
+<li>Memory allocation compatibility</li>
+<li>Standard memory function mapping</li>
+<li>Legacy support</li>
+<li>Zero overhead implementation</li>
+<li>Simplified memory management</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<h3 id="basic-zone-operations">Basic Zone Operations</h3>
+<pre><code class="language-objc"><span class="hljs-comment">// Create a new zone (returns NULL in mulle-objc)</span>
+<span class="hljs-built_in">NSZone</span> *zone = <span class="hljs-built_in">NSCreateZone</span>(<span class="hljs-number">1024</span>, <span class="hljs-number">128</span>, <span class="hljs-literal">YES</span>);
+
+<span class="hljs-comment">// Allocate memory in zone</span>
+<span class="hljs-type">void</span> *memory = <span class="hljs-built_in">NSZoneMalloc</span>(zone, size);
+
+<span class="hljs-comment">// Reallocate memory in zone</span>
+<span class="hljs-type">void</span> *newMemory = <span class="hljs-built_in">NSZoneRealloc</span>(zone, memory, newSize);
+
+<span class="hljs-comment">// Free memory in zone</span>
+<span class="hljs-built_in">NSZoneFree</span>(zone, memory);
+</code></pre>
+<h3 id="zone-management">Zone Management</h3>
+<pre><code class="language-objc"><span class="hljs-comment">// Get default zone (returns NULL)</span>
+<span class="hljs-built_in">NSZone</span> *defaultZone = <span class="hljs-built_in">NSDefaultMallocZone</span>();
+
+<span class="hljs-comment">// Free a zone (no-op in mulle-objc)</span>
+<span class="hljs-built_in">NSRecycleZone</span>(zone);
+</code></pre>
+<h3 id="object-allocation">Object Allocation</h3>
+<pre><code class="language-objc"><span class="hljs-comment">// Allocate object in zone</span>
+<span class="hljs-type">id</span> object = <span class="hljs-built_in">NSAllocateObject</span>(<span class="hljs-keyword">class</span>, extraBytes, zone);
+
+<span class="hljs-comment">// Reallocate object in zone</span>
+<span class="hljs-type">id</span> newObject = <span class="hljs-built_in">NSReallocateObject</span>(object, extraBytes, zone);
+
+<span class="hljs-comment">// Free object in zone</span>
+<span class="hljs-built_in">NSDeallocateObject</span>(object);
+</code></pre>
+<h2 id="technical-details">Technical Details</h2>
+<h3 id="core-functions">Core Functions</h3>
+<ol>
+<li>
+<p><strong>Zone Operations</strong>:</p>
+<pre><code class="language-objc"><span class="hljs-built_in">NSZone</span> *<span class="hljs-built_in">NSCreateZone</span>(<span class="hljs-built_in">NSUInteger</span> startSize,
+                     <span class="hljs-built_in">NSUInteger</span> granularity,
+                     <span class="hljs-type">BOOL</span> canFree);
+<span class="hljs-type">void</span> <span class="hljs-built_in">NSRecycleZone</span>(<span class="hljs-built_in">NSZone</span> *zone);
+</code></pre>
+</li>
+<li>
+<p><strong>Memory Management</strong>:</p>
+<pre><code class="language-objc"><span class="hljs-type">void</span> *<span class="hljs-built_in">NSZoneMalloc</span>(<span class="hljs-built_in">NSZone</span> *zone, <span class="hljs-built_in">NSUInteger</span> size);
+<span class="hljs-type">void</span> *<span class="hljs-built_in">NSZoneCalloc</span>(<span class="hljs-built_in">NSZone</span> *zone, <span class="hljs-built_in">NSUInteger</span> count, <span class="hljs-built_in">NSUInteger</span> size);
+<span class="hljs-type">void</span> *<span class="hljs-built_in">NSZoneRealloc</span>(<span class="hljs-built_in">NSZone</span> *zone, <span class="hljs-type">void</span> *ptr, <span class="hljs-built_in">NSUInteger</span> size);
+<span class="hljs-type">void</span> <span class="hljs-built_in">NSZoneFree</span>(<span class="hljs-built_in">NSZone</span> *zone, <span class="hljs-type">void</span> *ptr);
+</code></pre>
+</li>
+</ol>
+<h3 id="implementation-details">Implementation Details</h3>
+<ol>
+<li><strong>Zone Mapping</strong>:<pre><code class="language-objc"><span class="hljs-comment">// All zone operations map to standard memory functions</span>
+<span class="hljs-type">void</span> *<span class="hljs-built_in">NSZoneMalloc</span>(<span class="hljs-built_in">NSZone</span> *zone, <span class="hljs-built_in">NSUInteger</span> size)
+{
+    <span class="hljs-keyword">return</span> malloc(size);
+}
+</code></pre>
+</li>
+</ol>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li>
+<p><strong>Modern Usage</strong>:</p>
+<ul>
+<li>Avoid zone-based allocation</li>
+<li>Use standard memory functions</li>
+<li>Consider alternatives</li>
+</ul>
+</li>
+<li>
+<p><strong>Migration Strategy</strong>:</p>
+<ul>
+<li>Update legacy code</li>
+<li>Remove zone parameters</li>
+<li>Simplify allocations</li>
+</ul>
+</li>
+<li>
+<p><strong>Performance</strong>:</p>
+<ul>
+<li>Use direct allocation</li>
+<li>Minimize indirection</li>
+<li>Optimize memory usage</li>
+</ul>
+</li>
+</ol>
+<h2 id="important-considerations">Important Considerations</h2>
+<ol>
+<li>
+<p><strong>Compatibility</strong>:</p>
+<ul>
+<li>Legacy code support</li>
+<li>API compatibility</li>
+<li>Zero overhead</li>
+</ul>
+</li>
+<li>
+<p><strong>Memory Management</strong>:</p>
+<ul>
+<li>Standard allocation</li>
+<li>Direct mapping</li>
+<li>No zone overhead</li>
+</ul>
+</li>
+<li>
+<p><strong>Modern Code</strong>:</p>
+<ul>
+<li>Prefer standard allocation</li>
+<li>Remove zone usage</li>
+<li>Simplify interfaces</li>
+</ul>
+</li>
+</ol>
+<h2 id="use-cases">Use Cases</h2>
+<ol>
+<li>
+<p><strong>Legacy Support</strong>:</p>
+<pre><code class="language-objc">- (<span class="hljs-type">id</span>)allocateWithZone:(<span class="hljs-built_in">NSZone</span> *)zone
+{
+    <span class="hljs-comment">// Zone parameter ignored in mulle-objc</span>
+    <span class="hljs-keyword">return</span> [<span class="hljs-variable language_">super</span> allocWithZone:zone];
+}
+</code></pre>
+</li>
+<li>
+<p><strong>Compatibility Layer</strong>:</p>
+<pre><code class="language-objc">- (<span class="hljs-type">void</span>)initializeWithZone:(<span class="hljs-built_in">NSZone</span> *)zone
+{
+    <span class="hljs-comment">// Zone operations map to standard memory functions</span>
+    <span class="hljs-keyword">self</span>-&gt;data = <span class="hljs-built_in">NSZoneMalloc</span>(zone, dataSize);
+    <span class="hljs-keyword">self</span>-&gt;buffer = <span class="hljs-built_in">NSZoneCalloc</span>(zone, count, elementSize);
+}
+</code></pre>
+</li>
+<li>
+<p><strong>Modern Alternative</strong>:</p>
+<pre><code class="language-objc">- (<span class="hljs-type">id</span>)initWithCapacity:(<span class="hljs-built_in">NSUInteger</span>)capacity
+{
+    <span class="hljs-comment">// Direct memory allocation without zones</span>
+    <span class="hljs-keyword">self</span> = [<span class="hljs-variable language_">super</span> init];
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">self</span>) {
+        <span class="hljs-keyword">self</span>-&gt;data = malloc(capacity);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>;
+}
+</code></pre>
+</li>
+</ol>
+<h2 id="advanced-features">Advanced Features</h2>
+<h3 id="memory-tracking">Memory Tracking</h3>
+<pre><code class="language-objc">- (<span class="hljs-type">void</span>)trackMemoryUsage
+{
+    <span class="hljs-comment">// Modern memory tracking without zones</span>
+    size_t allocated = <span class="hljs-number">0</span>;
+    size_t used = <span class="hljs-number">0</span>;
+    
+    <span class="hljs-comment">// Track allocations directly</span>
+    allocated += malloc_size(<span class="hljs-keyword">self</span>-&gt;data);
+    used += <span class="hljs-keyword">self</span>-&gt;dataSize;
+    
+    <span class="hljs-comment">// Report usage</span>
+    [<span class="hljs-keyword">self</span> updateMemoryStatistics:allocated used:used];
+}
+</code></pre>
+<h3 id="allocation-strategies">Allocation Strategies</h3>
+<pre><code class="language-objc">- (<span class="hljs-type">void</span> *)allocateBuffer:(size_t)size
+{
+    <span class="hljs-comment">// Direct allocation with alignment</span>
+    <span class="hljs-type">void</span> *buffer = aligned_alloc(<span class="hljs-number">16</span>, size);
+    <span class="hljs-keyword">if</span> (!buffer) {
+        [<span class="hljs-keyword">self</span> handleAllocationFailure:size];
+    }
+    <span class="hljs-keyword">return</span> buffer;
+}
+</code></pre>
+<h3 id="memory-pools">Memory Pools</h3>
+<pre><code class="language-objc">- (<span class="hljs-type">id</span>)createMemoryPool
+{
+    <span class="hljs-comment">// Modern pool implementation without zones</span>
+    <span class="hljs-keyword">return</span> [[<span class="hljs-built_in">NSAutoreleasePool</span> alloc] init];
+}
+</code></pre>
+
+            
+            
+        </body>
+        </html>

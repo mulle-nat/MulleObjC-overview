@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>NSRecursiveLock</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="nsrecursivelock">NSRecursiveLock</h1>
+<h2 id="overview">Overview</h2>
+<p><code>NSRecursiveLock</code> extends the basic locking functionality of NSLock with recursive locking capabilities in mulle-objc. It allows the same thread to acquire the lock multiple times without deadlocking.</p>
+<h2 id="key-features">Key Features</h2>
+<ul>
+<li>Recursive locking support</li>
+<li>Thread safety</li>
+<li>Lock counting</li>
+<li>Performance optimized</li>
+<li>Debugging support</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<h3 id="basic-recursive-locking">Basic Recursive Locking</h3>
+<pre><code class="language-objc"><span class="hljs-built_in">NSRecursiveLock</span> *lock = [[<span class="hljs-built_in">NSRecursiveLock</span> alloc] init];
+
+[lock lock];
+[lock lock];  <span class="hljs-comment">// Same thread can acquire lock again</span>
+<span class="hljs-comment">// Critical section</span>
+[lock unlock];
+[lock unlock];
+</code></pre>
+<h3 id="conditional-locking">Conditional Locking</h3>
+<pre><code class="language-objc"><span class="hljs-keyword">if</span> ([lock tryLock]) {
+    <span class="hljs-comment">// Nested locking is allowed</span>
+    <span class="hljs-keyword">if</span> ([lock tryLock]) {
+        <span class="hljs-comment">// More critical code</span>
+        [lock unlock];
+    }
+    [lock unlock];
+}
+</code></pre>
+<h3 id="timed-locking">Timed Locking</h3>
+<pre><code class="language-objc"><span class="hljs-keyword">if</span> ([lock lockBeforeDate:[<span class="hljs-built_in">NSDate</span> dateWithTimeIntervalSinceNow:<span class="hljs-number">5.0</span>]]) {
+    <span class="hljs-comment">// Critical section with possible recursive locks</span>
+    [lock unlock];
+}
+</code></pre>
+<h2 id="technical-details">Technical Details</h2>
+<h3 id="core-methods">Core Methods</h3>
+<ol>
+<li>
+<p><strong>Lock Operations</strong>:</p>
+<pre><code class="language-objc">- (<span class="hljs-type">void</span>)lock;
+- (<span class="hljs-type">void</span>)unlock;
+- (<span class="hljs-type">BOOL</span>)tryLock;
+- (<span class="hljs-type">BOOL</span>)lockBeforeDate:(<span class="hljs-built_in">NSDate</span> *)limit;
+</code></pre>
+</li>
+<li>
+<p><strong>Lock Information</strong>:</p>
+<pre><code class="language-objc">- (<span class="hljs-type">void</span>)setName:(<span class="hljs-built_in">NSString</span> *)name;
+- (<span class="hljs-built_in">NSString</span> *)name;
+</code></pre>
+</li>
+</ol>
+<h3 id="implementation-details">Implementation Details</h3>
+<ol>
+<li><strong>Recursive Handling</strong>:<pre><code class="language-objc">- (<span class="hljs-type">void</span>)_initializeRecursiveLock;
+- (<span class="hljs-type">void</span>)_destroyRecursiveLock;
+</code></pre>
+</li>
+</ol>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li>
+<p><strong>Lock Usage</strong>:</p>
+<ul>
+<li>Balance lock/unlock calls</li>
+<li>Track recursion depth</li>
+<li>Use @try/@finally blocks</li>
+</ul>
+</li>
+<li>
+<p><strong>Error Handling</strong>:</p>
+<ul>
+<li>Check tryLock results</li>
+<li>Handle timeouts</li>
+<li>Clean up properly</li>
+</ul>
+</li>
+<li>
+<p><strong>Performance</strong>:</p>
+<ul>
+<li>Minimize recursion depth</li>
+<li>Keep critical sections short</li>
+<li>Consider lock alternatives</li>
+</ul>
+</li>
+</ol>
+<h2 id="important-considerations">Important Considerations</h2>
+<ol>
+<li>
+<p><strong>Thread Safety</strong>:</p>
+<ul>
+<li>Only recursive in same thread</li>
+<li>Match lock/unlock count</li>
+<li>Handle exceptions</li>
+</ul>
+</li>
+<li>
+<p><strong>Performance</strong>:</p>
+<ul>
+<li>Recursion overhead</li>
+<li>Lock tracking cost</li>
+<li>Memory usage</li>
+</ul>
+</li>
+<li>
+<p><strong>Debugging</strong>:</p>
+<ul>
+<li>Track recursion depth</li>
+<li>Monitor lock ownership</li>
+<li>Detect misuse</li>
+</ul>
+</li>
+</ol>
+<h2 id="use-cases">Use Cases</h2>
+<ol>
+<li>
+<p><strong>Recursive Operations</strong>:</p>
+<pre><code class="language-objc">- (<span class="hljs-type">void</span>)processNode:(Node *)node
+{
+    [<span class="hljs-keyword">self</span>-&gt;lock lock];
+    <span class="hljs-keyword">@try</span> {
+        [<span class="hljs-keyword">self</span> processNodeData:node];
+        <span class="hljs-keyword">for</span> (Node *child <span class="hljs-keyword">in</span> [node children]) {
+            [<span class="hljs-keyword">self</span> processNode:child];  <span class="hljs-comment">// Recursive call with same lock</span>
+        }
+    }
+    <span class="hljs-keyword">@finally</span> {
+        [<span class="hljs-keyword">self</span>-&gt;lock unlock];
+    }
+}
+</code></pre>
+</li>
+<li>
+<p><strong>Reentrant Methods</strong>:</p>
+<pre><code class="language-objc">- (<span class="hljs-type">void</span>)performOperation
+{
+    [<span class="hljs-keyword">self</span>-&gt;lock lock];
+    <span class="hljs-keyword">@try</span> {
+        [<span class="hljs-keyword">self</span> helperMethod];  <span class="hljs-comment">// May call back into performOperation</span>
+    }
+    <span class="hljs-keyword">@finally</span> {
+        [<span class="hljs-keyword">self</span>-&gt;lock unlock];
+    }
+}
+</code></pre>
+</li>
+<li>
+<p><strong>Safe Recursion</strong>:</p>
+<pre><code class="language-objc">- (<span class="hljs-type">void</span>)recursiveOperation:(<span class="hljs-built_in">NSUInteger</span>)depth
+{
+    <span class="hljs-keyword">if</span> ([<span class="hljs-keyword">self</span>-&gt;lock tryLock]) {
+        <span class="hljs-keyword">@try</span> {
+            <span class="hljs-keyword">if</span> (depth &gt; <span class="hljs-number">0</span>) {
+                [<span class="hljs-keyword">self</span> recursiveOperation:(depth - <span class="hljs-number">1</span>)];
+            }
+        }
+        <span class="hljs-keyword">@finally</span> {
+            [<span class="hljs-keyword">self</span>-&gt;lock unlock];
+        }
+    }
+}
+</code></pre>
+</li>
+</ol>
+
+            
+            
+        </body>
+        </html>

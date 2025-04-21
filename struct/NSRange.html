@@ -1,0 +1,61 @@
+<h1 id="nsrange">NSRange</h1>
+<p>The <code>NSRange</code> structure represents a range with a location and length. It's commonly used for substring operations, array slicing, and other range-based operations.</p>
+<h2 id="structure">Structure</h2>
+<pre><code class="language-objc"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> mulle_range <span class="hljs-built_in">NSRange</span>;
+</code></pre>
+<p>A range consists of:</p>
+<ul>
+<li><code>location</code>: Starting position (NSUInteger)</li>
+<li><code>length</code>: Number of items in range (NSUInteger)</li>
+</ul>
+<h2 id="constants">Constants</h2>
+<ul>
+<li><code>NSNotFound</code>: Special value indicating item was not found</li>
+</ul>
+<h2 id="functions">Functions</h2>
+<h3 id="range-creation">Range Creation</h3>
+<ul>
+<li><code>NSRangeMake(location, length)</code> - Creates a range with given location and length</li>
+<li><code>MulleMakeFullRange()</code> - Creates a range covering the maximum possible range (0 to -1)</li>
+<li><code>MulleObjCMakeInvalidRange()</code> - Creates an invalid range</li>
+</ul>
+<h3 id="range-properties">Range Properties</h3>
+<ul>
+<li><code>NSRangeGetLocation(range)</code> - Returns the location component</li>
+<li><code>NSRangeGetLength(range)</code> - Returns the length component</li>
+<li><code>NSRangeGetMax(range)</code> - Returns the maximum position (location + length)</li>
+<li><code>NSMaxRange(range)</code> - Legacy name for NSRangeGetMax</li>
+</ul>
+<h3 id="range-testing">Range Testing</h3>
+<ul>
+<li><code>NSRangeContainsLocation(location, range)</code> - Tests if location is within range</li>
+<li><code>NSLocationInRange(location, range)</code> - Legacy name for NSRangeContainsLocation</li>
+<li><code>NSRangeEqualToRange(range1, range2)</code> - Tests if two ranges are equal</li>
+<li><code>NSEqualRanges(range1, range2)</code> - Legacy name for NSRangeEqualToRange</li>
+<li><code>MulleObjCRangeIsValid(range)</code> - Tests if range is valid</li>
+<li><code>MulleObjCRangeContainsRange(big, small)</code> - Tests if one range fully contains another</li>
+<li><code>MulleObjCRangeIsCombinableRange(a, b)</code> - Tests if ranges can be combined</li>
+<li><code>MulleObjCRangeIntersectsRange(a, b)</code> - Tests if ranges overlap</li>
+</ul>
+<h3 id="range-operations">Range Operations</h3>
+<ul>
+<li><code>NSRangeUnion(range1, range2)</code> - Combines two ranges into encompassing range</li>
+<li><code>NSUnionRange(range1, range2)</code> - Legacy name for NSRangeUnion</li>
+<li><code>NSRangeIntersect(range1, range2)</code> - Gets overlapping portion of two ranges</li>
+<li><code>NSIntersectionRange(range1, range2)</code> - Legacy name for NSRangeIntersect</li>
+<li><code>MulleObjCRangeSubtract(range1, range2, result)</code> - Subtracts range2 from range1</li>
+<li><code>MulleObjCRangeInsert(range1, range2, result)</code> - Inserts range2 into range1</li>
+<li><code>MulleObjCRangeCombine(aRange, bRange)</code> - Combines adjacent or overlapping ranges</li>
+<li><code>MulleObjCRangeValidateAgainstLength(range, length)</code> - Validates range against a length</li>
+</ul>
+<h3 id="range-comparison">Range Comparison</h3>
+<ul>
+<li><code>MulleObjCRangeCompare(a, b)</code> - Compares two ranges</li>
+<li><code>MulleObjCRangePointerCompare(a, b)</code> - Compares two range pointers</li>
+</ul>
+<h3 id="string-conversion">String Conversion</h3>
+<ul>
+<li><code>MulleObjCRangeUTF8String(range)</code> - Converts range to string representation</li>
+</ul>
+<h2 id="legacy-support">Legacy Support</h2>
+<p>Several functions have both a modern and legacy name. The modern names use the <code>NSRange</code> prefix and are recommended for new code. Legacy names are provided for compatibility.</p>

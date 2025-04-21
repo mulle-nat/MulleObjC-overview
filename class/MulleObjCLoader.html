@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>MulleObjCLoader</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="mulleobjcloader">MulleObjCLoader</h1>
+<h2 id="overview">Overview</h2>
+<p><code>MulleObjCLoader</code> is a root class in mulle-objc that manages class and category dependencies. It ensures proper initialization order across frameworks and provides load-time control.</p>
+<h2 id="key-features">Key Features</h2>
+<ul>
+<li>Dependency management</li>
+<li>Framework initialization</li>
+<li>Category loading</li>
+<li>Load-time control</li>
+<li>Runtime integration</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<h3 id="basic-loading">Basic Loading</h3>
+<pre><code class="language-objc"><span class="hljs-comment">// Define loader</span>
+<span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">MyFrameworkLoader</span> : <span class="hljs-title">MulleObjCLoader</span></span>
+<span class="hljs-keyword">@end</span>
+
+<span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">MyFrameworkLoader</span></span>
+
++ (<span class="hljs-keyword">struct</span> _mulle_objc_dependency *) dependencies
+{
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">struct</span> _mulle_objc_dependency   dependencies[] =
+    {
+       { <span class="hljs-string">@&quot;Foundation&quot;</span>, MULLE_OBJC_NO_VERSION, MULLE_OBJC_NO_VERSION },
+       { <span class="hljs-literal">NULL</span>, MULLE_OBJC_NO_VERSION, MULLE_OBJC_NO_VERSION }
+    };
+    <span class="hljs-keyword">return</span> dependencies;
+}
+
+<span class="hljs-keyword">@end</span>
+</code></pre>
+<h3 id="category-management">Category Management</h3>
+<pre><code class="language-objc"><span class="hljs-comment">// Category loader</span>
+<span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">NSString_MyAdditions_Loader</span> : <span class="hljs-title">MulleObjCLoader</span></span>
+<span class="hljs-keyword">@end</span>
+
+<span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">NSString_MyAdditions_Loader</span></span>
+
++ (<span class="hljs-keyword">struct</span> _mulle_objc_dependency *) dependencies
+{
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">struct</span> _mulle_objc_dependency   dependencies[] =
+    {
+       { <span class="hljs-string">@&quot;NSString&quot;</span>, MULLE_OBJC_NO_VERSION, MULLE_OBJC_NO_VERSION },
+       { <span class="hljs-literal">NULL</span>, MULLE_OBJC_NO_VERSION, MULLE_OBJC_NO_VERSION }
+    };
+    <span class="hljs-keyword">return</span> dependencies;
+}
+
+<span class="hljs-keyword">@end</span>
+</code></pre>
+<h2 id="technical-details">Technical Details</h2>
+<h3 id="core-methods">Core Methods</h3>
+<ol>
+<li>
+<p><strong>Dependency Management</strong>:</p>
+<pre><code class="language-objc">+ (<span class="hljs-keyword">struct</span> _mulle_objc_dependency *)dependencies;
++ (<span class="hljs-keyword">struct</span> _mulle_objc_loadversion *)loadversion;
+</code></pre>
+</li>
+<li>
+<p><strong>Load Control</strong>:</p>
+<pre><code class="language-objc">+ (<span class="hljs-type">void</span>)load;
++ (<span class="hljs-type">void</span>)unload;
+</code></pre>
+</li>
+</ol>
+<h3 id="implementation-details">Implementation Details</h3>
+<ol>
+<li><strong>Version Control</strong>:<pre><code class="language-objc">+ (<span class="hljs-keyword">struct</span> _mulle_objc_loadversion *)loadversion
+{
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">struct</span> _mulle_objc_loadversion   version[] =
+    {
+       { MULLE_OBJC_VERSION, MULLE_OBJC_NO_VERSION }
+    };
+    <span class="hljs-keyword">return</span> version;
+}
+</code></pre>
+</li>
+</ol>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li>
+<p><strong>Dependency Definition</strong>:</p>
+<ul>
+<li>Order dependencies properly</li>
+<li>Specify version requirements</li>
+<li>Document dependencies</li>
+</ul>
+</li>
+<li>
+<p><strong>Load Management</strong>:</p>
+<ul>
+<li>Handle load failures</li>
+<li>Clean up resources</li>
+<li>Validate dependencies</li>
+</ul>
+</li>
+<li>
+<p><strong>Performance</strong>:</p>
+<ul>
+<li>Minimize load time</li>
+<li>Optimize dependencies</li>
+<li>Cache when possible</li>
+</ul>
+</li>
+</ol>
+<h2 id="important-considerations">Important Considerations</h2>
+<ol>
+<li>
+<p><strong>Load Order</strong>:</p>
+<ul>
+<li>Dependency resolution</li>
+<li>Circular dependencies</li>
+<li>Version compatibility</li>
+</ul>
+</li>
+<li>
+<p><strong>Thread Safety</strong>:</p>
+<ul>
+<li>Load-time synchronization</li>
+<li>Resource protection</li>
+<li>State management</li>
+</ul>
+</li>
+<li>
+<p><strong>Error Handling</strong>:</p>
+<ul>
+<li>Load failures</li>
+<li>Version mismatches</li>
+<li>Missing dependencies</li>
+</ul>
+</li>
+</ol>
+<h2 id="use-cases">Use Cases</h2>
+<ol>
+<li>
+<p><strong>Framework Loading</strong>:</p>
+<pre><code class="language-objc"><span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">MyFramework_Loader</span> : <span class="hljs-title">MulleObjCLoader</span></span>
+<span class="hljs-keyword">@end</span>
+
+<span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">MyFramework_Loader</span></span>
+
++ (<span class="hljs-keyword">struct</span> _mulle_objc_dependency *)dependencies
+{
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">struct</span> _mulle_objc_dependency deps[] =
+    {
+        { <span class="hljs-string">@&quot;Foundation&quot;</span>, <span class="hljs-number">0x00010000</span>, <span class="hljs-number">0x00020000</span> },
+        { <span class="hljs-string">@&quot;CoreData&quot;</span>, MULLE_OBJC_NO_VERSION, MULLE_OBJC_NO_VERSION },
+        { <span class="hljs-literal">NULL</span>, MULLE_OBJC_NO_VERSION, MULLE_OBJC_NO_VERSION }
+    };
+    <span class="hljs-keyword">return</span> deps;
+}
+
+<span class="hljs-keyword">@end</span>
+</code></pre>
+</li>
+<li>
+<p><strong>Category Loading</strong>:</p>
+<pre><code class="language-objc"><span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">NSObject_Extensions_Loader</span> : <span class="hljs-title">MulleObjCLoader</span></span>
+<span class="hljs-keyword">@end</span>
+
+<span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">NSObject_Extensions_Loader</span></span>
+
++ (<span class="hljs-keyword">struct</span> _mulle_objc_dependency *)dependencies
+{
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">struct</span> _mulle_objc_dependency deps[] =
+    {
+        { <span class="hljs-string">@&quot;NSObject&quot;</span>, MULLE_OBJC_NO_VERSION, MULLE_OBJC_NO_VERSION },
+        { <span class="hljs-literal">NULL</span>, MULLE_OBJC_NO_VERSION, MULLE_OBJC_NO_VERSION }
+    };
+    <span class="hljs-keyword">return</span> deps;
+}
+
+<span class="hljs-keyword">@end</span>
+</code></pre>
+</li>
+<li>
+<p><strong>Version Management</strong>:</p>
+<pre><code class="language-objc"><span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">VersionedLoader</span> : <span class="hljs-title">MulleObjCLoader</span></span>
+<span class="hljs-keyword">@end</span>
+
+<span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">VersionedLoader</span></span>
+
++ (<span class="hljs-keyword">struct</span> _mulle_objc_loadversion *)loadversion
+{
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">struct</span> _mulle_objc_loadversion version[] =
+    {
+        { MULLE_OBJC_VERSION, <span class="hljs-number">0x00020000</span> }
+    };
+    <span class="hljs-keyword">return</span> version;
+}
+
+<span class="hljs-keyword">@end</span>
+</code></pre>
+</li>
+</ol>
+<h2 id="advanced-features">Advanced Features</h2>
+<h3 id="load-callbacks">Load Callbacks</h3>
+<pre><code class="language-objc"><span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">CustomLoader</span></span>
+
++ (<span class="hljs-type">void</span>)load
+{
+    [<span class="hljs-variable language_">super</span> load];
+    <span class="hljs-comment">// Perform custom initialization</span>
+}
+
++ (<span class="hljs-type">void</span>)unload
+{
+    <span class="hljs-comment">// Cleanup</span>
+    [<span class="hljs-variable language_">super</span> unload];
+}
+
+<span class="hljs-keyword">@end</span>
+</code></pre>
+<h3 id="dependency-validation">Dependency Validation</h3>
+<pre><code class="language-objc"><span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">ValidatingLoader</span></span>
+
++ (<span class="hljs-type">void</span>)validateDependencies
+{
+    <span class="hljs-keyword">struct</span> _mulle_objc_dependency *deps = [<span class="hljs-keyword">self</span> dependencies];
+    <span class="hljs-keyword">while</span> (deps-&gt;name)
+    {
+        [<span class="hljs-keyword">self</span> validateDependency:deps];
+        deps++;
+    }
+}
+
+<span class="hljs-keyword">@end</span>
+</code></pre>
+<h3 id="load-order-control">Load Order Control</h3>
+<pre><code class="language-objc"><span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">OrderedLoader</span></span>
+
++ (<span class="hljs-keyword">struct</span> _mulle_objc_dependency *)dependencies
+{
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">struct</span> _mulle_objc_dependency deps[] =
+    {
+        { <span class="hljs-string">@&quot;First&quot;</span>, MULLE_OBJC_NO_VERSION, MULLE_OBJC_NO_VERSION },
+        { <span class="hljs-string">@&quot;Second&quot;</span>, MULLE_OBJC_NO_VERSION, MULLE_OBJC_NO_VERSION },
+        { <span class="hljs-string">@&quot;Third&quot;</span>, MULLE_OBJC_NO_VERSION, MULLE_OBJC_NO_VERSION },
+        { <span class="hljs-literal">NULL</span>, MULLE_OBJC_NO_VERSION, MULLE_OBJC_NO_VERSION }
+    };
+    <span class="hljs-keyword">return</span> deps;
+}
+
+<span class="hljs-keyword">@end</span>
+</code></pre>
+
+            
+            
+        </body>
+        </html>

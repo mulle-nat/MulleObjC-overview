@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>NSThread</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="nsthread">NSThread</h1>
+<h2 id="overview">Overview</h2>
+<p><code>NSThread</code> provides thread management capabilities in mulle-objc. It implements a 1:1 thread mapping model and integrates deeply with the runtime's thread safety mechanisms.</p>
+<h2 id="key-features">Key Features</h2>
+<ul>
+<li>1:1 thread mapping</li>
+<li>Thread lifecycle management</li>
+<li>Resource management</li>
+<li>Runtime integration</li>
+<li>Thread-local storage</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<h3 id="thread-creation">Thread Creation</h3>
+<pre><code class="language-objc"><span class="hljs-comment">// Create and start a new thread</span>
+[<span class="hljs-built_in">NSThread</span> detachNewThreadSelector:<span class="hljs-keyword">@selector</span>(threadMain:)
+                       toTarget:<span class="hljs-keyword">self</span>
+                     withObject:<span class="hljs-literal">nil</span>];
+
+<span class="hljs-comment">// Create without starting</span>
+<span class="hljs-built_in">NSThread</span> *thread = [[<span class="hljs-built_in">NSThread</span> alloc] initWithTarget:<span class="hljs-keyword">self</span>
+                                         selector:<span class="hljs-keyword">@selector</span>(threadMain:)
+                                           object:<span class="hljs-literal">nil</span>];
+[thread start];
+</code></pre>
+<h3 id="thread-management">Thread Management</h3>
+<pre><code class="language-objc"><span class="hljs-comment">// Get current thread</span>
+<span class="hljs-built_in">NSThread</span> *current = [<span class="hljs-built_in">NSThread</span> currentThread];
+
+<span class="hljs-comment">// Thread operations</span>
+[<span class="hljs-built_in">NSThread</span> sleepForTimeInterval:<span class="hljs-number">1.0</span>];
+[<span class="hljs-built_in">NSThread</span> exit];
+
+<span class="hljs-comment">// Thread information</span>
+[thread setName:<span class="hljs-string">@&quot;WorkerThread&quot;</span>];
+[thread setPriority:<span class="hljs-number">0.5</span>];
+</code></pre>
+<h3 id="thread-local-storage">Thread-Local Storage</h3>
+<pre><code class="language-objc"><span class="hljs-comment">// Store thread-specific data</span>
+[<span class="hljs-built_in">NSThread</span> setThreadDictionary:dict];
+<span class="hljs-built_in">NSDictionary</span> *threadDict = [<span class="hljs-built_in">NSThread</span> threadDictionary];
+</code></pre>
+<h2 id="technical-details">Technical Details</h2>
+<h3 id="core-methods">Core Methods</h3>
+<ol>
+<li>
+<p><strong>Thread Creation</strong>:</p>
+<pre><code class="language-objc">+ (<span class="hljs-type">void</span>)detachNewThreadSelector:(SEL)selector 
+                      toTarget:(<span class="hljs-type">id</span>)target 
+                    withObject:(<span class="hljs-type">id</span>)argument;
+- (<span class="hljs-type">id</span>)initWithTarget:(<span class="hljs-type">id</span>)target
+            selector:(SEL)selector
+              object:(<span class="hljs-type">id</span>)argument;
+</code></pre>
+</li>
+<li>
+<p><strong>Thread Control</strong>:</p>
+<pre><code class="language-objc">- (<span class="hljs-type">void</span>)start;
++ (<span class="hljs-type">void</span>)exit;
++ (<span class="hljs-type">void</span>)sleepForTimeInterval:(<span class="hljs-built_in">NSTimeInterval</span>)interval;
+</code></pre>
+</li>
+<li>
+<p><strong>Thread Information</strong>:</p>
+<pre><code class="language-objc">+ (<span class="hljs-built_in">NSThread</span> *)currentThread;
+- (<span class="hljs-type">void</span>)setName:(<span class="hljs-built_in">NSString</span> *)name;
+- (<span class="hljs-type">void</span>)setPriority:(<span class="hljs-type">float</span>)priority;
+</code></pre>
+</li>
+</ol>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li>
+<p><strong>Thread Creation</strong>:</p>
+<ul>
+<li>Use autorelease pools</li>
+<li>Handle exceptions</li>
+<li>Clean up resources</li>
+</ul>
+</li>
+<li>
+<p><strong>Thread Safety</strong>:</p>
+<ul>
+<li>Use proper synchronization</li>
+<li>Avoid shared mutable state</li>
+<li>Handle thread termination</li>
+</ul>
+</li>
+<li>
+<p><strong>Resource Management</strong>:</p>
+<ul>
+<li>Clean up thread-local storage</li>
+<li>Release retained objects</li>
+<li>Handle thread lifecycle</li>
+</ul>
+</li>
+</ol>
+<h2 id="important-considerations">Important Considerations</h2>
+<ol>
+<li>
+<p><strong>Memory Management</strong>:</p>
+<ul>
+<li>Thread-local autorelease pools</li>
+<li>Resource cleanup</li>
+<li>Memory barriers</li>
+</ul>
+</li>
+<li>
+<p><strong>Performance</strong>:</p>
+<ul>
+<li>Thread creation cost</li>
+<li>Context switching</li>
+<li>Resource contention</li>
+</ul>
+</li>
+<li>
+<p><strong>Safety</strong>:</p>
+<ul>
+<li>Exception handling</li>
+<li>Thread termination</li>
+<li>Resource leaks</li>
+</ul>
+</li>
+</ol>
+<h2 id="use-cases">Use Cases</h2>
+<ol>
+<li>
+<p><strong>Worker Thread</strong>:</p>
+<pre><code class="language-objc">+ (<span class="hljs-type">void</span>)threadMain:(<span class="hljs-type">id</span>)argument
+{
+    <span class="hljs-built_in">NSAutoreleasePool</span> *pool = [[<span class="hljs-built_in">NSAutoreleasePool</span> alloc] init];
+    <span class="hljs-keyword">@try</span> {
+        <span class="hljs-comment">// Thread work</span>
+        [<span class="hljs-keyword">self</span> processData:argument];
+    }
+    <span class="hljs-keyword">@finally</span> {
+        [pool drain];
+    }
+}
+</code></pre>
+</li>
+<li>
+<p><strong>Background Processing</strong>:</p>
+<pre><code class="language-objc">- (<span class="hljs-type">void</span>)startBackgroundWork
+{
+    [<span class="hljs-built_in">NSThread</span> detachNewThreadSelector:<span class="hljs-keyword">@selector</span>(backgroundWork:)
+                           toTarget:<span class="hljs-keyword">self</span>
+                         withObject:<span class="hljs-literal">nil</span>];
+}
+</code></pre>
+</li>
+<li>
+<p><strong>Thread Pool</strong>:</p>
+<pre><code class="language-objc">- (<span class="hljs-type">void</span>)setupThreadPool
+{
+    <span class="hljs-keyword">for</span> (<span class="hljs-built_in">NSUInteger</span> i = <span class="hljs-number">0</span>; i &lt; poolSize; i++)
+    {
+        <span class="hljs-built_in">NSThread</span> *worker = [[<span class="hljs-built_in">NSThread</span> alloc] initWithTarget:<span class="hljs-keyword">self</span>
+                                                 selector:<span class="hljs-keyword">@selector</span>(workerMain:)
+                                                   object:<span class="hljs-literal">nil</span>];
+        [worker setName:[<span class="hljs-built_in">NSString</span> stringWithFormat:<span class="hljs-string">@&quot;Worker%lu&quot;</span>, i]];
+        [worker start];
+    }
+}
+</code></pre>
+</li>
+</ol>
+
+            
+            
+        </body>
+        </html>

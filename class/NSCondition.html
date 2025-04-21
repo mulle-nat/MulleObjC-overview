@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>NSCondition</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="nscondition">NSCondition</h1>
+<h2 id="overview">Overview</h2>
+<p><code>NSCondition</code> provides condition variable functionality in mulle-objc through a thin wrapper around POSIX pthread primitives. It enables thread synchronization with wait/signal semantics.</p>
+<h2 id="key-features">Key Features</h2>
+<ul>
+<li>Condition variable functionality</li>
+<li>POSIX pthread integration</li>
+<li>Atomic operations</li>
+<li>Thread synchronization</li>
+<li>Debugging features</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<h3 id="basic-condition-usage">Basic Condition Usage</h3>
+<pre><code class="language-objc"><span class="hljs-built_in">NSCondition</span> *condition = [[<span class="hljs-built_in">NSCondition</span> alloc] init];
+
+<span class="hljs-comment">// Waiting thread</span>
+[condition lock];
+<span class="hljs-keyword">while</span> (!ready) {
+    [condition wait];
+}
+<span class="hljs-comment">// Process data</span>
+[condition unlock];
+
+<span class="hljs-comment">// Signaling thread</span>
+[condition lock];
+ready = <span class="hljs-literal">YES</span>;
+[condition signal];
+[condition unlock];
+</code></pre>
+<h3 id="broadcast-signaling">Broadcast Signaling</h3>
+<pre><code class="language-objc">[condition lock];
+<span class="hljs-comment">// Update shared state</span>
+[condition broadcast];
+[condition unlock];
+</code></pre>
+<h3 id="timed-waiting">Timed Waiting</h3>
+<pre><code class="language-objc">[condition lock];
+<span class="hljs-keyword">while</span> (!ready) {
+    <span class="hljs-keyword">if</span> (![condition waitUntilDate:[<span class="hljs-built_in">NSDate</span> dateWithTimeIntervalSinceNow:<span class="hljs-number">5.0</span>]]) {
+        <span class="hljs-comment">// Handle timeout</span>
+        <span class="hljs-keyword">break</span>;
+    }
+}
+[condition unlock];
+</code></pre>
+<h2 id="technical-details">Technical Details</h2>
+<h3 id="core-methods">Core Methods</h3>
+<ol>
+<li>
+<p><strong>Condition Operations</strong>:</p>
+<pre><code class="language-objc">- (<span class="hljs-type">void</span>)wait;
+- (<span class="hljs-type">BOOL</span>)waitUntilDate:(<span class="hljs-built_in">NSDate</span> *)limit;
+- (<span class="hljs-type">void</span>)signal;
+- (<span class="hljs-type">void</span>)broadcast;
+</code></pre>
+</li>
+<li>
+<p><strong>Lock Operations</strong>:</p>
+<pre><code class="language-objc">- (<span class="hljs-type">void</span>)lock;
+- (<span class="hljs-type">void</span>)unlock;
+</code></pre>
+</li>
+</ol>
+<h3 id="implementation-details">Implementation Details</h3>
+<ol>
+<li><strong>Pthread Integration</strong>:<pre><code class="language-objc">- (<span class="hljs-type">void</span>)_initializeCondition;
+- (<span class="hljs-type">void</span>)_destroyCondition;
+</code></pre>
+</li>
+</ol>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li>
+<p><strong>Condition Usage</strong>:</p>
+<ul>
+<li>Always check predicates</li>
+<li>Use while loops for waiting</li>
+<li>Handle spurious wakeups</li>
+</ul>
+</li>
+<li>
+<p><strong>Lock Management</strong>:</p>
+<ul>
+<li>Balance lock/unlock calls</li>
+<li>Use @try/@finally blocks</li>
+<li>Minimize critical sections</li>
+</ul>
+</li>
+<li>
+<p><strong>Error Handling</strong>:</p>
+<ul>
+<li>Check wait timeouts</li>
+<li>Handle interruptions</li>
+<li>Clean up properly</li>
+</ul>
+</li>
+</ol>
+<h2 id="important-considerations">Important Considerations</h2>
+<ol>
+<li>
+<p><strong>Thread Safety</strong>:</p>
+<ul>
+<li>Proper lock usage</li>
+<li>Predicate protection</li>
+<li>Signal timing</li>
+</ul>
+</li>
+<li>
+<p><strong>Performance</strong>:</p>
+<ul>
+<li>Wait efficiency</li>
+<li>Signal overhead</li>
+<li>Lock contention</li>
+</ul>
+</li>
+<li>
+<p><strong>Debugging</strong>:</p>
+<ul>
+<li>Deadlock detection</li>
+<li>Race conditions</li>
+<li>Lost signals</li>
+</ul>
+</li>
+</ol>
+<h2 id="use-cases">Use Cases</h2>
+<ol>
+<li>
+<p><strong>Producer-Consumer</strong>:</p>
+<pre><code class="language-objc">- (<span class="hljs-type">void</span>)produce:(<span class="hljs-type">id</span>)item
+{
+    [condition lock];
+    <span class="hljs-keyword">@try</span> {
+        [queue addObject:item];
+        [condition signal];
+    }
+    <span class="hljs-keyword">@finally</span> {
+        [condition unlock];
+    }
+}
+
+- (<span class="hljs-type">id</span>)consume
+{
+    <span class="hljs-type">id</span> item = <span class="hljs-literal">nil</span>;
+    [condition lock];
+    <span class="hljs-keyword">@try</span> {
+        <span class="hljs-keyword">while</span> ([queue count] == <span class="hljs-number">0</span>) {
+            [condition wait];
+        }
+        item = [queue removeFirstObject];
+    }
+    <span class="hljs-keyword">@finally</span> {
+        [condition unlock];
+    }
+    <span class="hljs-keyword">return</span> item;
+}
+</code></pre>
+</li>
+<li>
+<p><strong>Thread Coordination</strong>:</p>
+<pre><code class="language-objc">- (<span class="hljs-type">void</span>)waitForCompletion
+{
+    [condition lock];
+    <span class="hljs-keyword">@try</span> {
+        <span class="hljs-keyword">while</span> (!isComplete) {
+            [condition wait];
+        }
+    }
+    <span class="hljs-keyword">@finally</span> {
+        [condition unlock];
+    }
+}
+
+- (<span class="hljs-type">void</span>)markComplete
+{
+    [condition lock];
+    <span class="hljs-keyword">@try</span> {
+        isComplete = <span class="hljs-literal">YES</span>;
+        [condition broadcast];
+    }
+    <span class="hljs-keyword">@finally</span> {
+        [condition unlock];
+    }
+}
+</code></pre>
+</li>
+<li>
+<p><strong>Resource Pool</strong>:</p>
+<pre><code class="language-objc">- (<span class="hljs-type">id</span>)acquireResource
+{
+    [condition lock];
+    <span class="hljs-keyword">@try</span> {
+        <span class="hljs-keyword">while</span> ([availableResources count] == <span class="hljs-number">0</span>) {
+            [condition wait];
+        }
+        <span class="hljs-keyword">return</span> [availableResources removeObject];
+    }
+    <span class="hljs-keyword">@finally</span> {
+        [condition unlock];
+    }
+}
+
+- (<span class="hljs-type">void</span>)releaseResource:(<span class="hljs-type">id</span>)resource
+{
+    [condition lock];
+    <span class="hljs-keyword">@try</span> {
+        [availableResources addObject:resource];
+        [condition signal];
+    }
+    <span class="hljs-keyword">@finally</span> {
+        [condition unlock];
+    }
+}
+</code></pre>
+</li>
+</ol>
+
+            
+            
+        </body>
+        </html>

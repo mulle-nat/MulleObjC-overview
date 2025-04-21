@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>MulleObjC Functions</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="mulleobjc-functions">MulleObjC Functions</h1>
+<p>This document outlines the core functions available in MulleObjC for object manipulation, method invocation, and runtime operations.</p>
+<h2 id="core-functions">Core Functions</h2>
+<ul>
+<li><a href="MulleObjCAllocation.html">MulleObjCAllocation</a> - Object allocation and deallocation functions</li>
+<li><a href="MulleObjCDebug.html">MulleObjCDebug</a> - Debugging support functions</li>
+<li><a href="MulleObjCExceptionHandler.html">MulleObjCExceptionHandler</a> - Exception handling functions</li>
+<li><a href="MulleObjCHashFunctions.html">MulleObjCHashFunctions</a> - Hash calculation utilities</li>
+<li><a href="MulleObjCIvar.html">MulleObjCIvar</a> - Instance variable manipulation</li>
+<li><a href="MulleObjCPrinting.html">MulleObjCPrinting</a> - Object printing utilities</li>
+<li><a href="MulleObjCProperty.html">MulleObjCProperty</a> - Property access and manipulation</li>
+<li><a href="MulleObjCStackFrame.html">MulleObjCStackFrame</a> - Stack frame utilities</li>
+<li><a href="NSByteOrder.html">NSByteOrder</a> - Byte order conversion functions</li>
+<li><a href="NSDebug.html">NSDebug</a> - Debugging utilities</li>
+<li><a href="mulle-sprintf-object.html">mulle-sprintf-object</a> - Object formatting functions</li>
+</ul>
+<h2 id="object-property-access">Object Property Access</h2>
+<h3 id="value-getters-and-setters">Value Getters and Setters</h3>
+<p>A comprehensive set of functions for getting and setting primitive values:</p>
+<pre><code class="language-c"><span class="hljs-comment">// Example pair, similar pattern for other types</span>
+<span class="hljs-type">void</span> <span class="hljs-title function_">MulleObjCObjectSetBOOL</span><span class="hljs-params">(id obj, SEL sel, BOOL value)</span>;
+BOOL <span class="hljs-title function_">MulleObjCObjectGetBOOL</span><span class="hljs-params">(id obj, SEL sel)</span>;
+</code></pre>
+<p>Supported types include:</p>
+<ul>
+<li>BOOL, char, unsigned char</li>
+<li>short, unsigned short</li>
+<li>int, unsigned int</li>
+<li>long, unsigned long</li>
+<li>long long, unsigned long long</li>
+<li>NSInteger</li>
+<li>float, double, long double</li>
+<li>NSRange</li>
+</ul>
+<h2 id="method-invocation">Method Invocation</h2>
+<h3 id="imp-calling-helpers">IMP Calling Helpers</h3>
+<p>Functions for invoking methods with varying numbers of arguments:</p>
+<pre><code class="language-c">id <span class="hljs-title function_">MulleObjCIMPCall0</span><span class="hljs-params">(IMP imp, id obj, SEL sel)</span>;
+id <span class="hljs-title function_">MulleObjCIMPCall1</span><span class="hljs-params">(IMP imp, id obj, SEL sel, id arg)</span>;
+<span class="hljs-comment">// ... up to MulleObjCIMPCall5</span>
+</code></pre>
+<h3 id="perform-selector-functions">Perform Selector Functions</h3>
+<p>Higher-level method invocation helpers:</p>
+<pre><code class="language-c">id <span class="hljs-title function_">MulleObjCObjectPerformSelector0</span><span class="hljs-params">(id obj, SEL sel)</span>;
+id <span class="hljs-title function_">MulleObjCObjectPerformSelector</span><span class="hljs-params">(id obj, SEL sel, id argument)</span>;
+<span class="hljs-comment">// ... up to MulleObjCObjectPerformSelector5</span>
+</code></pre>
+<h3 id="bulk-operations">Bulk Operations</h3>
+<pre><code class="language-c"><span class="hljs-type">void</span> <span class="hljs-title function_">MulleObjCMakeObjectsPerformSelector0</span><span class="hljs-params">(id *objects, NSUInteger n, SEL sel)</span>;
+<span class="hljs-type">void</span> <span class="hljs-title function_">MulleObjCMakeObjectsPerformSelector</span><span class="hljs-params">(id *objects, NSUInteger n, SEL sel, id arg)</span>;
+</code></pre>
+<h2 id="runtime-support">Runtime Support</h2>
+<h3 id="class-operations">Class Operations</h3>
+<pre><code class="language-c">BOOL <span class="hljs-title function_">MulleObjCClassImplementsSelector</span><span class="hljs-params">(Class aClass, SEL sel)</span>;
+Class <span class="hljs-title function_">MulleObjCObjectGetClass</span><span class="hljs-params">(id obj)</span>;
+<span class="hljs-type">void</span> <span class="hljs-title function_">MulleObjCInstanceSetClass</span><span class="hljs-params">(id obj, Class cls)</span>;
+</code></pre>
+<h3 id="thread-safety">Thread Safety</h3>
+<pre><code class="language-c"><span class="hljs-type">void</span> <span class="hljs-title function_">MulleObjCInstanceSetThreadAffinity</span><span class="hljs-params">(id obj, <span class="hljs-type">mulle_thread_t</span> thread)</span>;
+<span class="hljs-type">void</span> <span class="hljs-title function_">MulleObjCInstanceConstantify</span><span class="hljs-params">(id obj)</span>;
+</code></pre>
+<h3 id="name-and-string-operations">Name and String Operations</h3>
+<pre><code class="language-c"><span class="hljs-type">char</span> *<span class="hljs-title function_">MulleObjCClassGetNameUTF8String</span><span class="hljs-params">(Class cls)</span>;
+<span class="hljs-type">char</span> *<span class="hljs-title function_">MulleObjCSelectorGetNameUTF8String</span><span class="hljs-params">(SEL sel)</span>;
+<span class="hljs-type">char</span> *<span class="hljs-title function_">MulleObjCProtocolGetNameUTF8String</span><span class="hljs-params">(PROTOCOL sel)</span>;
+</code></pre>
+<h3 id="method-collection">Method Collection</h3>
+<pre><code class="language-c"><span class="hljs-keyword">struct</span> MulleObjCCollectionInfo <span class="hljs-title function_">MulleObjCCollectionInfoMake</span><span class="hljs-params">(Class stopClass, 
+                                                          SEL sel, 
+                                                          <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> inheritance)</span>;
+</code></pre>
+<h3 id="property-operations">Property Operations</h3>
+<pre><code class="language-c"><span class="hljs-keyword">struct</span> _mulle_objc_property <span class="hljs-title function_">MulleObjCClassSearchProperty</span><span class="hljs-params">(Class cls, SEL propertyid)</span>;
+<span class="hljs-keyword">struct</span> _mulle_objc_property <span class="hljs-title function_">MulleObjCInstanceSearchProperty</span><span class="hljs-params">(id obj, SEL propertyid)</span>;
+</code></pre>
+<h2 id="implementation-details">Implementation Details</h2>
+<h3 id="method-chaining">Method Chaining</h3>
+<p>Functions for managing method implementation chains:</p>
+<pre><code class="language-c"><span class="hljs-type">void</span> <span class="hljs-title function_">MulleObjCIMPArrayInitCategoryOnly</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> MulleObjCIMPArray *imps, 
+                                      Class cls, 
+                                      SEL sel, 
+                                      <span class="hljs-keyword">struct</span> mulle_allocator *allocator)</span>;
+<span class="hljs-type">void</span> <span class="hljs-title function_">MulleObjCIMPArrayCallReverse</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> MulleObjCIMPArray *imps, id obj, id argument)</span>;
+</code></pre>
+<h3 id="kvc-support">KVC Support</h3>
+<p>Functions for Key-Value Coding operations with various types:</p>
+<pre><code class="language-c">id <span class="hljs-title function_">MulleObjCIMPCallWithFloat</span><span class="hljs-params">(IMP imp, id obj, SEL sel, <span class="hljs-type">float</span> argument)</span>;
+<span class="hljs-type">float</span> <span class="hljs-title function_">MulleObjCIMPCall0ReturningFloat</span><span class="hljs-params">(IMP imp, id obj, SEL sel)</span>;
+<span class="hljs-comment">// Similar pairs for other numeric types</span>
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li>Use the highest-level function appropriate for your needs</li>
+<li>Consider thread safety when using instance modification functions</li>
+<li>Properly manage memory when using collection functions</li>
+<li>Use bulk operations when performing actions on multiple objects</li>
+<li>Check return values for error conditions</li>
+</ol>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Most functions are inlined for performance</li>
+<li>Thread-safe functions are marked with <code>MULLE_OBJC_THREADSAFE_METHOD</code></li>
+<li>Some functions are specific to the mulle-objc runtime implementation</li>
+<li>Property and method operations respect the Objective-C inheritance chain</li>
+</ul>
+
+            
+            
+        </body>
+        </html>

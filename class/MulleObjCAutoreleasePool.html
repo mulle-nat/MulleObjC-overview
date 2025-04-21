@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>MulleObjCAutoreleasePool</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="mulleobjcautoreleasepool">MulleObjCAutoreleasePool</h1>
+<h2 id="overview">Overview</h2>
+<p><code>MulleObjCAutoreleasePool</code> provides the core autorelease functionality and utilities in mulle-objc. It offers low-level functions for managing autorelease pools and integrates deeply with the runtime's thread and memory management systems.</p>
+<h2 id="key-features">Key Features</h2>
+<ul>
+<li>Thread-local pool management</li>
+<li>Configurable pool behavior</li>
+<li>Runtime integration</li>
+<li>Efficient memory handling</li>
+<li>Coroutine support</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<h3 id="basic-object-autoreleasing">Basic Object Autoreleasing</h3>
+<pre><code class="language-objc"><span class="hljs-comment">// Autorelease a single object</span>
+<span class="hljs-type">id</span> obj = _MulleObjCAutoreleaseObject(someObject);
+
+<span class="hljs-comment">// Autorelease multiple objects</span>
+<span class="hljs-type">id</span> objects[<span class="hljs-number">3</span>] = {obj1, obj2, obj3};
+_MulleObjCAutoreleaseObjects(objects, <span class="hljs-number">3</span>, universe);
+
+<span class="hljs-comment">// Autorelease objects with stride</span>
+_MulleObjCAutoreleaseSpacedObjects(objects, count, stride, universe);
+</code></pre>
+<h3 id="pool-configuration">Pool Configuration</h3>
+<pre><code class="language-objc"><span class="hljs-comment">// Initialize pool configuration</span>
+<span class="hljs-keyword">struct</span> _mulle_objc_poolconfiguration config;
+_mulle_objc_poolconfiguration_init(&amp;config, poolClass);
+
+<span class="hljs-comment">// Reset pool configuration</span>
+_mulle_objc_poolconfiguration_reset(&amp;config);
+
+<span class="hljs-comment">// Clean up pool configuration</span>
+_mulle_objc_poolconfiguration_done(&amp;config);
+</code></pre>
+<h3 id="thread-management">Thread Management</h3>
+<pre><code class="language-objc"><span class="hljs-comment">// Create new pool configuration for thread</span>
+<span class="hljs-keyword">struct</span> _mulle_objc_poolconfiguration *config;
+config = mulle_objc_thread_new_poolconfiguration(universe);
+
+<span class="hljs-comment">// Reset thread&#x27;s pool configuration</span>
+mulle_objc_thread_reset_poolconfiguration(universe);
+
+<span class="hljs-comment">// Clean up thread&#x27;s pool configuration</span>
+mulle_objc_thread_done_poolconfiguration(universe);
+</code></pre>
+<h2 id="technical-details">Technical Details</h2>
+<h3 id="core-functions">Core Functions</h3>
+<ol>
+<li>
+<p><strong>Object Autoreleasing</strong>:</p>
+<pre><code class="language-c"><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> id _MulleObjCAutoreleaseObject(id obj)
+{
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">mulle_objc_poolconfiguration</span> *<span class="hljs-title">config</span>;</span>
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">mulle_objc_universe</span> *<span class="hljs-title">universe</span>;</span>
+    
+    universe = _mulle_objc_object_get_universe(obj);
+    config = mulle_objc_thread_get_poolconfiguration(universe);
+    (*config-&gt;autoreleaseObject)(config, obj);
+    <span class="hljs-keyword">return</span> obj;
+}
+</code></pre>
+</li>
+<li>
+<p><strong>Batch Autoreleasing</strong>:</p>
+<pre><code class="language-c"><span class="hljs-type">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-type">void</span> _MulleObjCAutoreleaseObjects(id *objects,
+                                               NSUInteger count,
+                                               <span class="hljs-keyword">struct</span> _mulle_objc_universe *universe)
+{
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">mulle_objc_poolconfiguration</span> *<span class="hljs-title">config</span>;</span>
+    config = mulle_objc_thread_get_poolconfiguration(universe);
+    (*config-&gt;autoreleaseObjects)(config, objects, count, <span class="hljs-keyword">sizeof</span>(id));
+}
+</code></pre>
+</li>
+</ol>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li>
+<p><strong>Pool Management</strong>:</p>
+<ul>
+<li>Initialize pools properly</li>
+<li>Clean up pools when done</li>
+<li>Handle nested pools correctly</li>
+</ul>
+</li>
+<li>
+<p><strong>Thread Safety</strong>:</p>
+<ul>
+<li>Use thread-local configurations</li>
+<li>Manage thread lifecycles</li>
+<li>Handle coroutine cases</li>
+</ul>
+</li>
+<li>
+<p><strong>Memory Efficiency</strong>:</p>
+<ul>
+<li>Batch autorelease when possible</li>
+<li>Use appropriate pool scopes</li>
+<li>Clean up unused pools</li>
+</ul>
+</li>
+</ol>
+<h2 id="important-considerations">Important Considerations</h2>
+<ol>
+<li>
+<p><strong>Thread Integration</strong>:</p>
+<ul>
+<li>Per-thread configurations</li>
+<li>Proper initialization/cleanup</li>
+<li>Coroutine handling</li>
+</ul>
+</li>
+<li>
+<p><strong>Performance</strong>:</p>
+<ul>
+<li>Batch operations</li>
+<li>Pool hierarchy</li>
+<li>Memory overhead</li>
+</ul>
+</li>
+<li>
+<p><strong>Safety</strong>:</p>
+<ul>
+<li>Proper initialization</li>
+<li>Cleanup handling</li>
+<li>Error conditions</li>
+</ul>
+</li>
+</ol>
+<h2 id="use-cases">Use Cases</h2>
+<ol>
+<li>
+<p><strong>Thread Pool Management</strong>:</p>
+<pre><code class="language-objc"><span class="hljs-comment">// Thread initialization</span>
+<span class="hljs-keyword">struct</span> _mulle_objc_poolconfiguration *config;
+config = mulle_objc_thread_new_poolconfiguration(universe);
+
+<span class="hljs-comment">// Thread cleanup</span>
+mulle_objc_thread_done_poolconfiguration(universe);
+</code></pre>
+</li>
+<li>
+<p><strong>Batch Processing</strong>:</p>
+<pre><code class="language-objc"><span class="hljs-comment">// Process multiple objects efficiently</span>
+<span class="hljs-type">id</span> objects[<span class="hljs-number">100</span>];
+<span class="hljs-comment">// Fill objects array</span>
+_MulleObjCAutoreleaseObjects(objects, <span class="hljs-number">100</span>, universe);
+</code></pre>
+</li>
+<li>
+<p><strong>Custom Pool Configuration</strong>:</p>
+<pre><code class="language-objc"><span class="hljs-comment">// Configure custom pool behavior</span>
+<span class="hljs-keyword">struct</span> _mulle_objc_poolconfiguration config;
+_mulle_objc_poolconfiguration_init(&amp;config, customPoolClass);
+<span class="hljs-comment">// Use custom configuration</span>
+_mulle_objc_poolconfiguration_done(&amp;config);
+</code></pre>
+</li>
+</ol>
+
+            
+            
+        </body>
+        </html>

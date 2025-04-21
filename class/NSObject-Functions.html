@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>NSObject Functions</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="nsobject-functions">NSObject Functions</h1>
+<p>Core functions for object lifecycle and runtime operations in mulle-objc.</p>
+<h2 id="object-lifecycle">Object Lifecycle</h2>
+<h3 id="initialization">Initialization</h3>
+<pre><code class="language-c">id <span class="hljs-title function_">NSAllocateObject</span><span class="hljs-params">(Class cls, NSUInteger extraBytes, NSZone *zone)</span>;
+<span class="hljs-type">void</span> <span class="hljs-title function_">NSDeallocateObject</span><span class="hljs-params">(id obj)</span>;
+id <span class="hljs-title function_">NSCopyObject</span><span class="hljs-params">(id obj, NSUInteger extraBytes, NSZone *zone)</span>;
+</code></pre>
+<h3 id="runtime-operations">Runtime Operations</h3>
+<pre><code class="language-c">BOOL <span class="hljs-title function_">NSShouldRetainWithZone</span><span class="hljs-params">(NSObject *obj, NSZone *zone)</span>;
+<span class="hljs-type">void</span> <span class="hljs-title function_">NSIncrementExtraRefCount</span><span class="hljs-params">(id object)</span>;
+BOOL <span class="hljs-title function_">NSDecrementExtraRefCountWasZero</span><span class="hljs-params">(id object)</span>;
+</code></pre>
+<h2 id="method-resolution">Method Resolution</h2>
+<h3 id="dynamic-method-handling">Dynamic Method Handling</h3>
+<pre><code class="language-c"><span class="hljs-type">void</span> *<span class="hljs-title function_">NSForwardingTargetForSelector</span><span class="hljs-params">(id self, SEL sel)</span>;
+BOOL <span class="hljs-title function_">NSResolveInstanceMethod</span><span class="hljs-params">(Class cls, SEL sel)</span>;
+BOOL <span class="hljs-title function_">NSResolveClassMethod</span><span class="hljs-params">(Class cls, SEL sel)</span>;
+</code></pre>
+<h3 id="message-forwarding">Message Forwarding</h3>
+<pre><code class="language-c"><span class="hljs-type">void</span> <span class="hljs-title function_">NSForwardInvocation</span><span class="hljs-params">(id self, NSInvocation *invocation)</span>;
+NSMethodSignature *<span class="hljs-title function_">NSMethodSignatureForSelector</span><span class="hljs-params">(id self, SEL sel)</span>;
+</code></pre>
+<h2 id="object-description">Object Description</h2>
+<h3 id="introspection">Introspection</h3>
+<pre><code class="language-c">NSString *<span class="hljs-title function_">NSStringFromClass</span><span class="hljs-params">(Class cls)</span>;
+NSString *<span class="hljs-title function_">NSStringFromSelector</span><span class="hljs-params">(SEL sel)</span>;
+NSString *<span class="hljs-title function_">NSStringFromProtocol</span><span class="hljs-params">(Protocol *proto)</span>;
+</code></pre>
+<h3 id="object-information">Object Information</h3>
+<pre><code class="language-c">Class <span class="hljs-title function_">NSClassFromString</span><span class="hljs-params">(NSString *<span class="hljs-built_in">string</span>)</span>;
+SEL <span class="hljs-title function_">NSSelectorFromString</span><span class="hljs-params">(NSString *<span class="hljs-built_in">string</span>)</span>;
+Protocol *<span class="hljs-title function_">NSProtocolFromString</span><span class="hljs-params">(NSString *<span class="hljs-built_in">string</span>)</span>;
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li>Use high-level allocation methods</li>
+<li>Handle reference counting properly</li>
+<li>Implement forwarding when needed</li>
+<li>Cache method resolutions</li>
+<li>Consider memory zones</li>
+</ol>
+<h2 id="thread-safety">Thread Safety</h2>
+<ul>
+<li>Most functions are thread-safe</li>
+<li>Reference counting is atomic</li>
+<li>Method resolution may need locks</li>
+<li>Consider forwarding implications</li>
+</ul>
+
+            
+            
+        </body>
+        </html>

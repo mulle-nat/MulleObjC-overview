@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>MulleObjCRuntimeObject</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="mulleobjcruntimeobject">MulleObjCRuntimeObject</h1>
+<p>The <code>MulleObjCRuntimeObject</code> protocol defines core runtime behavior for objects in the MulleObjC system, particularly focusing on thread affinity and ownership (TAO) strategies.</p>
+<h2 id="thread-affinity-and-ownership-tao-strategies">Thread Affinity and Ownership (TAO) Strategies</h2>
+<p>The protocol defines several strategies for managing object ownership and thread safety:</p>
+<h3 id="all-purpose-thread-strategies">All-Purpose Thread Strategies</h3>
+<ol>
+<li>
+<p><strong>MulleObjCTAOKnownThreadSafe</strong></p>
+<ul>
+<li>Most efficient strategy</li>
+<li>For fully thread-safe objects</li>
+<li>No thread affinity (accessible from any thread)</li>
+<li>Used with <code>MulleObjCThreadSafe</code> protocol</li>
+<li>Recommended for MulleObject-derived classes</li>
+</ul>
+</li>
+<li>
+<p><strong>MulleObjCTAOCallerRemovesFromCurrentPool</strong></p>
+<ul>
+<li>For objects created for passing to another thread</li>
+<li>Caller removes object from current thread's autorelease pool</li>
+<li>Fallback for objects without thread safety concerns</li>
+<li>Not recommended as a design feature</li>
+</ul>
+</li>
+<li>
+<p><strong>MulleObjCTAOCallerRemovesFromAllPools</strong></p>
+<ul>
+<li>Aggressive cleanup approach</li>
+<li>Removes object from all autorelease pools across threads</li>
+<li>Use only in special circumstances</li>
+<li>Potentially slow and dangerous</li>
+<li>Not recommended for general use</li>
+</ul>
+</li>
+</ol>
+<h3 id="custom-thread-strategies">Custom Thread Strategies</h3>
+<ol start="4">
+<li>
+<p><strong>MulleObjCTAOKnownThreadSafeMethods</strong></p>
+<ul>
+<li>For objects with thread-safe methods only</li>
+<li>Limited to specific NSThread access</li>
+<li>No thread affinity changes</li>
+<li>Bypasses normal thread checking</li>
+<li>More efficient for partially thread-safe objects</li>
+</ul>
+</li>
+<li>
+<p><strong>MulleObjCTAOReceiverPerformsFinalize</strong></p>
+<ul>
+<li>For specialized manual object management</li>
+<li>Changes thread affinity on access</li>
+<li>Object handles own finalization</li>
+<li>Reserved for special cases</li>
+</ul>
+</li>
+</ol>
+<h2 id="operational-flow">Operational Flow</h2>
+<h3 id="source-thread-mullerelinquishaccess">Source Thread (mulleRelinquishAccess)</h3>
+<ol>
+<li>Retains object to prevent deallocation during transfer</li>
+<li>Optionally removes from autorelease pools (strategy-dependent)</li>
+<li>Unsets thread affinity marker</li>
+</ol>
+<h3 id="receiving-thread-mullegainaccess">Receiving Thread (mulleGainAccess)</h3>
+<ol>
+<li>Sets thread affinity to current thread (unless thread-safe)</li>
+<li>Autoreleases object in receiving thread's pool</li>
+</ol>
+<h2 id="implementation-guidelines">Implementation Guidelines</h2>
+<ol>
+<li>Use <code>MulleObjCTAOKnownThreadSafe</code> as the default strategy</li>
+<li>Implement <code>MulleObjCThreadSafe</code> protocol for thread-safe objects</li>
+<li>Be cautious with custom thread strategies</li>
+<li>Consider memory management implications</li>
+<li>Test thoroughly across thread boundaries</li>
+</ol>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li>Prefer thread-safe objects when possible</li>
+<li>Use custom thread strategies only when necessary</li>
+<li>Document thread safety requirements</li>
+<li>Consider performance implications</li>
+<li>Handle autorelease pools appropriately</li>
+<li>Test thread boundary transitions</li>
+</ol>
+
+            
+            
+        </body>
+        </html>

@@ -27,6 +27,20 @@ Supporting C functions for the Objective-C runtime, including:
 
 Function documentation can also be found in class and protocol sections:
 
-* [Class Functions](class/MulleObjCLoader-Functions.md)
+* [MulleDynamicObject Functions](class/MulleDynamicObject-Functions.md)
+* [MulleObjCLoader Functions](class/MulleObjCLoader-Functions.md)
+* [MulleObject Functions](class/MulleObject-Functions.md)
+* [MulleProxy Functions](class/MulleProxy-Functions.md)
+
+* [NSAutoreleasePool Functions](class/NSAutoreleasePool-Functions.md)
+* [NSCondition Functions](class/NSCondition-Functions.md)
+* [NSInvocation Functions](class/NSInvocation-Functions.md)
+* [NSLock Functions](class/NSLock-Functions.md)
+* [NSMethodSignature Functions](class/NSMethodSignature-Functions.md)
+* [NSNull Functions](class/NSNull-Functions.md)
+* [NSObject Functions](class/NSObject-Functions.md)
+* [NSThread Functions](class/NSThread-Functions.md)
+
 * [Protocol Functions](protocol/NSCopying-Functions.md)
-* [Runtime Functions](protocol/MulleObjCRuntimeObject-Functions.md)
+* [Runtime Object Functions](protocol/MulleObjCRuntimeObject-Functions.md)
+

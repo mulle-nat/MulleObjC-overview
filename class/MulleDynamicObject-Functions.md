@@ -5,48 +5,21 @@ Functions for dynamic property support in mulle-objc.
 ## Property Management
 
 ### Value Setting
-```c
-// Set property values
-void _MulleDynamicObjectValueSetter(MulleDynamicObject *self,
-                                  SEL selector,
-                                  void *_param,
-                                  char *objcType);
-
-void _MulleDynamicObjectNumberSetter(MulleDynamicObject *self,
-                                   SEL selector,
-                                   void *_param,
-                                   char *objcType);
-
-// Get property values
-void _MulleDynamicObjectValueGetter(MulleDynamicObject *self,
-                                  SEL selector,
-                                  void *_param);
-```
+- [`_MulleDynamicObjectValueSetter`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_MulleDynamicObjectValueSetter+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Set property value
+- [`_MulleDynamicObjectNumberSetter`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_MulleDynamicObjectNumberSetter+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Set number property
+- [`_MulleDynamicObjectValueGetter`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_MulleDynamicObjectValueGetter+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get property value
 
 ## Property Analysis
 
 ### Type Information
-```c
-// Get property type info
-MulleObjCGenericType _MulleObjCGenericTypeOfProperty(struct _mulle_objc_property *property);
-MulleObjCGenericType _MulleObjCGenericTypeOfSignature(char *signature);
-
-// Search for dynamic property
-struct _mulle_objc_property *_MulleObjCClassPointerSearchDynamicProperty(
-    struct _mulle_objc_infraclass **infra_p,
-    mulle_objc_methodid_t methodid);
-```
+- [`_MulleObjCGenericTypeOfProperty`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_MulleObjCGenericTypeOfProperty+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get property type
+- [`_MulleObjCGenericTypeOfSignature`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_MulleObjCGenericTypeOfSignature+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get signature type
+- [`_MulleObjCClassPointerSearchDynamicProperty`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_MulleObjCClassPointerSearchDynamicProperty+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Find dynamic property
 
 ## Method Generation
 
 ### Accessor Creation
-```c
-// Create property methods
-struct _mulle_objc_method *_mulle_objc_infraclass_create_methods_for_property(
-    struct _mulle_objc_infraclass *infra,
-    struct _mulle_objc_property *property,
-    mulle_objc_methodid_t neededSel);
-```
+- [`_mulle_objc_infraclass_create_methods_for_property`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_infraclass_create_methods_for_property+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Create property methods
 
 ## Important Notes
 

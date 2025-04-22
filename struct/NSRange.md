@@ -1,52 +1,69 @@
 # NSRange
 
-A structure representing a range with location and length, used throughout MulleObjC for substring operations, array slicing, and other range-based operations.
+Structure for representing a range with location and length in mulle-objc.
 
-## Structure
-```c
-typedef struct mulle_range   NSRange;
-typedef NSRange             *NSRangePointer;
+## Structure Definition
 
-struct mulle_range {
-    NSUInteger location;  // Starting position
-    NSUInteger length;    // Number of items
-};
+```objc
+typedef struct _NSRange {
+   NSUInteger location;  // Starting index
+   NSUInteger length;    // Number of items
+} NSRange;
 ```
 
-## Constants
-- `NSNotFound` - Special value indicating item was not found
+## Functions
 
-## Creation Functions
-- `NSRangeMake(location, length)` - Creates range with given location and length
-- `MulleMakeFullRange()` - Creates range covering maximum possible range (0 to -1)
-- `MulleObjCMakeInvalidRange()` - Creates an invalid range
+### Range Creation
+- [`NSMakeRange`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSMakeRange+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/NSRange.c+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/NSRange.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Create range struct
+- [`NSEmptyRange`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSEmptyRange+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/NSRange.c+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/NSRange.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Create empty range
 
-## Access Functions
-- `NSRangeGetLocation(range)` - Gets location
-- `NSRangeGetLength(range)` - Gets length
-- `NSRangeGetMax(range)` - Gets maximum position (location + length)
+### Range Operations
+- [`NSEqualRanges`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSEqualRanges+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/NSRange.c+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/NSRange.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Compare ranges
+- [`NSLocationInRange`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSLocationInRange+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/NSRange.c+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/NSRange.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check if location in range
+- [`NSMaxRange`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSMaxRange+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/NSRange.c+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/NSRange.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get maximum location
 
-## Testing Functions
-- `NSRangeContainsLocation(range, location)` - Tests if location is within range
-- `NSRangeEqualToRange(range1, range2)` - Tests range equality
-- `MulleObjCRangeIsValid(range)` - Tests range validity
-- `MulleObjCRangeContainsRange(big, small)` - Tests if one range contains another
-- `MulleObjCRangeIntersectsRange(a, b)` - Tests range overlap
+### Range Manipulation
+- [`NSUnionRange`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSUnionRange+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/NSRange.c+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/NSRange.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Combine ranges
+- [`NSIntersectionRange`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSIntersectionRange+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/NSRange.c+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/NSRange.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Intersect ranges
 
-## Operation Functions
-- `NSRangeUnion(range1, range2)` - Combines ranges into encompassing range
-- `NSRangeIntersect(range1, range2)` - Gets overlapping portion
-- `MulleObjCRangeSubtract(range1, range2, result)` - Subtracts range2 from range1
-- `MulleObjCRangeInsert(range1, range2, result)` - Inserts range2 into range1
-- `MulleObjCRangeValidateAgainstLength(range, length)` - Validates against length
+## Usage Example
 
-## Comparison Functions
-- `MulleObjCRangeCompare(a, b)` - Compares ranges
-- `MulleObjCRangePointerCompare(a, b)` - Compares range pointers
+```objc
+// Create range
+NSRange range = NSMakeRange(0, 10);
 
-## Convenience Macro
-```c
-MulleObjCRangeFor( range, name) // Iterates over range with variable name
+// Check if location is in range
+BOOL contains = NSLocationInRange(5, range);  // YES
+
+// Get maximum location
+NSUInteger max = NSMaxRange(range);  // 10
+
+// Combine ranges
+NSRange range1 = NSMakeRange(0, 5);
+NSRange range2 = NSMakeRange(3, 5);
+NSRange union = NSUnionRange(range1, range2);  // {0, 8}
+
+// Intersect ranges
+NSRange intersection = NSIntersectionRange(range1, range2);  // {3, 2}
 ```
 
-Note: Legacy function names (e.g., NSMaxRange) are provided for compatibility but modern NSRange-prefixed names are preferred.
+## Important Notes
+
+1. Range Validation
+   - Check for empty ranges
+   - Validate indices
+   - Handle overflow
+   - Consider bounds
+
+2. Performance
+   - Pass by value
+   - Avoid copying
+   - Cache results
+   - Use stack allocation
+
+3. Best Practices
+   - Check for overflow
+   - Validate input
+   - Document assumptions
+   - Test edge cases
+   - Consider zero length

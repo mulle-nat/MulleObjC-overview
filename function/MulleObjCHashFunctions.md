@@ -5,25 +5,13 @@ Core functions for hash computation in mulle-objc.
 ## Hash Functions
 
 ### String Hashing
-```c
-// Hash UTF8 string
-mulle_objc_uniqueid_t mulle_objc_uniqueid_from_string(char *s);
-
-// Hash method name
-mulle_objc_methodid_t mulle_objc_methodid_from_string(char *s);
-
-// Hash class name
-mulle_objc_classid_t mulle_objc_classid_from_string(char *s);
-```
+- [`mulle_objc_uniqueid_from_string`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+mulle_objc_uniqueid_from_string+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCHashFunctions.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCHashFunctions.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Hash UTF8 string
+- [`mulle_objc_methodid_from_string`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+mulle_objc_methodid_from_string+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCHashFunctions.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCHashFunctions.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Hash method name
+- [`mulle_objc_classid_from_string`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+mulle_objc_classid_from_string+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCHashFunctions.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCHashFunctions.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Hash class name
 
 ### Pointer Hashing
-```c
-// Hash pointer value
-uintptr_t _mulle_objc_object_hash(void *obj);
-
-// Hash pointer with mask
-uintptr_t _mulle_objc_object_hash_inline(void *obj, uintptr_t mask);
-```
+- [`_mulle_objc_object_hash`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_object_hash+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCHashFunctions.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCHashFunctions.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Hash pointer value
+- [`_mulle_objc_object_hash_inline`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_object_hash_inline+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCHashFunctions.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCHashFunctions.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Hash pointer with mask
 
 ## Important Notes
 

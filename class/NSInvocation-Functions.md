@@ -5,24 +5,14 @@ Functions for working with method invocations in mulle-objc.
 ## Invocation Support
 
 ### Frame Management
-```c
-// Get frame size for MetaABI
-size_t mulle_metaabi_sizeof_union(size_t size);
-
-// Check if type can be stored in pointer
-BOOL mulle_metaabi_is_voidptr_storage_compatible(size_t size);
-```
+- [`mulle_metaabi_sizeof_union`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+mulle_metaabi_sizeof_union+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSInvocation.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSInvocation.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get frame size
+- [`mulle_metaabi_is_voidptr_storage_compatible`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+mulle_metaabi_is_voidptr_storage_compatible+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSInvocation.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSInvocation.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check pointer storage
 
 ## Memory Management
 
 ### Value Handling
-```c
-// Copy values
-void mulle_id_copy(id *dst, id *src, size_t n);
-
-// Release objects
-void _mulle_objc_objects_release(void **objects, NSUInteger count);
-```
+- [`mulle_id_copy`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+mulle_id_copy+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSInvocation.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSInvocation.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Copy object values
+- [`_mulle_objc_objects_release`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_objects_release+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSInvocation.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSInvocation.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Release objects
 
 ## Important Notes
 

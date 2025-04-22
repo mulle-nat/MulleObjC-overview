@@ -5,17 +5,8 @@ Functions for object string formatting in mulle-objc.
 ## Formatting Functions
 
 ### Object Formatting
-```c
-// Format object description
-void mulle_sprintf_object_do_format_object(struct mulle_buffer *buffer,
-                                         struct mulle_sprintf_formatcontext *ctxt,
-                                         struct mulle_sprintf_argumentarray *arguments,
-                                         int argc,
-                                         int width,
-                                         int precision,
-                                         int modifier,
-                                         int conversion);
-```
+- [`mulle_sprintf_object_do_format_object`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+mulle_sprintf_object_do_format_object+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/mulle-sprintf-object.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/mulle-sprintf-object.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Format object description
+- [`mulle_sprintf_register_object_functions`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+mulle_sprintf_register_object_functions+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/mulle-sprintf-object.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/mulle-sprintf-object.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Register formatters
 
 ## Important Notes
 

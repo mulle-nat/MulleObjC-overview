@@ -1,32 +1,57 @@
 # MulleObjCContainerObjectCallback
 
-Callback structures for container memory management and comparison operations.
+Callback structure for object-based container operations in mulle-objc.
 
-## Key-Value Callbacks
+## Structure Definition
 
-### Object Combinations
-- `_MulleObjCContainerRetainKeyRetainValueCallback` - Retain both
-- `_MulleObjCContainerCopyKeyRetainValueCallback` - Copy key, retain value
-- `_MulleObjCContainerRetainKeyCopyValueCallback` - Retain key, copy value
-- `_MulleObjCContainerCopyKeyCopyValueCallback` - Copy both
+```objc
+struct MulleObjCContainerObjectCallback
+{
+   void   (*retain)(id);
+   void   (*release)(id);
+   void   (*describe)(id, struct mulle_buffer *);
+};
+```
 
-### String Combinations
-- `_MulleObjCContainerCopyCStringKeyRetainValueCallback` - Copy string key, retain value
-- `_MulleObjCContainerAssignCStringKeyCallback` - Assign string key
-- `_MulleObjCContainerFreeCStringKeyCallback` - Free string key on removal
-- `_MulleObjCContainerCopyCStringKeyCallback` - Copy string key on insert
+## Functions
 
-### Special Combinations
-- `_MulleObjCContainerIntegerKeyRetainValueCallback` - Integer key, retain value
-- `_MulleObjCContainerPointerKeyIntegerValueCallback` - Pointer key, integer value
-- `_MulleObjCContainerIntegerKeyPointerValueCallback` - Integer key, pointer value
+### Memory Management
+- [`MulleObjCContainerObjectCallbackRetain`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCContainerObjectCallbackRetain+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/MulleObjCContainerObjectCallback.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/MulleObjCContainerObjectCallback.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Retain object
+- [`MulleObjCContainerObjectCallbackRelease`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCContainerObjectCallbackRelease+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/MulleObjCContainerObjectCallback.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/MulleObjCContainerObjectCallback.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Release object
 
-## Callback Behaviors
+### Description
+- [`MulleObjCContainerObjectCallbackDescribe`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCContainerObjectCallbackDescribe+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/MulleObjCContainerObjectCallback.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/MulleObjCContainerObjectCallback.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Description callback
 
-| Operation | Retain | Copy | Assign | AssignRetained |
-|-----------|--------|------|--------|----------------|
-| On Insert | -retain | -copy | nop | nop |
-| On Remove | -autorelease | -autorelease | nop | -autorelease |
-| Compare | -isEqual | -isEqual | -isEqual | -isEqual |
+## Usage Example
 
-Note: All callbacks are const to allow placement in write-protected storage.
+```objc
+struct MulleObjCContainerObjectCallback callbacks = {
+    .retain = MulleObjCContainerObjectCallbackRetain,
+    .release = MulleObjCContainerObjectCallbackRelease,
+    .describe = MulleObjCContainerObjectCallbackDescribe
+};
+
+// Use in container initialization
+container->objectCallbacks = callbacks;
+```
+
+## Important Notes
+
+1. Memory Management
+   - Retain/release pairs must balance
+   - Handle nil objects properly
+   - Clean up resources
+   - Consider autorelease pools
+
+2. Thread Safety
+   - Callbacks must be thread-safe
+   - Consider synchronization
+   - Handle concurrent access
+   - Check thread ownership
+
+3. Best Practices
+   - Initialize all fields
+   - Handle errors gracefully
+   - Document requirements
+   - Test thoroughly
+   - Consider TAO implications

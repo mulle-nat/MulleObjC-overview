@@ -5,42 +5,20 @@ Functions for working with method signatures and type encoding in mulle-objc.
 ## Type Information
 
 ### Type Analysis
-```c
-// Get type info from signature
-struct mulle_objc_typeinfo *mulle_objc_signature_supply_typeinfo(char *type,
-                                                                size_t *length,
-                                                                struct mulle_objc_typeinfo *info);
-
-// Count types in signature
-NSUInteger mulle_objc_signature_count_typeinfos(char *types);
-```
+- [`mulle_objc_signature_supply_typeinfo`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+mulle_objc_signature_supply_typeinfo+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSMethodSignature.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSMethodSignature.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get type info
+- [`mulle_objc_signature_count_typeinfos`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+mulle_objc_signature_count_typeinfos+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSMethodSignature.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSMethodSignature.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Count type infos
 
 ## MetaABI Support
 
 ### Parameter Types
-```c
-// Get MetaABI parameter type
-enum MulleObjCMetaABIType {
-    MulleObjCMetaABITypeVoid = 0,
-    MulleObjCMetaABITypeVoidPointer = 1,
-    MulleObjCMetaABITypeParameterBlock = 2
-};
-
-// Get parameter/return types
-MulleObjCMetaABIType mulle_objc_signature_get_metaabiparamtype(char *signature);
-MulleObjCMetaABIType mulle_objc_signature_get_metaabireturntype(char *signature);
-```
+- [`mulle_objc_signature_get_metaabiparamtype`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+mulle_objc_signature_get_metaabiparamtype+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSMethodSignature.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSMethodSignature.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get parameter type
+- [`mulle_objc_signature_get_metaabireturntype`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+mulle_objc_signature_get_metaabireturntype+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSMethodSignature.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSMethodSignature.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get return type
 
 ## Type Navigation
 
 ### Type Parsing
-```c
-// Skip type qualifiers
-char *_mulle_objc_signature_skip_type_qualifier(char *signature);
-
-// Get next type in signature
-char *mulle_objc_signature_next_type(char *signature);
-```
+- [`_mulle_objc_signature_skip_type_qualifier`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_signature_skip_type_qualifier+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSMethodSignature.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSMethodSignature.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Skip qualifiers
+- [`mulle_objc_signature_next_type`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+mulle_objc_signature_next_type+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSMethodSignature.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSMethodSignature.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get next type
 
 ## Important Notes
 

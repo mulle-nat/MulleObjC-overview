@@ -1,78 +1,54 @@
-# MulleObjCContainerCallback Functions
+# MulleObjCContainerCallback
 
-Functions for container operations and callbacks in mulle-objc.
+Callback structure for container operations in mulle-objc.
 
-## Container Callbacks
+## Structure Definition
 
-### Basic Operations
-
-``` c
-struct MulleObjCContainerCallback   MulleObjCContainerRetainCallback;
-struct MulleObjCContainerCallback   MulleObjCContainerCopyCallback;
-struct MulleObjCContainerCallback   MulleObjCContainerAssignCallback;
+```objc
+struct MulleObjCContainerCallback
+{
+   void   (*retain)(void *);
+   void   (*release)(void *);
+   void   (*describe)(void *, struct mulle_buffer *);
+};
 ```
+
+## Functions
 
 ### Memory Management
+- [`MulleObjCContainerCallbackRetain`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCContainerCallbackRetain+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/MulleObjCContainerCallback.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/MulleObjCContainerCallback.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Retain callback
+- [`MulleObjCContainerCallbackRelease`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCContainerCallbackRelease+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/MulleObjCContainerCallback.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/MulleObjCContainerCallback.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Release callback
 
-``` c
-void MulleObjCContainerRetain(void *item, struct MulleObjCContainerCallback *callback);
-void MulleObjCContainerRelease(void *item, struct MulleObjCContainerCallback *callback);
+### Description
+- [`MulleObjCContainerCallbackDescribe`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCContainerCallbackDescribe+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/MulleObjCContainerCallback.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/struct/MulleObjCContainerCallback.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Description callback
+
+## Usage Example
+
+```objc
+struct MulleObjCContainerCallback callbacks = {
+    .retain = MulleObjCContainerCallbackRetain,
+    .release = MulleObjCContainerCallbackRelease,
+    .describe = MulleObjCContainerCallbackDescribe
+};
+
+// Use in container initialization
+container->callbacks = callbacks;
 ```
 
-## Container Creation
+## Important Notes
 
-### Callback Setup
+1. Memory Management
+   - Retain/release pairs must balance
+   - Handle nil values properly
+   - Clean up resources
 
-``` c
-struct MulleObjCContainerCallback MulleObjCContainerCallbackMake(
-    void (*retain)(void *),
-    void (*release)(void *),
-    int  (*compare)(void *, void *)
-);
-```
+2. Thread Safety
+   - Callbacks must be thread-safe
+   - Consider synchronization
+   - Handle concurrent access
 
-### Specialized Callbacks
-
-``` c
-struct MulleObjCContainerCallback MulleObjCContainerValueCallbackMake(
-    size_t size,
-    void (*copy)(void *, void *),
-    int  (*compare)(void *, void *)
-);
-```
-
-## Container Operations
-
-### Item Management
-
-``` c
-void *MulleObjCContainerCopy(void *item, 
-                            struct MulleObjCContainerCallback *callback);
-int MulleObjCContainerCompare(void *a, 
-                             void *b,
-                             struct MulleObjCContainerCallback *callback);
-```
-
-### Collection Support
-
-``` c
-void MulleObjCContainerFree(void *item,
-                           struct MulleObjCContainerCallback *callback);
-size_t MulleObjCContainerSize(void *item,
-                             struct MulleObjCContainerCallback *callback);
-```
-
-## Best Practices
-
-1.  Use appropriate callback type
-2.  Handle memory management
-3.  Implement proper comparison
-4.  Consider value semantics
-5.  Document callback behavior
-
-## Thread Safety
-
--   Callbacks should be thread-safe
--   Consider concurrent access
--   Handle retain/release atomically
--   Implement thread-safe comparison
+3. Best Practices
+   - Initialize all fields
+   - Handle errors gracefully
+   - Document requirements
+   - Test thoroughly

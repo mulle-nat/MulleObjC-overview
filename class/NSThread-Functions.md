@@ -5,60 +5,30 @@ Core functions for thread management and thread-local storage in mulle-objc.
 ## Thread Access
 
 ### Current Thread
-```c
-// Get current thread object, may return nil if not a MulleObjC thread
-NSThread *MulleThreadGetCurrentThread(void);
-
-// Get or create current thread object
-NSThread *MulleThreadGetOrCreateCurrentThread(void);
-
-// Get current thread's native handle
-mulle_thread_t MulleThreadGetCurrentOSThread(void);
-```
+- [`MulleThreadGetCurrentThread`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleThreadGetCurrentThread+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get current thread
+- [`MulleThreadGetOrCreateCurrentThread`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleThreadGetOrCreateCurrentThread+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get/create thread
+- [`MulleThreadGetCurrentOSThread`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleThreadGetCurrentOSThread+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get native handle
 
 ## Thread-Local Storage
 
 ### User Info
-```c
-// Get/set thread-local storage
-id MulleThreadGetCurrentThreadUserInfo(void);
-void MulleThreadSetCurrentThreadUserInfo(id info);
-
-// Thread dictionary access
-void MulleThreadSetObjectForKeyUTF8String(id value, char *key);
-id MulleThreadObjectForKeyUTF8String(char *key);
-```
+- [`MulleThreadGetCurrentThreadUserInfo`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleThreadGetCurrentThreadUserInfo+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get thread info
+- [`MulleThreadSetCurrentThreadUserInfo`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleThreadSetCurrentThreadUserInfo+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Set thread info
+- [`MulleThreadSetObjectForKeyUTF8String`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleThreadSetObjectForKeyUTF8String+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Set dictionary value
+- [`MulleThreadObjectForKeyUTF8String`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleThreadObjectForKeyUTF8String+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get dictionary value
 
 ### Thread Object Access
-```c
-// Get native thread handle from NSThread
-mulle_thread_t MulleThreadObjectGetOSThread(NSThread *threadObject);
-```
+- [`MulleThreadObjectGetOSThread`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleThreadObjectGetOSThread+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get native handle
 
 ## TAO (Thread Access Optimization)
 
 ### Failure Handling
-```c
-// Handler for TAO violations
-typedef void MulleObjCTAOFailureHandler(void *obj,
-                                      mulle_thread_t osThread,
-                                      struct _mulle_objc_descriptor *des);
-
-// Get/set TAO failure handler
-MulleObjCTAOFailureHandler *MulleObjCGetTAOFailureHandler(void);
-void MulleObjCSetTAOFailureHandler(MulleObjCTAOFailureHandler *handler);
-
-// Default handler that logs and aborts
-void MulleObjCTAOLogAndFail(struct _mulle_objc_object *obj,
-                           mulle_thread_t osThread,
-                           struct _mulle_objc_descriptor *desc);
-```
+- [`MulleObjCGetTAOFailureHandler`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCGetTAOFailureHandler+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get failure handler
+- [`MulleObjCSetTAOFailureHandler`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCSetTAOFailureHandler+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Set failure handler
+- [`MulleObjCTAOLogAndFail`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCTAOLogAndFail+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Default handler
 
 ### Testing
-```c
-// Test class for TAO dilemma issues
-void MulleObjCTAOTest(Class cls, id arg);
-```
+- [`MulleObjCTAOTest`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCTAOTest+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSThread.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Test TAO issues
 
 ## Important Notes
 

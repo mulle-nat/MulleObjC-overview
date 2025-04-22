@@ -5,26 +5,20 @@ Functions for property management in mulle-objc.
 ## Property Management
 
 ### Property Access
-```c
-// Get property info
-char *_mulle_objc_property_get_name(struct _mulle_objc_property *property);
-char *_mulle_objc_property_get_signature(struct _mulle_objc_property *property);
-unsigned int _mulle_objc_property_get_bits(struct _mulle_objc_property *property);
+- [`_mulle_objc_property_get_name`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_property_get_name+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCProperty.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCProperty.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get property name
+- [`_mulle_objc_property_get_signature`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_property_get_signature+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCProperty.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCProperty.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get property signature
+- [`_mulle_objc_property_get_bits`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_property_get_bits+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCProperty.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCProperty.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get property attributes
 
-// Get property IDs
-mulle_objc_propertyid_t _mulle_objc_property_get_propertyid(struct _mulle_objc_property *property);
-mulle_objc_methodid_t _mulle_objc_property_get_getter(struct _mulle_objc_property *property);
-mulle_objc_methodid_t _mulle_objc_property_get_setter(struct _mulle_objc_property *property);
-```
+### Property IDs
+- [`_mulle_objc_property_get_propertyid`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_property_get_propertyid+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCProperty.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCProperty.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get property ID
+- [`_mulle_objc_property_get_getter`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_property_get_getter+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCProperty.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCProperty.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get getter ID
+- [`_mulle_objc_property_get_setter`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_property_get_setter+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCProperty.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCProperty.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get setter ID
 
 ### Property State
-```c
-// Check property attributes
-BOOL _mulle_objc_property_is_dynamic(struct _mulle_objc_property *property);
-BOOL _mulle_objc_property_is_readonly(struct _mulle_objc_property *property);
-BOOL _mulle_objc_property_is_settable(struct _mulle_objc_property *property);
-BOOL _mulle_objc_property_is_atomic(struct _mulle_objc_property *property);
-```
+- [`_mulle_objc_property_is_dynamic`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_property_is_dynamic+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCProperty.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCProperty.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check if dynamic
+- [`_mulle_objc_property_is_readonly`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_property_is_readonly+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCProperty.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCProperty.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check if readonly
+- [`_mulle_objc_property_is_settable`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_property_is_settable+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCProperty.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCProperty.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check if settable
+- [`_mulle_objc_property_is_atomic`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_property_is_atomic+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCProperty.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCProperty.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check if atomic
 
 ## Important Notes
 

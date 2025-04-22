@@ -2,18 +2,17 @@
 
 Functions for stack frame management in mulle-objc.
 
-## Stack Frame Management
+## Stack Frame Operations
 
-### Frame Operations
-```c
-// Get stack frame info
-struct _mulle_objc_threadinfo *_mulle_objc_thread_get_threadinfo(struct _mulle_objc_universe *universe);
+### Frame Access
+- [`MulleObjCFrameAddress`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCFrameAddress+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCStackFrame.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCStackFrame.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get frame address
+- [`MulleObjCReturnAddress`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCReturnAddress+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCStackFrame.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCStackFrame.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get return address
+- [`MulleObjCCountFrames`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCCountFrames+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCStackFrame.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCStackFrame.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Count stack frames
 
-// Initialize/destroy thread info
-void _mulle_objc_threadinfo_destructor(struct _mulle_objc_threadinfo *info,
-                                     void *foundationspace);
-void _mulle_objc_threadinfo_initializer(struct _mulle_objc_threadinfo *config);
-```
+### Legacy Support
+- [`NSFrameAddress`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSFrameAddress+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCStackFrame.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCStackFrame.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Legacy frame address
+- [`NSReturnAddress`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSReturnAddress+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCStackFrame.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCStackFrame.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Legacy return address
+- [`NSCountFrames`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSCountFrames+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCStackFrame.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCStackFrame.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Legacy frame count
 
 ## Important Notes
 

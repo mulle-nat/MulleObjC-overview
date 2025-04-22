@@ -13,17 +13,17 @@ struct mulle__pointermap   __ivars;  // Maps property names to values
 ## Methods
 
 ### Initialization
-- `-init` - Initializes the dynamic property storage
+- [`-init`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+init+of+MulleDynamicObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Initializes the dynamic property storage
 
 ### Dynamic Property Support
-- `-forward:` - Handles dynamic property access and method generation
-- `+isFullyDynamic` - Returns NO by default, can be overridden to enable fully dynamic mode
+- [`-forward:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+forward+of+MulleDynamicObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Handles dynamic property access and method generation
+- [`+isFullyDynamic`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+isFullyDynamic+of+MulleDynamicObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Returns NO by default, can be overridden to enable fully dynamic mode
 
 ### Internal Support
-- `_MulleDynamicObjectValueSetter` - Sets value for dynamic property
-- `_MulleDynamicObjectNumberSetter` - Sets number value for dynamic property
-- `_MulleDynamicObjectValueGetter` - Gets value from dynamic property
-- `_MulleDynamicObjectForward` - Helper function for subclasses implementing forward:
+- [`_MulleDynamicObjectValueSetter`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+_MulleDynamicObjectValueSetter+of+MulleDynamicObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Sets value for dynamic property
+- [`_MulleDynamicObjectNumberSetter`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+_MulleDynamicObjectNumberSetter+of+MulleDynamicObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Sets number value for dynamic property
+- [`_MulleDynamicObjectValueGetter`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+_MulleDynamicObjectValueGetter+of+MulleDynamicObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Gets value from dynamic property
+- [`_MulleDynamicObjectForward`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+_MulleDynamicObjectForward+of+MulleDynamicObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleDynamicObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Helper function for subclasses implementing forward:
 
 ## Usage Example
 

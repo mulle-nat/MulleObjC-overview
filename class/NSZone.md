@@ -1,26 +1,29 @@
 # NSZone
 
-## Overview
+Legacy memory management structure in mulle-objc that provides zone-based memory allocation compatibility.
 
-`NSZone` is a legacy memory management structure in mulle-objc that provides
-zone-based memory allocation compatibility. It implements a simplified
-approach that maps all operations to standard memory functions while
-maintaining compatibility.
+## Functions
 
-## Key Features
+### Zone Operations
+- [`NSCreateZone`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSCreateZone+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSZone.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSZone.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Creates new zone (returns NULL)
+- [`NSRecycleZone`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSRecycleZone+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSZone.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSZone.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Frees zone (no-op)
+- [`NSDefaultMallocZone`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSDefaultMallocZone+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSZone.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSZone.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Gets default zone (returns NULL)
 
--   Memory allocation compatibility
--   Standard memory function mapping
--   Legacy support
--   Zero overhead implementation
--   Simplified memory management
+### Memory Management
+- [`NSZoneMalloc`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSZoneMalloc+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSZone.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSZone.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Allocates memory in zone
+- [`NSZoneCalloc`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSZoneCalloc+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSZone.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSZone.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Allocates zeroed memory
+- [`NSZoneRealloc`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSZoneRealloc+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSZone.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSZone.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Reallocates memory
+- [`NSZoneFree`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSZoneFree+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSZone.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSZone.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Frees memory
 
-## Usage
+### Object Allocation
+- [`NSAllocateObject`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSAllocateObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSZone.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSZone.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Allocates object in zone
+- [`NSReallocateObject`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSReallocateObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSZone.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSZone.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Reallocates object
+- [`NSDeallocateObject`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSDeallocateObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSZone.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSZone.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Deallocates object
 
-### Basic Zone Operations
+## Usage Example
 
-``` objc
-// Create a new zone (returns NULL in mulle-objc)
+```objc
+// Create zone (returns NULL)
 NSZone *zone = NSCreateZone(1024, 128, YES);
 
 // Allocate memory in zone
@@ -31,172 +34,29 @@ void *newMemory = NSZoneRealloc(zone, memory, newSize);
 
 // Free memory in zone
 NSZoneFree(zone, memory);
-```
 
-### Zone Management
-
-``` objc
-// Get default zone (returns NULL)
-NSZone *defaultZone = NSDefaultMallocZone();
-
-// Free a zone (no-op in mulle-objc)
-NSRecycleZone(zone);
-```
-
-### Object Allocation
-
-``` objc
-// Allocate object in zone
+// Object allocation
 id object = NSAllocateObject(class, extraBytes, zone);
-
-// Reallocate object in zone
-id newObject = NSReallocateObject(object, extraBytes, zone);
-
-// Free object in zone
-NSDeallocateObject(object);
 ```
 
-## Technical Details
+## Important Notes
 
-### Core Functions
+1. Compatibility
+   - Legacy code support
+   - API compatibility
+   - Zero overhead
 
-1.  **Zone Operations**:
+2. Memory Management
+   - Standard allocation
+   - Direct mapping
+   - No zone overhead
 
-    ``` objc
-    NSZone *NSCreateZone(NSUInteger startSize,
-                         NSUInteger granularity,
-                         BOOL canFree);
-    void NSRecycleZone(NSZone *zone);
-    ```
+3. Modern Code
+   - Prefer standard allocation
+   - Remove zone usage
+   - Simplify interfaces
 
-2.  **Memory Management**:
-
-    ``` objc
-    void *NSZoneMalloc(NSZone *zone, NSUInteger size);
-    void *NSZoneCalloc(NSZone *zone, NSUInteger count, NSUInteger size);
-    void *NSZoneRealloc(NSZone *zone, void *ptr, NSUInteger size);
-    void NSZoneFree(NSZone *zone, void *ptr);
-    ```
-
-### Implementation Details
-
-1.  **Zone Mapping**:
-
-    ``` objc
-    // All zone operations map to standard memory functions
-    void *NSZoneMalloc(NSZone *zone, NSUInteger size)
-    {
-        return malloc(size);
-    }
-    ```
-
-## Best Practices
-
-1.  **Modern Usage**:
-    -   Avoid zone-based allocation
-    -   Use standard memory functions
-    -   Consider alternatives
-2.  **Migration Strategy**:
-    -   Update legacy code
-    -   Remove zone parameters
-    -   Simplify allocations
-3.  **Performance**:
-    -   Use direct allocation
-    -   Minimize indirection
-    -   Optimize memory usage
-
-## Important Considerations
-
-1.  **Compatibility**:
-    -   Legacy code support
-    -   API compatibility
-    -   Zero overhead
-2.  **Memory Management**:
-    -   Standard allocation
-    -   Direct mapping
-    -   No zone overhead
-3.  **Modern Code**:
-    -   Prefer standard allocation
-    -   Remove zone usage
-    -   Simplify interfaces
-
-## Use Cases
-
-1.  **Legacy Support**:
-
-    ``` objc
-    - (id)allocateWithZone:(NSZone *)zone
-    {
-        // Zone parameter ignored in mulle-objc
-        return [super allocWithZone:zone];
-    }
-    ```
-
-2.  **Compatibility Layer**:
-
-    ``` objc
-    - (void)initializeWithZone:(NSZone *)zone
-    {
-        // Zone operations map to standard memory functions
-        self->data = NSZoneMalloc(zone, dataSize);
-        self->buffer = NSZoneCalloc(zone, count, elementSize);
-    }
-    ```
-
-3.  **Modern Alternative**:
-
-    ``` objc
-    - (id)initWithCapacity:(NSUInteger)capacity
-    {
-        // Direct memory allocation without zones
-        self = [super init];
-        if (self) {
-            self->data = malloc(capacity);
-        }
-        return self;
-    }
-    ```
-
-## Advanced Features
-
-### Memory Tracking
-
-``` objc
-- (void)trackMemoryUsage
-{
-    // Modern memory tracking without zones
-    size_t allocated = 0;
-    size_t used = 0;
-    
-    // Track allocations directly
-    allocated += malloc_size(self->data);
-    used += self->dataSize;
-    
-    // Report usage
-    [self updateMemoryStatistics:allocated used:used];
-}
-```
-
-### Allocation Strategies
-
-``` objc
-- (void *)allocateBuffer:(size_t)size
-{
-    // Direct allocation with alignment
-    void *buffer = aligned_alloc(16, size);
-    if (!buffer) {
-        [self handleAllocationFailure:size];
-    }
-    return buffer;
-}
-```
-
-### Memory Pools
-
-``` objc
-- (id)createMemoryPool
-{
-    // Modern pool implementation without zones
-    return [[NSAutoreleasePool alloc] init];
-}
-```
+4. Best Practices
+   - Use direct allocation
+   - Minimize indirection
+   - Optimize memory usage

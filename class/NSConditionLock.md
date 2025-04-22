@@ -13,18 +13,18 @@ mulle_atomic_pointer_t   _currentCondition;  // The current condition value
 ## Methods
 
 ### Initialization
-- `-initWithCondition:` - Initialize with starting condition value
+- [`-initWithCondition:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+initWithCondition+of+NSConditionLock+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSConditionLock.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSConditionLock.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Initialize with starting condition value
 
 ### Condition Access
-- `-condition` - Returns current condition value
+- [`-condition`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+condition+of+NSConditionLock+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSConditionLock.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSConditionLock.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Returns current condition value
 
 ### Locking Operations
-- `-lockWhenCondition:` - Acquires lock when condition matches value
-- `-mulleLockWhenNotCondition:` - Acquires lock when condition doesn't match value
-- `-tryLockWhenCondition:` - Attempts to acquire lock if condition matches value
-- `-mulleTryLockWhenNotCondition:` - Attempts to acquire lock if condition doesn't match value
-- `-unlockWithCondition:` - Releases lock and sets new condition value
-- `-mulleUnlockWithCondition:broadcast:` - Releases lock, sets condition, optionally broadcasts
+- [`-lockWhenCondition:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+lockWhenCondition+of+NSConditionLock+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSConditionLock.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSConditionLock.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Acquires lock when condition matches value
+- [`-mulleLockWhenNotCondition:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+mulleLockWhenNotCondition+of+NSConditionLock+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSConditionLock.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSConditionLock.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Acquires lock when condition doesn't match value
+- [`-tryLockWhenCondition:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+tryLockWhenCondition+of+NSConditionLock+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSConditionLock.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSConditionLock.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Attempts to acquire lock if condition matches value
+- [`-mulleTryLockWhenNotCondition:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+mulleTryLockWhenNotCondition+of+NSConditionLock+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSConditionLock.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSConditionLock.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Attempts to acquire lock if condition doesn't match value
+- [`-unlockWithCondition:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+unlockWithCondition+of+NSConditionLock+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSConditionLock.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSConditionLock.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Releases lock and sets new condition value
+- [`-mulleUnlockWithCondition:broadcast:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+mulleUnlockWithCondition:broadcast+of+NSConditionLock+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSConditionLock.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSConditionLock.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Releases lock, sets condition, optionally broadcasts
 
 ## Usage Example
 

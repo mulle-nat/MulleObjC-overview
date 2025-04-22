@@ -5,29 +5,17 @@ Core functions for MulleObject class in mulle-objc.
 ## Object Management
 
 ### Instance Operations
-```c
-// Get instance allocator
-struct mulle_allocator *MulleObjCInstanceGetAllocator(id obj);
-
-// Get class name
-char *MulleObjCInstanceGetClassNameUTF8String(id obj);
-
-// Set class
-void MulleObjCInstanceSetClass(id obj, Class cls);
-```
+- [`MulleObjCInstanceGetAllocator`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCInstanceGetAllocator+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCAllocation.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCAllocation.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get instance allocator
+- [`MulleObjCInstanceGetClassNameUTF8String`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCInstanceGetClassNameUTF8String+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCAllocation.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCAllocation.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get class name
+- [`MulleObjCInstanceSetClass`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCInstanceSetClass+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCAllocation.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCAllocation.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Set class
 
 ## Thread Safety
 
 ### Lock Management
-```c
-// Lock operations
-void MulleObjCLockInstance(id obj);
-void MulleObjCUnlockInstance(id obj);
-BOOL MulleObjCTryLockInstance(id obj);
-
-// Lock sharing
-void MulleObjCInstanceShareLock(id obj, id other);
-```
+- [`MulleObjCLockInstance`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCLockInstance+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCAllocation.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCAllocation.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Lock instance
+- [`MulleObjCUnlockInstance`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCUnlockInstance+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCAllocation.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCAllocation.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Unlock instance
+- [`MulleObjCTryLockInstance`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCTryLockInstance+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCAllocation.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCAllocation.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Try to lock instance
+- [`MulleObjCInstanceShareLock`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCInstanceShareLock+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCAllocation.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCAllocation.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Share lock between instances
 
 ## Important Notes
 

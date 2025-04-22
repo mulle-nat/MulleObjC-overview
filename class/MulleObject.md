@@ -17,23 +17,23 @@ NSRecursiveLock   *__lock;  // Recursive lock for thread safety
 ## Methods
 
 ### Object Creation
-- `+locklessObject` - Creates instance without lock
-- `-initNoLock` - Initializes without lock
-- `-init` - Initializes with lock
+- [`+locklessObject`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+locklessObject+of+MulleObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Creates instance without lock
+- [`-initNoLock`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+initNoLock+of+MulleObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Initializes without lock
+- [`-init`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+init+of+MulleObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Initializes with lock
 
 ### Lock Operations (NSLocking)
-- `-lock` - Acquires the lock
-- `-unlock` - Releases the lock
-- `-tryLock` - Attempts to acquire lock without blocking
+- [`-lock`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+lock+of+MulleObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Acquires the lock
+- [`-unlock`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+unlock+of+MulleObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Releases the lock
+- [`-tryLock`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+tryLock+of+MulleObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Attempts to acquire lock without blocking
 
 ### Lock Sharing
-- `-didShareRecursiveLock:` - Called after lock sharing to update thread affinity
-- `-shareRecursiveLock:` - Shares lock with another lock
-- `-shareRecursiveLockWithObject:` - Shares lock with another MulleObject
+- [`-didShareRecursiveLock:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+didShareRecursiveLock+of+MulleObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Called after lock sharing to update thread affinity
+- [`-shareRecursiveLock:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+shareRecursiveLock+of+MulleObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Shares lock with another lock
+- [`-shareRecursiveLockWithObject:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+shareRecursiveLockWithObject+of+MulleObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Shares lock with another MulleObject
 
 ### Internal Forwarding
-- `-__lockingForward:` - Handles locking for forwarded methods
-- `-__lockingSuperForward:` - Handles locking for super forwarded methods
+- [`-__lockingForward:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+__lockingForward+of+MulleObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Handles locking for forwarded methods
+- [`-__lockingSuperForward:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+__lockingSuperForward+of+MulleObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Handles locking for super forwarded methods
 
 ## Usage Example
 

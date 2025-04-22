@@ -5,52 +5,30 @@ Core functions for object lifecycle and runtime operations in mulle-objc.
 ## Object Creation
 
 ### Instance Management
-```c
-// Create instance with extra bytes
-id _MulleObjCClassAllocateInstance(Class cls, size_t extra);
-
-// Create non-zeroed instance with extra bytes
-id _MulleObjCClassAllocateNonZeroedObject(Class cls, size_t extra);
-
-// Free instance memory
-void _MulleObjCInstanceFree(id obj);
-```
+- [`_MulleObjCClassAllocateInstance`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_MulleObjCClassAllocateInstance+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Create instance with extra bytes
+- [`_MulleObjCClassAllocateNonZeroedObject`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_MulleObjCClassAllocateNonZeroedObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Create non-zeroed instance
+- [`_MulleObjCInstanceFree`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_MulleObjCInstanceFree+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Free instance memory
 
 ## Memory Management
 
 ### Reference Counting
-```c
-// Retain/release operations
-void _mulle_objc_object_retain(void *obj);
-void _mulle_objc_object_release(void *obj);
-
-// Autorelease support
-void *_mulle_objc_object_autorelease(void *obj);
-```
+- [`_mulle_objc_object_retain`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_object_retain+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Retain object
+- [`_mulle_objc_object_release`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_object_release+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Release object
+- [`_mulle_objc_object_autorelease`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_object_autorelease+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Autorelease object
 
 ## Thread Access
 
 ### TAO (Thread Access Optimization)
-```c
-// Thread ownership checks
-BOOL MulleObjCObjectIsOnMainThread(id obj);
-BOOL MulleObjCObjectIsAccessibleByThread(id obj, NSThread *thread);
-
-// Thread affinity management
-void MulleObjCInstanceSetThreadAffinity(id obj, mulle_thread_t thread);
-```
+- [`MulleObjCObjectIsOnMainThread`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCObjectIsOnMainThread+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check if on main thread
+- [`MulleObjCObjectIsAccessibleByThread`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCObjectIsAccessibleByThread+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check thread access
+- [`MulleObjCInstanceSetThreadAffinity`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCInstanceSetThreadAffinity+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Set thread affinity
 
 ## Runtime Information
 
 ### Class Access
-```c
-// Get class information
-Class MulleObjCObjectGetClass(id obj);
-char *MulleObjCObjectGetClassNameUTF8String(id obj);
-
-// Get universe
-struct _mulle_objc_universe *_mulle_objc_object_get_universe(void *obj);
-```
+- [`MulleObjCObjectGetClass`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCObjectGetClass+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get object's class
+- [`MulleObjCObjectGetClassNameUTF8String`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCObjectGetClassNameUTF8String+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get class name
+- [`_mulle_objc_object_get_universe`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_object_get_universe+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get runtime universe
 
 ## Important Notes
 

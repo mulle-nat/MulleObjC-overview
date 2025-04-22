@@ -1,25 +1,24 @@
 # MulleObjCLoader
 
-## Overview
+Class that manages class and category dependencies, ensuring proper initialization order across frameworks.
 
-`MulleObjCLoader` is a root class in mulle-objc that manages class and
-category dependencies. It ensures proper initialization order across
-frameworks and provides load-time control.
+## Base Class
+NSObject
 
-## Key Features
+## Methods
 
--   Dependency management
--   Framework initialization
--   Category loading
--   Load-time control
--   Runtime integration
+### Dependency Management
+- [`+dependencies`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+dependencies+of+MulleObjCLoader+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCLoader.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCLoader.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Returns array of dependencies
+- [`+loadversion`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+loadversion+of+MulleObjCLoader+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCLoader.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCLoader.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Returns version requirements
 
-## Usage
+### Load Control
+- [`+load`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+load+of+MulleObjCLoader+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCLoader.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCLoader.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Performs loading
+- [`+unload`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+unload+of+MulleObjCLoader+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCLoader.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCLoader.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Performs unloading
 
-### Basic Loading
+## Usage Example
 
-``` objc
-// Define loader
+```objc
+// Define framework loader
 @interface MyFrameworkLoader : MulleObjCLoader
 @end
 
@@ -36,12 +35,8 @@ frameworks and provides load-time control.
 }
 
 @end
-```
 
-### Category Management
-
-``` objc
-// Category loader
+// Define category loader
 @interface NSString_MyAdditions_Loader : MulleObjCLoader
 @end
 
@@ -60,190 +55,29 @@ frameworks and provides load-time control.
 @end
 ```
 
-## Technical Details
+## Important Notes
 
-### Core Methods
+1. Dependency Management
+   - Order dependencies properly
+   - Specify version requirements
+   - Document dependencies
 
-1.  **Dependency Management**:
+2. Load Management
+   - Handle load failures
+   - Clean up resources
+   - Validate dependencies
 
-    ``` objc
-    + (struct _mulle_objc_dependency *)dependencies;
-    + (struct _mulle_objc_loadversion *)loadversion;
-    ```
+3. Performance
+   - Minimize load time
+   - Optimize dependencies
+   - Cache when possible
 
-2.  **Load Control**:
+4. Thread Safety
+   - Load-time synchronization
+   - Resource protection
+   - State management
 
-    ``` objc
-    + (void)load;
-    + (void)unload;
-    ```
-
-### Implementation Details
-
-1.  **Version Control**:
-
-    ``` objc
-    + (struct _mulle_objc_loadversion *)loadversion
-    {
-        static struct _mulle_objc_loadversion   version[] =
-        {
-           { MULLE_OBJC_VERSION, MULLE_OBJC_NO_VERSION }
-        };
-        return version;
-    }
-    ```
-
-## Best Practices
-
-1.  **Dependency Definition**:
-    -   Order dependencies properly
-    -   Specify version requirements
-    -   Document dependencies
-2.  **Load Management**:
-    -   Handle load failures
-    -   Clean up resources
-    -   Validate dependencies
-3.  **Performance**:
-    -   Minimize load time
-    -   Optimize dependencies
-    -   Cache when possible
-
-## Important Considerations
-
-1.  **Load Order**:
-    -   Dependency resolution
-    -   Circular dependencies
-    -   Version compatibility
-2.  **Thread Safety**:
-    -   Load-time synchronization
-    -   Resource protection
-    -   State management
-3.  **Error Handling**:
-    -   Load failures
-    -   Version mismatches
-    -   Missing dependencies
-
-## Use Cases
-
-1.  **Framework Loading**:
-
-    ``` objc
-    @interface MyFramework_Loader : MulleObjCLoader
-    @end
-
-    @implementation MyFramework_Loader
-
-    + (struct _mulle_objc_dependency *)dependencies
-    {
-        static struct _mulle_objc_dependency deps[] =
-        {
-            { @"Foundation", 0x00010000, 0x00020000 },
-            { @"CoreData", MULLE_OBJC_NO_VERSION, MULLE_OBJC_NO_VERSION },
-            { NULL, MULLE_OBJC_NO_VERSION, MULLE_OBJC_NO_VERSION }
-        };
-        return deps;
-    }
-
-    @end
-    ```
-
-2.  **Category Loading**:
-
-    ``` objc
-    @interface NSObject_Extensions_Loader : MulleObjCLoader
-    @end
-
-    @implementation NSObject_Extensions_Loader
-
-    + (struct _mulle_objc_dependency *)dependencies
-    {
-        static struct _mulle_objc_dependency deps[] =
-        {
-            { @"NSObject", MULLE_OBJC_NO_VERSION, MULLE_OBJC_NO_VERSION },
-            { NULL, MULLE_OBJC_NO_VERSION, MULLE_OBJC_NO_VERSION }
-        };
-        return deps;
-    }
-
-    @end
-    ```
-
-3.  **Version Management**:
-
-    ``` objc
-    @interface VersionedLoader : MulleObjCLoader
-    @end
-
-    @implementation VersionedLoader
-
-    + (struct _mulle_objc_loadversion *)loadversion
-    {
-        static struct _mulle_objc_loadversion version[] =
-        {
-            { MULLE_OBJC_VERSION, 0x00020000 }
-        };
-        return version;
-    }
-
-    @end
-    ```
-
-## Advanced Features
-
-### Load Callbacks
-
-``` objc
-@implementation CustomLoader
-
-+ (void)load
-{
-    [super load];
-    // Perform custom initialization
-}
-
-+ (void)unload
-{
-    // Cleanup
-    [super unload];
-}
-
-@end
-```
-
-### Dependency Validation
-
-``` objc
-@implementation ValidatingLoader
-
-+ (void)validateDependencies
-{
-    struct _mulle_objc_dependency *deps = [self dependencies];
-    while (deps->name)
-    {
-        [self validateDependency:deps];
-        deps++;
-    }
-}
-
-@end
-```
-
-### Load Order Control
-
-``` objc
-@implementation OrderedLoader
-
-+ (struct _mulle_objc_dependency *)dependencies
-{
-    static struct _mulle_objc_dependency deps[] =
-    {
-        { @"First", MULLE_OBJC_NO_VERSION, MULLE_OBJC_NO_VERSION },
-        { @"Second", MULLE_OBJC_NO_VERSION, MULLE_OBJC_NO_VERSION },
-        { @"Third", MULLE_OBJC_NO_VERSION, MULLE_OBJC_NO_VERSION },
-        { NULL, MULLE_OBJC_NO_VERSION, MULLE_OBJC_NO_VERSION }
-    };
-    return deps;
-}
-
-@end
-```
+5. Error Handling
+   - Load failures
+   - Version mismatches
+   - Missing dependencies

@@ -5,65 +5,47 @@ Functions for object serialization and coding in mulle-objc.
 ## Encoding Operations
 
 ### Basic Encoding
-
-``` c
-void NSEncodeObject(NSCoder *coder, id object);
-void NSEncodeRootObject(NSCoder *coder, id object);
-```
+- [`NSEncodeObject`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSEncodeObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Encodes object
+- [`NSEncodeRootObject`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSEncodeRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Encodes root object
 
 ### Conditional Encoding
-
-``` c
-BOOL NSEncodeConditionalObject(NSCoder *coder, id object);
-void NSEncodeBycopy(NSCoder *coder, id object);
-void NSEncodeByref(NSCoder *coder, id object);
-```
+- [`NSEncodeConditionalObject`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSEncodeConditionalObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Conditionally encodes object
+- [`NSEncodeBycopy`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSEncodeBycopy+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Encodes by copying
+- [`NSEncodeByref`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSEncodeByref+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Encodes by reference
 
 ## Decoding Operations
 
 ### Object Decoding
-
-``` c
-id NSDecodeObject(NSCoder *coder);
-id NSDecodeRootObject(NSCoder *coder);
-```
+- [`NSDecodeObject`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSDecodeObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Decodes object
+- [`NSDecodeRootObject`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSDecodeRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Decodes root object
 
 ### Class Handling
-
-``` c
-Class NSDecodingClassForClassName(NSString *codedName);
-void NSSetDecodingClassForClassName(Class cls, NSString *codedName);
-```
+- [`NSDecodingClassForClassName`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSDecodingClassForClassName+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Gets decoding class
+- [`NSSetDecodingClassForClassName`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSSetDecodingClassForClassName+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Sets decoding class
 
 ## Version Support
 
 ### Version Management
-
-``` c
-NSUInteger NSClassVersionForCoder(Class cls);
-void NSSetClassVersionForCoder(Class cls, NSUInteger version);
-```
+- [`NSClassVersionForCoder`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSClassVersionForCoder+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Gets class version
+- [`NSSetClassVersionForCoder`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSSetClassVersionForCoder+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Sets class version
 
 ## Coding Helpers
 
 ### Type Encoding
-
-``` c
-void NSEncodeType(NSCoder *coder, const char *type);
-const char *NSDecodeType(NSCoder *coder);
-```
+- [`NSEncodeType`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSEncodeType+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Encodes type
+- [`NSDecodeType`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSDecodeType+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSObject-NSCodingSupport.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Decodes type
 
 ## Best Practices
 
-1.  Handle version migration
-2.  Use conditional encoding appropriately
-3.  Implement proper class substitution
-4.  Consider backward compatibility
-5.  Document coding requirements
+1. Handle version migration
+2. Use conditional encoding appropriately
+3. Implement proper class substitution
+4. Consider backward compatibility
+5. Document coding requirements
 
 ## Thread Safety
 
--   Coding operations are not thread-safe
--   Synchronize shared coder access
--   Consider version conflicts
--   Handle concurrent encoding
+- Coding operations are not thread-safe
+- Synchronize shared coder access
+- Consider version conflicts
+- Handle concurrent encoding

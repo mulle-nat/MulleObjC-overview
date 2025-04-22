@@ -1,154 +1,64 @@
 # MulleObjCAutoreleasePool
 
-## Overview
+Core class providing autorelease functionality and utilities in mulle-objc.
 
-`MulleObjCAutoreleasePool` provides the core autorelease functionality and
-utilities in mulle-objc. It offers low-level functions for managing
-autorelease pools and integrates deeply with the runtime's thread and memory
-management systems.
+## Functions
 
-## Key Features
+### Object Autoreleasing
+- [`_MulleObjCAutoreleaseObject`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_MulleObjCAutoreleaseObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCAutoreleasePool.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCAutoreleasePool.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Autoreleases a single object
+- [`_MulleObjCAutoreleaseObjects`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_MulleObjCAutoreleaseObjects+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCAutoreleasePool.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCAutoreleasePool.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Autoreleases multiple objects
+- [`_MulleObjCAutoreleaseSpacedObjects`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_MulleObjCAutoreleaseSpacedObjects+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCAutoreleasePool.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCAutoreleasePool.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Autoreleases objects with stride
 
--   Thread-local pool management
--   Configurable pool behavior
--   Runtime integration
--   Efficient memory handling
--   Coroutine support
+### Pool Configuration
+- [`_mulle_objc_poolconfiguration_init`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_poolconfiguration_init+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCAutoreleasePool.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCAutoreleasePool.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Initializes pool configuration
+- [`_mulle_objc_poolconfiguration_reset`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_poolconfiguration_reset+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCAutoreleasePool.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCAutoreleasePool.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Resets pool configuration
+- [`_mulle_objc_poolconfiguration_done`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_mulle_objc_poolconfiguration_done+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCAutoreleasePool.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCAutoreleasePool.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Cleans up pool configuration
 
-## Usage
+### Thread Management
+- [`mulle_objc_thread_new_poolconfiguration`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+mulle_objc_thread_new_poolconfiguration+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCAutoreleasePool.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCAutoreleasePool.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Creates new thread pool configuration
+- [`mulle_objc_thread_reset_poolconfiguration`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+mulle_objc_thread_reset_poolconfiguration+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCAutoreleasePool.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCAutoreleasePool.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Resets thread pool configuration
+- [`mulle_objc_thread_done_poolconfiguration`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+mulle_objc_thread_done_poolconfiguration+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCAutoreleasePool.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/MulleObjCAutoreleasePool.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Cleans up thread pool configuration
 
-### Basic Object Autoreleasing
+## Usage Example
 
-``` objc
-// Autorelease a single object
+```objc
+// Autorelease objects
 id obj = _MulleObjCAutoreleaseObject(someObject);
 
-// Autorelease multiple objects
+// Batch autorelease
 id objects[3] = {obj1, obj2, obj3};
 _MulleObjCAutoreleaseObjects(objects, 3, universe);
 
-// Autorelease objects with stride
-_MulleObjCAutoreleaseSpacedObjects(objects, count, stride, universe);
-```
-
-### Pool Configuration
-
-``` objc
-// Initialize pool configuration
-struct _mulle_objc_poolconfiguration config;
-_mulle_objc_poolconfiguration_init(&config, poolClass);
-
-// Reset pool configuration
-_mulle_objc_poolconfiguration_reset(&config);
-
-// Clean up pool configuration
-_mulle_objc_poolconfiguration_done(&config);
-```
-
-### Thread Management
-
-``` objc
-// Create new pool configuration for thread
+// Thread pool management
 struct _mulle_objc_poolconfiguration *config;
 config = mulle_objc_thread_new_poolconfiguration(universe);
-
-// Reset thread's pool configuration
-mulle_objc_thread_reset_poolconfiguration(universe);
-
-// Clean up thread's pool configuration
+// ... use pool ...
 mulle_objc_thread_done_poolconfiguration(universe);
 ```
 
-## Technical Details
+## Important Notes
 
-### Core Functions
+1. Thread Safety
+   - Per-thread configurations
+   - Proper initialization/cleanup
+   - Coroutine handling
 
-1.  **Object Autoreleasing**:
+2. Performance
+   - Batch operations when possible
+   - Efficient pool hierarchy
+   - Minimize memory overhead
 
-    ``` c
-    static inline id _MulleObjCAutoreleaseObject(id obj)
-    {
-        struct _mulle_objc_poolconfiguration *config;
-        struct _mulle_objc_universe *universe;
+3. Memory Management
+   - Initialize pools properly
+   - Clean up pools when done
+   - Handle nested pools correctly
 
-        universe = _mulle_objc_object_get_universe(obj);
-        config = mulle_objc_thread_get_poolconfiguration(universe);
-        (*config->autoreleaseObject)(config, obj);
-        return obj;
-    }
-    ```
+4. Error Handling
+   - Proper initialization
+   - Cleanup handling
+   - Error conditions
 
-2.  **Batch Autoreleasing**:
-
-    ``` c
-    static inline void _MulleObjCAutoreleaseObjects(id *objects,
-                                                   NSUInteger count,
-                                                   struct _mulle_objc_universe *universe)
-    {
-        struct _mulle_objc_poolconfiguration *config;
-        config = mulle_objc_thread_get_poolconfiguration(universe);
-        (*config->autoreleaseObjects)(config, objects, count, sizeof(id));
-    }
-    ```
-
-## Best Practices
-
-1.  **Pool Management**:
-    -   Initialize pools properly
-    -   Clean up pools when done
-    -   Handle nested pools correctly
-2.  **Thread Safety**:
-    -   Use thread-local configurations
-    -   Manage thread lifecycles
-    -   Handle coroutine cases
-3.  **Memory Efficiency**:
-    -   Batch autorelease when possible
-    -   Use appropriate pool scopes
-    -   Clean up unused pools
-
-## Important Considerations
-
-1.  **Thread Integration**:
-    -   Per-thread configurations
-    -   Proper initialization/cleanup
-    -   Coroutine handling
-2.  **Performance**:
-    -   Batch operations
-    -   Pool hierarchy
-    -   Memory overhead
-3.  **Safety**:
-    -   Proper initialization
-    -   Cleanup handling
-    -   Error conditions
-
-## Use Cases
-
-1.  **Thread Pool Management**:
-
-    ``` objc
-    // Thread initialization
-    struct _mulle_objc_poolconfiguration *config;
-    config = mulle_objc_thread_new_poolconfiguration(universe);
-
-    // Thread cleanup
-    mulle_objc_thread_done_poolconfiguration(universe);
-    ```
-
-2.  **Batch Processing**:
-
-    ``` objc
-    // Process multiple objects efficiently
-    id objects[100];
-    // Fill objects array
-    _MulleObjCAutoreleaseObjects(objects, 100, universe);
-    ```
-
-3.  **Custom Pool Configuration**:
-
-    ``` objc
-    // Configure custom pool behavior
-    struct _mulle_objc_poolconfiguration config;
-    _mulle_objc_poolconfiguration_init(&config, customPoolClass);
-    // Use custom configuration
-    _mulle_objc_poolconfiguration_done(&config);
-    ```
+5. Best Practices
+   - Use thread-local configurations
+   - Manage thread lifecycles
+   - Handle coroutine cases

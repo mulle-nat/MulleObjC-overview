@@ -20,18 +20,18 @@ pthread_cond_t    _condition;  // Condition variable
 ## Methods
 
 ### NSLocking Protocol
-- `-lock` - Acquires the lock
-- `-unlock` - Releases the lock
-- `-tryLock` - Attempts to acquire lock without blocking
+- [`-lock`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+lock+of+NSCondition+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSCondition.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSCondition.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Acquires the lock
+- [`-unlock`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+unlock+of+NSCondition+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSCondition.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSCondition.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Releases the lock
+- [`-tryLock`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+tryLock+of+NSCondition+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSCondition.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSCondition.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Attempts to acquire lock without blocking
 
 ### Condition Operations
-- `-signal` - Wakes one waiting thread
-- `-broadcast` - Wakes all waiting threads
-- `-wait` - Waits for signal (must be locked)
+- [`-signal`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+signal+of+NSCondition+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSCondition.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSCondition.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Wakes one waiting thread
+- [`-broadcast`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+broadcast+of+NSCondition+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSCondition.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSCondition.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Wakes all waiting threads
+- [`-wait`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+wait+of+NSCondition+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSCondition.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSCondition.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Waits for signal (must be locked)
 
 ### Properties
-- `@property name` - Condition name (for debugging)
-- `@property(readonly) mulleIsLocked` - Lock state
+- [`@property name`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+property+name+of+NSCondition+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSCondition.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSCondition.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Condition name (for debugging)
+- [`@property(readonly) mulleIsLocked`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+property+mulleIsLocked+of+NSCondition+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSCondition.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSCondition.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Lock state
 
 ## Usage Example
 

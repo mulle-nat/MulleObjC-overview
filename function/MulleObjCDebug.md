@@ -4,20 +4,20 @@ Functions for debugging and runtime inspection.
 
 ## Print Functions
 
-- `_NSPrintForDebugger(id obj)` - Prints object description for debugger
-- `mulle_fprintf(FILE *fp, char *format, ...)` - Prints formatted text to file
-- `mulle_objc_warn_printf(char *format, ...)` - Prints warning message
+- [`_NSPrintForDebugger`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_NSPrintForDebugger+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCDebug.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCDebug.h) - Prints object description for debugger
+- [`mulle_fprintf`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+mulle_fprintf+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCDebug.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCDebug.h) - Prints formatted text to file
+- [`mulle_objc_warn_printf`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+mulle_objc_warn_printf+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCDebug.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCDebug.h) - Prints warning message
 
 ## Environment Functions
 
-- `mulle_objc_environment_get_int(char *name)` - Gets environment variable as integer
-- `mulle_objc_environment_get_yes_no(char *name)` - Gets environment variable as boolean
+- [`mulle_objc_environment_get_int`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+mulle_objc_environment_get_int+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCDebug.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCDebug.h) - Gets environment variable as integer
+- [`mulle_objc_environment_get_yes_no`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+mulle_objc_environment_get_yes_no+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCDebug.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCDebug.h) - Gets environment variable as boolean
 
 ## Dump Functions
 
-- `MulleObjCHTMLDumpUniverse()` - Creates HTML dump of universe in current directory
-- `MulleObjCDotdumpClass(char *classname)` - Creates DOT graph of class
-- `MulleObjCDumpObject(id obj)` - Prints object details to stderr
+- [`MulleObjCHTMLDumpUniverse`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCHTMLDumpUniverse+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCDebug.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCDebug.h) - Creates HTML dump of universe in current directory
+- [`MulleObjCDotdumpClass`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCDotdumpClass+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCDebug.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCDebug.h) - Creates DOT graph of class
+- [`MulleObjCDumpObject`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCDumpObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCDebug.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/function/MulleObjCDebug.h) - Prints object details to stderr
 
 ## Usage Example
 

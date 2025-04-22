@@ -1,212 +1,629 @@
-/* Base Typography */
+/* simplecss https://simplecss.org with modifications MIT licensed */
+/* mulle v0.0.2 */
+
+/* Global variables. */
+:root {
+  /* Set sans-serif & mono fonts */
+  --sans-font: -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir,
+    "Nimbus Sans L", Roboto, "Noto Sans", "Segoe UI", Arial, Helvetica,
+    "Helvetica Neue", sans-serif;
+  --mono-font: Consolas, Menlo, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+
+  /* Default (light) theme */
+  --bg: #fff;
+  --accent-bg: #f5f7ff;
+  --text: #212121;
+  --text-light: #585858;
+  --border: #d8dae1;
+  --accent: #0d47a1;
+  --code: #212121;
+  --preformatted: #444;
+  --marked: #ffdd33;
+  --disabled: #efefef;
+}
+
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --bg: #212121;
+    --accent-bg: #2b2b2b;
+    --text: #dcdcdc;
+    --text-light: #ababab;
+    --border: #666;
+    --accent: #ffb300;
+    --code: #dcdcdc;
+    --preformatted: #ccc;
+    --disabled: #111;
+  }
+  /* Add a bit of transparency so light media isn't so glaring in dark mode */
+  img,
+  video {
+    opacity: 0.8;
+  }
+}
+
+/* Reset box-sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Reset default appearance */
+textarea,
+select,
+input,
+progress {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+html {
+  /* Set the font globally */
+  font-family: var(--sans-font);
+  scroll-behavior: smooth;
+}
+
+/* Make the body a nice central block */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 
-               "Helvetica Neue", Arial, sans-serif;
-  line-height: 1.6;
-  color: #333;
-  margin: 2rem;
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+  color: var(--text);
+  background-color: var(--bg);
+  font-size: 1.15rem;
+  line-height: 1.5;
+  display: grid;
+  grid-template-columns: 1fr 90% 1fr;
+  margin: 0;
+}
+body > * {
+  grid-column: 2;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  margin-top: 1.5em;
-  margin-bottom: 0.75em;
-  line-height: 1.2;
-  font-weight: 600;
+/* Make the header bg full width, but the content inline with body */
+body > header {
+  background-color: var(--accent-bg);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  padding: 0 0.5rem 1rem 0.5rem;
+  grid-column: 1 / -1;
 }
 
-h1 { font-size: 2.2rem; }
-h2 { font-size: 1.8rem; }
-h3 { font-size: 1.5rem; }
-h4 { font-size: 1.3rem; }
-h5 { font-size: 1.1rem; }
-h6 { font-size: 1rem; }
-
-p {
-  margin-bottom: 1.25em;
+body > header h1 {
+  max-width: 1200px;
+  margin: 1rem auto;
 }
 
-/* Lists */
-ul, ol {
-  margin: 1.25rem 0;
-  padding-left: 2rem;
+body > header p {
+  max-width: 40rem;
+  margin: 1rem auto;
 }
-li {
+
+/* Add a little padding to ensure spacing is correct between content and header > nav */
+main {
+  padding-top: 1.0rem;
+}
+
+body > footer {
+  margin-top: 4rem;
+  padding: 2rem 1rem 1.5rem 1rem;
+  color: var(--text-light);
+  font-size: 0.9rem;
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+
+/* Format headers */
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.7rem;
+  margin-top: 1rem;
+}
+
+h3 {
+  font-size: 1.3rem;
+  margin-top: 1rem;
+}
+
+h4 {
+  font-size: 1.2rem;
+}
+
+h5 {
+  font-size: 1.1rem;
+}
+
+h6 {
+  font-size: 0.96rem;
+}
+
+/* Prevent long strings from overflowing container */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* Fix line height when title wraps */
+h1,
+h2,
+h3 {
+  line-height: 1.1;
+}
+
+/* Reduce header size on mobile */
+@media only screen and (max-width: 720px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 2.1rem;
+  }
+
+  h3 {
+    font-size: 1.75rem;
+  }
+
+  h4 {
+    font-size: 1.25rem;
+  }
+}
+
+/* Format links & buttons */
+a,
+a:visited {
+  color: var(--accent);
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+button,
+[role="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+label[type="button"] {
+  border: none;
+  border-radius: 5px;
+  background-color: var(--accent);
+  font-size: 1rem;
+  color: var(--bg);
+  padding: 0.7rem 0.9rem;
+  margin: 0.5rem 0;
+}
+
+button[disabled],
+[role="button"][aria-disabled="true"],
+input[type="submit"][disabled],
+input[type="reset"][disabled],
+input[type="button"][disabled],
+input[type="checkbox"][disabled],
+input[type="radio"][disabled],
+select[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+  cursor: not-allowed;
+  background-color: var(--disabled);
+}
+
+input[type="range"] {
+  padding: 0;
+}
+
+/* Set the cursor to '?' while hovering over an abbreviation */
+abbr {
+  cursor: help;
+}
+
+button:focus,
+button:enabled:hover,
+[role="button"]:focus,
+[role="button"]:not([aria-disabled="true"]):hover,
+input[type="submit"]:focus,
+input[type="submit"]:enabled:hover,
+input[type="reset"]:focus,
+input[type="reset"]:enabled:hover,
+input[type="button"]:focus,
+input[type="button"]:enabled:hover,
+label[type="button"]:focus,
+label[type="button"]:hover {
+  filter: brightness(1.4);
+  cursor: pointer;
+}
+
+/* Format navigation */
+header > nav {
+  font-size: 1rem;
+  line-height: 2;
+  padding: 1rem 0 0 0;
+}
+
+/* Use flexbox to allow items to wrap, as needed */
+header > nav ul,
+header > nav ol {
+  align-content: space-around;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* List items are inline elements, make them behave more like blocks */
+header > nav ul li,
+header > nav ol li {
+  display: inline-block;
+}
+
+header > nav a,
+header > nav a:visited {
+  margin: 0 0.5rem 1rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--text);
+  display: inline-block;
+  padding: 0.1rem 1rem;
+  text-decoration: none;
+}
+
+header > nav a:hover {
+  filter: brightness(1.4);
+  cursor: pointer;
+}
+
+/* Reduce nav side on mobile */
+@media only screen and (max-width: 720px) {
+  header > nav a {
+    border: none;
+    padding: 0;
+    text-decoration: underline;
+    line-height: 1;
+  }
+}
+
+/* Consolidate box styling */
+aside, details, pre, progress {
+  background-color: var(--accent-bg);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+
+aside {
+  font-size: 1rem;
+  width: 30%;
+  padding: 0 15px;
+  margin-left: 15px;
+  float: right;
+}
+
+/* Make aside full-width on mobile */
+@media only screen and (max-width: 720px) {
+  aside {
+    width: 100%;
+    float: none;
+    margin-left: 0;
+  }
+}
+
+article, fieldset {
+  border: 1px solid var(--border);
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+
+article h2:first-child,
+section h2:first-child {
+  margin-top: 1rem;
+}
+
+section {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 2rem 1rem;
+  margin: 3rem 0;
+}
+
+/* Don't double separators when chaining sections */
+section + section,
+section:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+section:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+details {
+  padding: 0.7rem 1rem;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: bold;
+  padding: 0.7rem 1rem;
+  margin: -0.7rem -1rem;
+  word-break: break-all;
+}
+
+details[open] summary + * {
+  margin-top: 0;
+}
+
+details[open] summary {
   margin-bottom: 0.5rem;
 }
 
-/* Code Blocks */
-pre {
-  background: #f6f8fa;
-  padding: 1rem;
-  border-radius: 4px;
-  overflow-x: auto;
-  margin: 1.5rem 0;
-}
-code {
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-  font-size: 0.9em;
-  background: #f6f8fa;
-  padding: 0.2em 0.4em;
-  border-radius: 3px;
+details[open] > :last-child {
+  margin-bottom: 0;
 }
 
-/* Tables */
+/* Format tables */
 table {
-  width: 100%;
   border-collapse: collapse;
+  display: block;
   margin: 1.5rem 0;
+  overflow: auto;
+  font-size: 1.15rem;   /* needed (nat) */
+  width: 100%;
 }
-th, td {
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-}
+
+td,
 th {
-  background-color: #f8f9fa;
-  font-weight: 600;
+  border: 1px solid var(--border);
+  text-align: left;
+  padding: 0.5rem;
 }
 
-/* Blockquotes */
-blockquote {
-  border-left: 4px solid #ddd;
-  padding: 0.5rem 1rem;
-  margin: 1.5rem 0;
-  color: #666;
+th {
+  background-color: var(--accent-bg);
+  font-weight: bold;
 }
 
-/* Images */
-img {
+tr:nth-child(even) {
+  /* Set every other cell slightly darker. Improves readability. */
+  background-color: var(--accent-bg);
+}
+
+table caption {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+/* Format forms */
+textarea,
+select,
+input {
+  font-size: inherit;
+  font-family: inherit;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  box-shadow: none;
+  max-width: 100%;
+  display: inline-block;
+}
+label {
+  display: block;
+}
+textarea:not([cols]) {
+  width: 100%;
+}
+
+/* Add arrow to drop-down */
+select:not([multiple]) {
+  background-image: linear-gradient(45deg, transparent 49%, var(--text) 51%),
+    linear-gradient(135deg, var(--text) 51%, transparent 49%);
+  background-position: calc(100% - 15px), calc(100% - 10px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 25px;
+}
+
+/* checkbox and radio button style */
+input[type="checkbox"],
+input[type="radio"] {
+  vertical-align: middle;
+  position: relative;
+}
+
+input[type="radio"] {
+  border-radius: 100%;
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  background-color: var(--accent);
+}
+
+input[type="checkbox"]:checked::after {
+  /* Creates a rectangle with colored right and bottom borders which is rotated to look like a check mark */
+  content: " ";
+  width: 0.18em;
+  height: 0.32em;
+  border-radius: 0;
+  position: absolute;
+  top: 0.05em;
+  left: 0.17em;
+  background-color: transparent;
+  border-right: solid var(--bg) 0.08em;
+  border-bottom: solid var(--bg) 0.08em;
+  font-size: 1.8em;
+  transform: rotate(45deg);
+}
+input[type="radio"]:checked::after {
+  /* creates a colored circle for the checked radio button  */
+  content: " ";
+  width: 0.25em;
+  height: 0.25em;
+  border-radius: 100%;
+  position: absolute;
+  top: 0.125em;
+  background-color: var(--bg);
+  left: 0.125em;
+  font-size: 32px;
+}
+
+/* Makes input fields wider on smaller screens */
+@media only screen and (max-width: 720px) {
+  textarea,
+  select,
+  input {
+    width: 100%;
+  }
+}
+
+/* Ensures the checkbox and radio inputs do not have a set width like other input fields */
+input[type="checkbox"],
+input[type="radio"] {
+  width: auto;
+}
+
+/* Set a height for color input */
+input[type="color"] {
+  height: 2.5rem;
+  padding:  0.2rem;
+}
+
+/* do not show border around file selector button */
+input[type="file"] {
+  border: 0;
+}
+
+/* Misc body elements */
+hr {
+  color: var(--border);
+  border-top: 1px;
+  margin: 1rem auto;
+}
+
+mark {
+  padding: 2px 5px;
+  border-radius: 4px;
+  background-color: var(--marked);
+}
+
+img,
+video {
   max-width: 100%;
   height: auto;
-  margin: 1rem 0;
+  border-radius: 5px;
 }
 
-/* Horizontal Rule */
-hr {
-  border: 0;
-  border-top: 1px solid #eee;
-  margin: 2rem 0;
+figure {
+  margin: 0;
+  text-align: center;
 }
 
-/* Forms */
-input, textarea, select {
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  width: 100%;
-  max-width: 400px;
-  margin: 0.5rem 0;
-}
-button {
-  padding: 0.5rem 1rem;
-  background-color: #0366d6;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-button:hover {
-  background-color: #0056b3;
+figcaption {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-bottom: 1rem;
 }
 
-/* Accessibility Focus States */
-:focus {
-  outline: 2px solid #0366d6;
-  outline-offset: 2px;
+blockquote {
+  margin: 2rem 0 2rem 2rem;
+  padding: 0.4rem 0.8rem;
+  border-left: 0.35rem solid var(--accent);
+  color: var(--text-light);
+  font-style: italic;
 }
 
-/* Tables with thin borders and subtle hover */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1.5rem 0;
-  border: 1px solid #ccc; /* thin outer border */
-  border-radius: 6px;
-  overflow: hidden; /* to round corners */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  transition: box-shadow 0.3s ease;
+cite {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  font-style: normal;
 }
 
-table:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
 }
 
-th, td {
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid #eee; /* subtle row separation */
-  border-right: 1px solid #eee;
+dl dt {
+  grid-column-start: 1;
+  color: var(--text-light);
 }
 
-th:last-child, td:last-child {
-  border-right: none;
+dl dd {
+  grid-column-start: 2;
 }
 
-th {
-  background-color: #f0f4f8;
-  font-weight: 600;
-  color: #222;
-  text-align: left;
+/* Use mono font for code elements */
+pre,
+pre span,
+samp {
+  font-family: var(--mono-font);
+  color: var(--code);
 }
 
-/* Links with subtle gradient and underline animation */
-a {
-  color: #0366d6;
-  text-decoration: none;
-  background-image: linear-gradient(120deg, #0366d6 0%, #0056b3 100%);
-  background-repeat: no-repeat;
-  background-size: 100% 2px;
-  background-position: 0 100%;
-  transition: background-size 0.3s ease, color 0.3s ease;
-  position: relative;
+code, kbd {
+  font-family: var(--mono-font);
+  background-color: var(--accent-bg);
+  border-radius: 3px;
+  border-size: 1px solid var(--border);
 }
 
-a:hover, a:focus {
-  color: #004080;
-  background-size: 100% 100%;
-  outline: none;
+
+pre {
+  padding: 1rem 1.4rem;
+  max-width: 100%;
+  overflow: visible;
+  color: var(--preformatted);
 }
 
-a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 2px;
-  width: 0;
-  background: #0056b3;
-  transition: width 0.3s ease;
+/* Fix embedded code within pre */
+pre code {
+  color: var(--preformatted);
+  background: none;
+  margin: 0;
+  padding: 0;
 }
 
-a:hover::after, a:focus::after {
+/* Progress bars */
+/* Declarations are repeated because you */
+/* cannot combine vendor-specific selectors */
+progress {
   width: 100%;
 }
 
-pre.objc, pre.c, pre.sh {
-  font-size: 0.85em; /* 15% smaller than base */
-  background: #272822 !important; /* Classic Monokai dark background */
-  color: #f8f8f2; /* Base text color */
-  padding: 1.25rem;
-  margin: 1.5rem 0;
-  border-radius: 4px;
-  position: relative;
+progress:indeterminate {
+  background-color: var(--accent-bg);
 }
 
-/* Add language label (optional) */
-pre.objc::before, pre.c::before, pre.sh::before {
-  content: attr(class);
-  position: absolute;
-  top: 0;
-  right: 0;
-  background: rgba(255,255,255,0.1);
-  color: #66d9ef;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.75em;
-  border-bottom-left-radius: 4px;
+progress::-webkit-progress-bar {
+  border-radius: 5px;
+  background-color: var(--accent-bg);
 }
 
-pre.objc code, pre.c code, pre.sh code {
-  color: #f8f8f2; /* Base text */
+progress::-webkit-progress-value {
+  border-radius: 5px;
+  background-color: var(--accent);
 }
 
+progress::-moz-progress-bar {
+  border-radius: 5px;
+  background-color: var(--accent);
+  transition-property: width;
+  transition-duration: 0.3s;
+}
+
+progress:indeterminate::-moz-progress-bar {
+  background-color: var(--accent-bg);
+}

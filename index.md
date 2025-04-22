@@ -26,6 +26,7 @@ Supporting C functions for the Objective-C runtime, including:
 * Method invocation helpers
 
 Function documentation can also be found in class and protocol sections:
+
 * [Class Functions](class/MulleObjCLoader-Functions.md)
 * [Protocol Functions](protocol/NSCopying-Functions.md)
 * [Runtime Functions](protocol/MulleObjCRuntimeObject-Functions.md)

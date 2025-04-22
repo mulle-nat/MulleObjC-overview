@@ -1,59 +1,78 @@
 # MulleObjCTaggedPointer
 
-Protocol for objects that can be represented as tagged pointers. Inherits from `MulleObjCImmutable`. Tagged pointers store small values directly in the pointer bits rather than allocating separate storage.
+Protocol for implementing tagged pointer support in mulle-objc. Tagged pointers store small values directly in pointer bits to avoid heap allocation.
+
+## Required Methods
+
+### Value Access
+- [`+mulleTaggedPointerClass`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+mulleTaggedPointerClass+of+MulleObjCTaggedPointer+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCTaggedPointer.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCTaggedPointer.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get class for tagged pointer
+- [`+mulleTaggedPointerFromIndex:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+mulleTaggedPointerFromIndex+of+MulleObjCTaggedPointer+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCTaggedPointer.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCTaggedPointer.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Create pointer from index
+- [`-mulleTaggedPointerIndex`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+mulleTaggedPointerIndex+of+MulleObjCTaggedPointer+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCTaggedPointer.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCTaggedPointer.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get index from pointer
+
+### Validation
+- [`+mulleIsTaggedPointerClass`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+mulleIsTaggedPointerClass+of+MulleObjCTaggedPointer+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCTaggedPointer.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCTaggedPointer.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check if class supports tagging
+- [`-mulleIsTaggedPointer`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+mulleIsTaggedPointer+of+MulleObjCTaggedPointer+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCTaggedPointer.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCTaggedPointer.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check if instance is tagged pointer
+
+## Helper Functions
+
+- [`MulleObjCTaggedPointerCreate`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCTaggedPointerCreate+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCTaggedPointer.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCTaggedPointer.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Create tagged pointer
+- [`MulleObjCTaggedPointerGetClass`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCTaggedPointerGetClass+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCTaggedPointer.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCTaggedPointer.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get pointer class
+- [`MulleObjCTaggedPointerGetIndex`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCTaggedPointerGetIndex+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCTaggedPointer.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCTaggedPointer.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get pointer index
 
 ## Usage Example
 
 ```objc
-// Register your class for tagged pointer usage
-@interface MySmallInteger : NSObject <MulleObjCTaggedPointer>
+@interface MyNumber : NSObject <MulleObjCTaggedPointer>
 @end
 
-// Register at index 1 (indexes 0-7 available on 64 bit)
-MulleObjCTaggedPointerRegisterClassAtIndex([MySmallInteger class], 1);
+@implementation MyNumber
 
-// Create tagged pointer instances
-if (MulleObjCTaggedPointerIsIntegerValue(value))
++ (BOOL) mulleIsTaggedPointerClass
 {
-   id obj = MulleObjCCreateTaggedPointerWithIntegerValueAndIndex(value, 1);
-   NSInteger val = MulleObjCTaggedPointerGetIntegerValue(obj);
+    return YES;
 }
+
++ (instancetype) mulleTaggedPointerFromIndex:(NSUInteger)index
+{
+    return MulleObjCTaggedPointerCreate(self, index);
+}
+
+- (NSUInteger) mulleTaggedPointerIndex
+{
+    return MulleObjCTaggedPointerGetIndex(self);
+}
+
+@end
+
+// Usage
+id number = [MyNumber mulleTaggedPointerFromIndex:42];
+NSUInteger value = [number mulleTaggedPointerIndex];
 ```
 
-## Class Methods
+## Important Notes
 
-- `+isTaggedPointerEnabled` - Returns whether tagged pointers are enabled
+1. Memory Layout
+   - Bit patterns
+   - Alignment rules
+   - Platform specifics
+   - Value ranges
 
-## Optional Methods
+2. Thread Safety
+   - Thread-safe creation
+   - Safe access
+   - Handle concurrent use
+   - Consider TAO rules
 
-Memory management methods (all thread-safe):
-- `-retain`
-- `-autorelease`
-- `-release`
-- `-retainCount`
+3. Best Practices
+   - Check validity
+   - Handle errors
+   - Document usage
+   - Test thoroughly
 
-## Helper Functions
+4. Performance
+   - Avoid allocation
+   - Fast access
+   - Consider inlining
+   - Handle contention
 
-### Registration
-- `MulleObjCTaggedPointerRegisterClassAtIndex(Class cls, unsigned int index)` - Registers a class for tagged pointer usage
-
-### Value Validation
-- `MulleObjCTaggedPointerIsIntegerValue(NSInteger value)`
-- `MulleObjCTaggedPointerIsUnsignedIntegerValue(NSUInteger value)`
-- `MulleObjCTaggedPointerIsFloatValue(float value)`
-- `MulleObjCTaggedPointerIsDoubleValue(double value)`
-
-### Creation
-- `MulleObjCCreateTaggedPointerWithIntegerValueAndIndex(NSInteger value, NSUInteger index)`
-- `MulleObjCCreateTaggedPointerWithUnsignedIntegerValueAndIndex(NSUInteger value, NSUInteger index)`
-- `MulleObjCCreateTaggedPointerWithFloatValueAndIndex(float value, NSUInteger index)`
-- `MulleObjCCreateTaggedPointerWithDoubleValueAndIndex(double value, NSUInteger index)`
-
-### Value Access
-- `MulleObjCTaggedPointerGetIntegerValue(void *pointer)`
-- `MulleObjCTaggedPointerGetUnsignedIntegerValue(void *pointer)`
-- `MulleObjCTaggedPointerGetFloatValue(void *pointer)`
-- `MulleObjCTaggedPointerGetDoubleValue(void *pointer)`
-- `MulleObjCTaggedPointerGetIndex(void *pointer)`
-
-Note: Tagged pointers are immutable and thread-safe by design. The class must be registered with the runtime before use.
+Note: Tagged pointers are an optimization that avoids heap allocation for small values by storing them directly in pointer bits. This improves performance and reduces memory usage.

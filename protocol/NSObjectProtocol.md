@@ -5,58 +5,58 @@ Protocol defining the core interface for objects in mulle-objc. Inherits from Mu
 ## Optional Methods
 
 ### Basic Object Methods
-- `-self` - Used by faults, not necessarily thread-safe
+- [`-self`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+self+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Used by faults, not necessarily thread-safe
 
 ### Class Introspection (Thread-safe)
-- `-superclass`
-- `-class`
-- `+class`
-- `-isProxy`
-- `-isKindOfClass:`
-- `-isMemberOfClass:`
+- [`-superclass`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+superclass+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-class`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+class+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`+class`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+class+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-isProxy`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+isProxy+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-isKindOfClass:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+isKindOfClass+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-isMemberOfClass:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+isMemberOfClass+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
 
 ### AAO Support
-- `+instantiate`
+- [`+instantiate`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+instantiate+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
 
 ### Object Lifecycle
-- `+new`
-- `+alloc`
-- `-init`
-- `-dealloc`
-- `-finalize`
-- `-autorelease` (thread-safe)
+- [`+new`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+new+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`+alloc`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+alloc+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-init`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+init+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-dealloc`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+dealloc+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-finalize`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+finalize+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-autorelease`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+autorelease+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) (thread-safe)
 
 ### Protocol and Method Introspection (Thread-safe)
-- `-conformsToProtocol:`
-- `-respondsToSelector:`
-- `+instanceMethodForSelector:`
-- `-methodForSelector:`
+- [`-conformsToProtocol:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+conformsToProtocol+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-respondsToSelector:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+respondsToSelector+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`+instanceMethodForSelector:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+instanceMethodForSelector+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-methodForSelector:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+methodForSelector+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
 
 ### Method Invocation (Thread-safe)
-- `-performSelector:`
-- `-performSelector:withObject:`
-- `-performSelector:withObject:withObject:`
+- [`-performSelector:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+performSelector+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-performSelector:withObject:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+performSelector:withObject+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-performSelector:withObject:withObject:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+performSelector:withObject:withObject+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
 
 ### Collection Support
-- `-hash`
-- `-isEqual:`
+- [`-hash`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+hash+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-isEqual:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+isEqual+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
 
 ### String Representation
-- `-UTF8String` - mulle extension
+- [`-UTF8String`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+UTF8String+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - mulle extension
 
 ### Zones (Deprecated)
-- `-zone` - Always returns NULL
+- [`-zone`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+zone+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Always returns NULL
 
 ### Instance Type
-- `-immutableInstance`
+- [`-immutableInstance`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+immutableInstance+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
 
 ### Internal Support
-- `-_pushToParentAutoreleasePool`
+- [`-_pushToParentAutoreleasePool`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+_pushToParentAutoreleasePool+of+NSObjectProtocol+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
 
 ## Additional Protocol
 
 ### MullePropertyObserving
 For classes using `observable` properties:
-- `-willChange` - Called by generated setters before change
+- [`-willChange`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+willChange+of+MullePropertyObserving+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSObjectProtocol.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Called by generated setters before change
 
 Note: Many methods are marked with `MULLE_OBJC_THREADSAFE_METHOD`. The called methods may not be thread-safe - it's performSelector's duty to check that.

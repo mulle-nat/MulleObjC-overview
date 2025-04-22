@@ -1,29 +1,56 @@
 # MulleObjCRuntimeObject
 
-The most basic protocol in mulle-objc, defining essential memory management and thread safety methods. All methods marked with `MULLE_OBJC_THREADSAFE_METHOD` are thread-safe.
+The `MulleObjCRuntimeObject` protocol defines the core runtime functionality for objects in mulle-objc. This is the base protocol that all objects must implement.
 
-## Memory Management Methods
+## Required Methods
 
-### Required Methods
-- `-retain` - Increases retain count
-- `-release` - Decreases retain count
-- `-retainCount` - Returns current retain count
-- `-dealloc` - Deallocates object
-- `-finalize` - Finalizes object
-- `-_becomeRootObject` - ObjectGraph support
+### Object Information
+- [`-class`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+class+of+MulleObjCRuntimeObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get object's class
+- [`-methodForSelector:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+methodForSelector+of+MulleObjCRuntimeObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get method implementation
 
-### Thread Safety Methods
+### Message Sending
+- [`-performSelector:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+performSelector+of+MulleObjCRuntimeObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Perform selector
+- [`-performSelector:withObject:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+performSelector:withObject+of+MulleObjCRuntimeObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - With one argument
+- [`-performSelector:withObject:withObject:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+performSelector:withObject:withObject+of+MulleObjCRuntimeObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - With two arguments
 
-- `-mulleIsThreadSafe` - Returns whether object is thread-safe
-- `-mulleIsAccessible` - Checks if object can be safely accessed by current thread
-- `-mulleIsAccessibleByThread:` - Checks if object can be safely accessed by given thread
+### Protocol Support
+- [`-conformsToProtocol:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+conformsToProtocol+of+MulleObjCRuntimeObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check protocol conformance
+- [`-respondsToSelector:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+respondsToSelector+of+MulleObjCRuntimeObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check method availability
 
-### Thread Access Control
+### Thread Safety
+- [`-mulleIsThreadSafe`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+mulleIsThreadSafe+of+MulleObjCRuntimeObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check thread safety
+- [`-mulleIsAccessible`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+mulleIsAccessible+of+MulleObjCRuntimeObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check accessibility
 
-- `-mulleGainAccess` - Claims thread access
-- `-mulleGainAccessWithTAOStrategy:` - Claims thread access with specific strategy
-- `-mulleRelinquishAccess` - Releases thread access
-- `-mulleRelinquishAccessWithTAOStrategy:` - Releases thread access with specific strategy
-- `-mulleTAOStrategy` - Returns current Thread Affinity and Ownership strategy
+## Helper Functions
 
-Note: This is the most fundamental protocol in mulle-objc. All objects must implement these methods either directly or through inheritance.
+- [`MulleObjCObjectGetClass`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCObjectGetClass+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get object's class
+- [`MulleObjCObjectGetMethodForSelector`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCObjectGetMethodForSelector+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get method implementation
+- [`MulleObjCObjectConformsTo`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCObjectConformsTo+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check protocol conformance
+
+## Important Notes
+
+1. Core Protocol
+   - Base functionality
+   - Required methods
+   - Runtime support
+   - Thread safety
+
+2. Thread Safety
+   - Check thread affinity
+   - Handle concurrent access
+   - Use proper locks
+   - Consider TAO rules
+
+3. Best Practices
+   - Validate objects
+   - Handle nil cases
+   - Document usage
+   - Test thoroughly
+
+4. Performance
+   - Cache lookups
+   - Minimize locks
+   - Consider inlining
+   - Handle contention
+
+Note: This protocol provides the minimal runtime functionality required for all objects in mulle-objc. It is typically implemented by root classes like NSObject.

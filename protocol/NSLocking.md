@@ -5,14 +5,14 @@ Protocol for basic lock operations in mulle-objc.
 ## Required Methods
 All methods are marked with `MULLE_OBJC_THREADSAFE_METHOD`:
 
-- `-lock` - Acquires the lock
-- `-unlock` - Releases the lock
+- [`-lock`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+lock+of+NSLocking+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSLocking.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSLocking.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Acquires the lock
+- [`-unlock`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+unlock+of+NSLocking+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSLocking.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSLocking.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Releases the lock
 
 ## Optional Methods
 Also marked with `MULLE_OBJC_THREADSAFE_METHOD`:
 
-- `-tryLock` - Attempts to acquire lock without blocking
-- `-lockBeforeTimeInterval:` - Attempts to acquire lock with timeout
+- [`-tryLock`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+tryLock+of+NSLocking+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSLocking.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSLocking.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Attempts to acquire lock without blocking
+- [`-lockBeforeTimeInterval:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+lockBeforeTimeInterval+of+NSLocking+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSLocking.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSLocking.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Attempts to acquire lock with timeout
 
 ## Convenience Macros
 

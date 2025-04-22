@@ -4,57 +4,72 @@ The `MulleObjCRootObject` protocol defines the minimal interface for root object
 
 All methods marked with `MULLE_OBJC_THREADSAFE_METHOD` are thread-safe.
 
-## Optional Methods
+## Object Creation and Initialization
 
-### Object Creation and Initialization
-- `+alloc`
-- `+allocWithZone:` (zones are deprecated)
-- `+new`
-- `-init`
+### Class Methods
+- [`+alloc`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+alloc+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`+allocWithZone:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+allocWithZone+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) (zones are deprecated)
+- [`+new`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+new+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
 
-### Memory Management
-- `-zones` - Always returns NULL
-- `-mulleAllocator`
-- `-mullePerformFinalize`
-- `-mulleIsFinalized`
-- `-finalize`
-- `-dealloc`
+### Instance Methods
+- [`-init`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+init+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
 
-### Thread Safety and Access
-- `-mulleIsThreadSafe`
-- `-mulleIsAccessible`
-- `-mulleIsAccessibleByThread:`
-- `-mulleGainAccess`
-- `-mulleGainAccessWithTAOStrategy:`
-- `-mulleRelinquishAccess`
-- `-mulleRelinquishAccessWithTAOStrategy:`
-- `-mulleTAOStrategy`
+## Memory Management
 
-### Class Introspection
-- `-class`
-- `+class`
-- `-superclass`
-- `+isSubclassOfClass:`
-- `-isKindOfClass:`
-- `-isMemberOfClass:`
+### Zones and Allocators
+- [`-zones`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+zones+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Always returns NULL
+- [`-mulleAllocator`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+mulleAllocator+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+
+### Finalization
+- [`-mullePerformFinalize`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+mullePerformFinalize+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-mulleIsFinalized`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+mulleIsFinalized+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-finalize`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+finalize+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-dealloc`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+dealloc+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+
+## Thread Safety and Access
+
+### Thread Safety
+- [`-mulleIsThreadSafe`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+mulleIsThreadSafe+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-mulleIsAccessible`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+mulleIsAccessible+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-mulleIsAccessibleByThread:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+mulleIsAccessibleByThread+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+
+### Thread Access Control
+- [`-mulleGainAccess`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+mulleGainAccess+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-mulleGainAccessWithTAOStrategy:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+mulleGainAccessWithTAOStrategy+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-mulleRelinquishAccess`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+mulleRelinquishAccess+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-mulleRelinquishAccessWithTAOStrategy:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+mulleRelinquishAccessWithTAOStrategy+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-mulleTAOStrategy`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+mulleTAOStrategy+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+
+## Class and Protocol Introspection
+
+### Class Methods
+- [`+class`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+class+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`+isSubclassOfClass:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+isSubclassOfClass+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+
+### Instance Methods
+- [`-class`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+class+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-superclass`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+superclass+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-isKindOfClass:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+isKindOfClass+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-isMemberOfClass:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+isMemberOfClass+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
 
 ### Protocol and Method Introspection
-- `-conformsToProtocol:`
-- `-respondsToSelector:`
-- `+instanceMethodForSelector:`
-- `-methodForSelector:`
+- [`-conformsToProtocol:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+conformsToProtocol+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-respondsToSelector:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+respondsToSelector+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`+instanceMethodForSelector:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+instanceMethodForSelector+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-methodForSelector:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+methodForSelector+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
 
 ### Method Invocation
-- `-performSelector:`
-- `-performSelector:withObject:`
-- `-performSelector:withObject:withObject:`
+- [`-performSelector:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+performSelector+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-performSelector:withObject:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+performSelector:withObject+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`-performSelector:withObject:withObject:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+performSelector:withObject:withObject+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
 
 ### Universe Support
-- `-_pushToParentAutoreleasePool`
+- [`-_pushToParentAutoreleasePool`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+_pushToParentAutoreleasePool+of+MulleObjCRootObject+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
 
-### Helper Functions
-- `MulleObjCClassIsSubclassOfClass`
-- `NSObjectIsKindOfClass`
-- `MulleObjCInstanceIsMemberOfClass`
+## Helper Functions
+
+- [`MulleObjCClassIsSubclassOfClass`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCClassIsSubclassOfClass+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`NSObjectIsKindOfClass`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSObjectIsKindOfClass+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
+- [`MulleObjCInstanceIsMemberOfClass`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCInstanceIsMemberOfClass+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRootObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder)
 
 Note: This protocol is primarily used for lightweight objects and forwarding classes that don't need the full NSObject functionality.

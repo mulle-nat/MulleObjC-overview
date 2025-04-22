@@ -6,59 +6,42 @@ Functions for fast enumeration support in mulle-objc.
 
 ### Basic Operations
 
-``` c
-NSUInteger NSFastEnumerationGetItems(id<NSFastEnumeration> obj,
-                                   id *stackbuf,
-                                   NSUInteger len,
-                                   NSUInteger *state);
-```
+- [`NSFastEnumerationGetItems`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSFastEnumerationGetItems+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSFastEnumeration.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSFastEnumeration.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get items from enumeration
 
 ### State Management
 
-``` c
-void NSFastEnumerationBegin(NSFastEnumerationState *state);
-void NSFastEnumerationEnd(NSFastEnumerationState *state);
-```
+- [`NSFastEnumerationBegin`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSFastEnumerationBegin+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSFastEnumeration.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSFastEnumeration.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Initialize enumeration state
+- [`NSFastEnumerationEnd`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSFastEnumerationEnd+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSFastEnumeration.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSFastEnumeration.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Clean up enumeration state
 
 ## Mutation Checking
 
 ### Mutation Detection
 
-``` c
-unsigned long NSFastEnumerationGetMutations(id<NSFastEnumeration> obj);
-void NSFastEnumerationCheckMutations(id<NSFastEnumeration> obj,
-                                   unsigned long mutations);
-```
+- [`NSFastEnumerationGetMutations`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSFastEnumerationGetMutations+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSFastEnumeration.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSFastEnumeration.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get mutation count
+- [`NSFastEnumerationCheckMutations`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSFastEnumerationCheckMutations+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSFastEnumeration.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSFastEnumeration.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Verify no mutations occurred
 
 ## Buffer Management
 
 ### Buffer Operations
 
-``` c
-NSUInteger NSFastEnumerationFillBuffer(id *stackbuf,
-                                     NSUInteger maxItems,
-                                     id<NSFastEnumeration> obj,
-                                     NSUInteger startIndex);
-```
+- [`NSFastEnumerationFillBuffer`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSFastEnumerationFillBuffer+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSFastEnumeration.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSFastEnumeration.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Fill enumeration buffer
 
 ### Optimization
 
-``` c
-NSUInteger NSFastEnumerationBatchSize(id<NSFastEnumeration> obj);
-BOOL NSFastEnumerationShouldCopyItems(id<NSFastEnumeration> obj);
-```
+- [`NSFastEnumerationBatchSize`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSFastEnumerationBatchSize+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSFastEnumeration.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSFastEnumeration.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get optimal batch size
+- [`NSFastEnumerationShouldCopyItems`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+NSFastEnumerationShouldCopyItems+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSFastEnumeration.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSFastEnumeration.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check if items should be copied
 
 ## Best Practices
 
-1.  Handle mutations properly
-2.  Use appropriate buffer size
-3.  Implement state management
-4.  Consider performance
-5.  Document enumeration behavior
+1. Handle mutations properly
+2. Use appropriate buffer size
+3. Implement state management
+4. Consider performance
+5. Document enumeration behavior
 
 ## Thread Safety
 
--   Enumeration is not thread-safe
--   Check for mutations
--   Handle concurrent access
--   Consider collection changes
+- Enumeration is not thread-safe
+- Check for mutations
+- Handle concurrent access
+- Consider collection changes

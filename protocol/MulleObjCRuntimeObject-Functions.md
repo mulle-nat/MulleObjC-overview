@@ -5,62 +5,49 @@ Functions for runtime object operations in mulle-objc.
 ## Runtime Operations
 
 ### Object Information
+- [`MulleObjCObjectGetClass`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCObjectGetClass+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get object's class
+- [`MulleObjCObjectGetClassId`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCObjectGetClassId+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get object's class ID
+- [`MulleObjCObjectGetInfraClass`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCObjectGetInfraClass+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get object's infrastructure class
 
-``` c
-Class MulleObjCObjectGetClass(id obj);
-void MulleObjCObjectSetClass(id obj, Class cls);
-```
+### Method Operations
+- [`MulleObjCObjectGetMethodForSelector`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCObjectGetMethodForSelector+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get method implementation
+- [`MulleObjCObjectGetMethodForSelectorId`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCObjectGetMethodForSelectorId+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get method by selector ID
 
-### Method Resolution
+### Protocol Operations
+- [`MulleObjCObjectConformsTo`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCObjectConformsTo+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check protocol conformance
+- [`MulleObjCObjectConformsToProtocolId`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCObjectConformsToProtocolId+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check by protocol ID
 
-``` c
-IMP MulleObjCObjectGetMethodImplementation(id obj, SEL sel);
-BOOL MulleObjCObjectRespondsToSelector(id obj, SEL sel);
-```
+### Message Sending
+- [`MulleObjCObjectPerformSelector`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCObjectPerformSelector+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Perform selector
+- [`MulleObjCObjectPerformSelector_2`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCObjectPerformSelector_2+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - With one argument
+- [`MulleObjCObjectPerformSelector_3`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCObjectPerformSelector_3+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - With two arguments
 
-## Instance Variables
+### Thread Safety
+- [`MulleObjCObjectIsThreadSafe`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCObjectIsThreadSafe+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check thread safety
+- [`MulleObjCObjectIsAccessible`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCObjectIsAccessible+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCRuntimeObject.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check accessibility
 
-### Ivar Access
+## Important Notes
 
-``` c
-void *MulleObjCObjectGetInstanceVariable(id obj, const char *name);
-void MulleObjCObjectSetInstanceVariable(id obj, const char *name, void *value);
-```
+1. Object Lifecycle
+   - Initialize properly
+   - Clean up resources
+   - Handle errors
+   - Check state
 
-### Layout Information
+2. Thread Safety
+   - Check thread affinity
+   - Handle concurrent access
+   - Use proper locks
+   - Consider TAO rules
 
-``` c
-const char *MulleObjCObjectGetIvarLayout(id obj);
-const char *MulleObjCObjectGetWeakIvarLayout(id obj);
-```
+3. Best Practices
+   - Validate objects
+   - Handle nil cases
+   - Document usage
+   - Test thoroughly
 
-## Runtime Flags
-
-### Flag Management
-
-``` c
-void MulleObjCObjectSetRuntimeFlags(id obj, unsigned int flags);
-unsigned int MulleObjCObjectGetRuntimeFlags(id obj);
-```
-
-### Special Flags
-
-``` c
-void MulleObjCObjectSetFinalizeFlag(id obj);
-BOOL MulleObjCObjectGetFinalizeFlag(id obj);
-```
-
-## Best Practices
-
-1.  Use runtime functions carefully
-2.  Handle class changes properly
-3.  Consider ivar layout
-4.  Document runtime flags
-5.  Handle finalization
-
-## Thread Safety
-
--   Runtime operations need locks
--   Handle concurrent access
--   Consider atomic operations
--   Implement proper synchronization
+4. Performance
+   - Cache lookups
+   - Minimize locks
+   - Consider inlining
+   - Handle contention

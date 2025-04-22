@@ -4,11 +4,16 @@ Protocol for implementing class clusters in mulle-objc. A class cluster is an ab
 
 ## Required Methods
 
-- `+__classClusterClass` - Returns the actual concrete class to instantiate
+- [`+__classClusterClass`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+__classClusterClass+of+MulleObjCClassCluster+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCClassCluster.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCClassCluster.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Returns the actual concrete class to instantiate
 
 ## Optional Methods
 
-- `+initialize` - Must call `[super initialize]` or `MulleObjCClassMarkAsClassCluster()` if overridden
+- [`+initialize`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+initialize+of+MulleObjCClassCluster+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCClassCluster.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCClassCluster.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Must call `[super initialize]` or `MulleObjCClassMarkAsClassCluster()` if overridden
+
+## Helper Functions
+
+- [`MulleObjCClassMarkAsClassCluster`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCClassMarkAsClassCluster+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCClassCluster.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCClassCluster.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Mark class as cluster
+- [`MulleObjCClassIsClassCluster`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCClassIsClassCluster+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCClassCluster.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCClassCluster.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check if class is cluster
 
 ## Usage
 

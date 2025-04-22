@@ -1,22 +1,68 @@
 # MulleObjCSingleton
 
-Protocol for implementing singleton classes in mulle-objc. Singletons are expected to be created through `+sharedInstance` and not through `+alloc`.
+Protocol for implementing singleton objects in mulle-objc. Provides thread-safe singleton initialization and access.
 
-## Optional Methods
+## Required Methods
 
-- `+initialize` - Must call `[super initialize]` or `MulleObjCSingletonMarkClassAsSingleton()` if overridden
-- `+sharedInstance` - Returns the singleton instance (implemented by MulleObjCSingleton)
+### Instance Access
+- [`+sharedInstance`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+sharedInstance+of+MulleObjCSingleton+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCSingleton.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCSingleton.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Get singleton instance
+
+### Initialization
+- [`+initializeSingleton`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+initializeSingleton+of+MulleObjCSingleton+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCSingleton.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCSingleton.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Initialize singleton instance
 
 ## Helper Functions
 
-- `MulleObjCSingletonCreate(Class self)` - Creates singleton instance for a class
-- `MulleObjCSingletonMarkClassAsSingleton(Class self)` - Marks a class as singleton
-- `MulleObjCInstanceIsSingleton(id obj)` - Checks if an instance is a singleton
-- `MulleObjCSingletonSetEphemeral(BOOL flag)` - Sets ephemeral mode (must be called before +initialize)
+- [`MulleObjCInstanceIsaSingleton`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCInstanceIsaSingleton+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCSingleton.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCSingleton.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check if instance is singleton
+- [`MulleObjCClassIsaSingleton`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+MulleObjCClassIsaSingleton+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCSingleton.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/MulleObjCSingleton.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Check if class is singleton
+
+## Usage Example
+
+```objc
+@interface MySingleton : NSObject <MulleObjCSingleton>
+@end
+
+@implementation MySingleton
+
++ (instancetype) sharedInstance
+{
+   return( MulleObjCSingletonCreate( self));
+}
+
++ (void) initializeSingleton
+{
+   // Initialize singleton state here
+}
+
+@end
+
+// Usage
+id instance = [MySingleton sharedInstance];
+```
 
 ## Important Notes
 
-1. Singletons must be thread-safe, but the subclass has to ensure this (no automatic `<MulleObjcThreadSafe>`)
-2. You cannot run `-mullePerformFinalize` on a singleton
-3. Using `+alloc` will create another instance instead of returning the singleton
-4. Use environment variable `MULLE_OBJC_EPHEMERAL_SINGLETON` to control ephemeral behavior externally
+1. Thread Safety
+   - Thread-safe initialization
+   - Safe instance access
+   - Handle concurrent calls
+   - Consider TAO rules
+
+2. Initialization
+   - One-time setup
+   - Handle dependencies
+   - Clean up properly
+   - Check state
+
+3. Best Practices
+   - Lazy initialization
+   - Handle errors
+   - Document usage
+   - Test thoroughly
+
+4. Performance
+   - Cache instance
+   - Minimize locks
+   - Consider inlining
+   - Handle contention
+
+Note: This protocol provides thread-safe singleton implementation. The singleton instance is created lazily on first access and guaranteed to be initialized only once.

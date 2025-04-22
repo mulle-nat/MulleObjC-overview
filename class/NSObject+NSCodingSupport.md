@@ -2,21 +2,24 @@
 
 ## Overview
 
-`NSObject+NSCodingSupport` is a category in mulle-objc that provides foundational support for object archiving and serialization. It implements version control, class substitution, object replacement, and post-decode processing capabilities.
+`NSObject+NSCodingSupport` is a category in mulle-objc that provides
+foundational support for object archiving and serialization. It implements
+version control, class substitution, object replacement, and post-decode
+processing capabilities.
 
 ## Key Features
 
-- Object archiving support
-- Version control
-- Class substitution
-- Object replacement
-- Post-decode processing
+-   Object archiving support
+-   Version control
+-   Class substitution
+-   Object replacement
+-   Post-decode processing
 
 ## Usage
 
 ### Basic Coding Support
 
-```objc
+``` objc
 // Implementing NSCoding
 @interface MyObject : NSObject <NSCoding>
 @end
@@ -44,7 +47,7 @@
 
 ### Class Version Support
 
-```objc
+``` objc
 @implementation MyObject
 
 + (NSUInteger)version
@@ -71,7 +74,7 @@
 
 ### Object Substitution
 
-```objc
+``` objc
 @implementation MyObject
 
 + (Class)classForCoder
@@ -93,148 +96,150 @@
 
 ### Core Methods
 
-1. **Version Control**:
-   ```objc
-   + (NSUInteger)version;
-   - (NSUInteger)version;
-   ```
+1.  **Version Control**:
 
-2. **Class Substitution**:
-   ```objc
-   + (Class)classForCoder;
-   - (Class)classForCoder;
-   + (NSString *)classNameForCoder;
-   ```
+    ``` objc
+    + (NSUInteger)version;
+    - (NSUInteger)version;
+    ```
 
-3. **Object Replacement**:
-   ```objc
-   - (id)replacementObjectForCoder:(NSCoder *)coder;
-   - (id)awakeAfterUsingCoder:(NSCoder *)coder;
-   ```
+2.  **Class Substitution**:
+
+    ``` objc
+    + (Class)classForCoder;
+    - (Class)classForCoder;
+    + (NSString *)classNameForCoder;
+    ```
+
+3.  **Object Replacement**:
+
+    ``` objc
+    - (id)replacementObjectForCoder:(NSCoder *)coder;
+    - (id)awakeAfterUsingCoder:(NSCoder *)coder;
+    ```
 
 ## Best Practices
 
-1. **Version Management**:
-   - Increment versions properly
-   - Handle all versions
-   - Document changes
-
-2. **Data Migration**:
-   - Convert between versions
-   - Validate data
-   - Handle missing fields
-
-3. **Error Handling**:
-   - Validate decoded data
-   - Handle corruption
-   - Provide defaults
+1.  **Version Management**:
+    -   Increment versions properly
+    -   Handle all versions
+    -   Document changes
+2.  **Data Migration**:
+    -   Convert between versions
+    -   Validate data
+    -   Handle missing fields
+3.  **Error Handling**:
+    -   Validate decoded data
+    -   Handle corruption
+    -   Provide defaults
 
 ## Important Considerations
 
-1. **Compatibility**:
-   - Version handling
-   - Forward compatibility
-   - Backward compatibility
-
-2. **Performance**:
-   - Efficient encoding
-   - Optimized decoding
-   - Memory usage
-
-3. **Security**:
-   - Data validation
-   - Safe decoding
-   - Secure storage
+1.  **Compatibility**:
+    -   Version handling
+    -   Forward compatibility
+    -   Backward compatibility
+2.  **Performance**:
+    -   Efficient encoding
+    -   Optimized decoding
+    -   Memory usage
+3.  **Security**:
+    -   Data validation
+    -   Safe decoding
+    -   Secure storage
 
 ## Use Cases
 
-1. **Object Persistence**:
-   ```objc
-   @implementation DataObject
+1.  **Object Persistence**:
 
-   - (void)encodeWithCoder:(NSCoder *)coder
-   {
-       [super encodeWithCoder:coder];
-       [coder encodeObject:self.identifier forKey:@"identifier"];
-       [coder encodeObject:self.metadata forKey:@"metadata"];
-       [coder encodeInteger:self.version forKey:@"version"];
-   }
+    ``` objc
+    @implementation DataObject
 
-   - (id)initWithCoder:(NSCoder *)coder
-   {
-       self = [super initWithCoder:coder];
-       if (self) {
-           _identifier = [coder decodeObjectForKey:@"identifier"];
-           _metadata = [coder decodeObjectForKey:@"metadata"];
-           _version = [coder decodeIntegerForKey:@"version"];
-       }
-       return self;
-   }
+    - (void)encodeWithCoder:(NSCoder *)coder
+    {
+        [super encodeWithCoder:coder];
+        [coder encodeObject:self.identifier forKey:@"identifier"];
+        [coder encodeObject:self.metadata forKey:@"metadata"];
+        [coder encodeInteger:self.version forKey:@"version"];
+    }
 
-   @end
-   ```
+    - (id)initWithCoder:(NSCoder *)coder
+    {
+        self = [super initWithCoder:coder];
+        if (self) {
+            _identifier = [coder decodeObjectForKey:@"identifier"];
+            _metadata = [coder decodeObjectForKey:@"metadata"];
+            _version = [coder decodeIntegerForKey:@"version"];
+        }
+        return self;
+    }
 
-2. **Version Migration**:
-   ```objc
-   @implementation VersionedObject
+    @end
+    ```
 
-   + (NSUInteger)version
-   {
-       return 2;
-   }
+2.  **Version Migration**:
 
-   - (id)initWithCoder:(NSCoder *)coder
-   {
-       self = [super init];
-       if (self) {
-           NSUInteger version = [coder versionForClassName:NSStringFromClass([self class])];
-           
-           switch (version) {
-               case 1:
-                   [self decodeVersion1:coder];
-                   break;
-               case 2:
-                   [self decodeVersion2:coder];
-                   break;
-               default:
-                   [NSException raise:NSInvalidArchiveOperationException
-                               format:@"Unsupported version: %lu", version];
-           }
-       }
-       return self;
-   }
+    ``` objc
+    @implementation VersionedObject
 
-   @end
-   ```
+    + (NSUInteger)version
+    {
+        return 2;
+    }
 
-3. **Object Substitution**:
-   ```objc
-   @implementation SubstitutableObject
+    - (id)initWithCoder:(NSCoder *)coder
+    {
+        self = [super init];
+        if (self) {
+            NSUInteger version = [coder versionForClassName:NSStringFromClass([self class])];
 
-   - (id)replacementObjectForCoder:(NSCoder *)coder
-   {
-       if (self.shouldUseAlternative) {
-           return [[AlternativeObject alloc] initWithOriginal:self];
-       }
-       return self;
-   }
+            switch (version) {
+                case 1:
+                    [self decodeVersion1:coder];
+                    break;
+                case 2:
+                    [self decodeVersion2:coder];
+                    break;
+                default:
+                    [NSException raise:NSInvalidArchiveOperationException
+                                format:@"Unsupported version: %lu", version];
+            }
+        }
+        return self;
+    }
 
-   - (id)awakeAfterUsingCoder:(NSCoder *)coder
-   {
-       // Post-decode processing
-       [self validateState];
-       [self updateCachedValues];
-       return self;
-   }
+    @end
+    ```
 
-   @end
-   ```
+3.  **Object Substitution**:
+
+    ``` objc
+    @implementation SubstitutableObject
+
+    - (id)replacementObjectForCoder:(NSCoder *)coder
+    {
+        if (self.shouldUseAlternative) {
+            return [[AlternativeObject alloc] initWithOriginal:self];
+        }
+        return self;
+    }
+
+    - (id)awakeAfterUsingCoder:(NSCoder *)coder
+    {
+        // Post-decode processing
+        [self validateState];
+        [self updateCachedValues];
+        return self;
+    }
+
+    @end
+    ```
 
 ## Advanced Features
 
 ### Custom Archiving
 
-```objc
+``` objc
 @implementation CustomArchiver
 
 - (void)encodeWithCoder:(NSCoder *)coder
@@ -263,7 +268,7 @@
 
 ### Secure Coding
 
-```objc
+``` objc
 @implementation SecureObject
 
 + (BOOL)supportsSecureCoding
@@ -288,7 +293,7 @@
 
 ### Migration Support
 
-```objc
+``` objc
 @implementation MigratableObject
 
 - (void)migrateFromVersion:(NSUInteger)oldVersion

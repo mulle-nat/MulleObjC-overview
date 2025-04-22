@@ -5,14 +5,16 @@ Functions for container operations and callbacks in mulle-objc.
 ## Container Callbacks
 
 ### Basic Operations
-```c
+
+``` c
 struct MulleObjCContainerCallback   MulleObjCContainerRetainCallback;
 struct MulleObjCContainerCallback   MulleObjCContainerCopyCallback;
 struct MulleObjCContainerCallback   MulleObjCContainerAssignCallback;
 ```
 
 ### Memory Management
-```c
+
+``` c
 void MulleObjCContainerRetain(void *item, struct MulleObjCContainerCallback *callback);
 void MulleObjCContainerRelease(void *item, struct MulleObjCContainerCallback *callback);
 ```
@@ -20,7 +22,8 @@ void MulleObjCContainerRelease(void *item, struct MulleObjCContainerCallback *ca
 ## Container Creation
 
 ### Callback Setup
-```c
+
+``` c
 struct MulleObjCContainerCallback MulleObjCContainerCallbackMake(
     void (*retain)(void *),
     void (*release)(void *),
@@ -29,7 +32,8 @@ struct MulleObjCContainerCallback MulleObjCContainerCallbackMake(
 ```
 
 ### Specialized Callbacks
-```c
+
+``` c
 struct MulleObjCContainerCallback MulleObjCContainerValueCallbackMake(
     size_t size,
     void (*copy)(void *, void *),
@@ -40,7 +44,8 @@ struct MulleObjCContainerCallback MulleObjCContainerValueCallbackMake(
 ## Container Operations
 
 ### Item Management
-```c
+
+``` c
 void *MulleObjCContainerCopy(void *item, 
                             struct MulleObjCContainerCallback *callback);
 int MulleObjCContainerCompare(void *a, 
@@ -49,7 +54,8 @@ int MulleObjCContainerCompare(void *a,
 ```
 
 ### Collection Support
-```c
+
+``` c
 void MulleObjCContainerFree(void *item,
                            struct MulleObjCContainerCallback *callback);
 size_t MulleObjCContainerSize(void *item,
@@ -58,15 +64,15 @@ size_t MulleObjCContainerSize(void *item,
 
 ## Best Practices
 
-1. Use appropriate callback type
-2. Handle memory management
-3. Implement proper comparison
-4. Consider value semantics
-5. Document callback behavior
+1.  Use appropriate callback type
+2.  Handle memory management
+3.  Implement proper comparison
+4.  Consider value semantics
+5.  Document callback behavior
 
 ## Thread Safety
 
-- Callbacks should be thread-safe
-- Consider concurrent access
-- Handle retain/release atomically
-- Implement thread-safe comparison
+-   Callbacks should be thread-safe
+-   Consider concurrent access
+-   Handle retain/release atomically
+-   Implement thread-safe comparison

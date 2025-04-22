@@ -2,21 +2,23 @@
 
 ## Overview
 
-`MulleObject` is the fundamental base class in mulle-objc that provides automatic thread-safe method locking. It serves as a foundation for objects requiring built-in thread safety and synchronization capabilities.
+`MulleObject` is the fundamental base class in mulle-objc that provides
+automatic thread-safe method locking. It serves as a foundation for objects
+requiring built-in thread safety and synchronization capabilities.
 
 ## Key Features
 
-- Automatic thread-safe methods
-- Built-in locking mechanism
-- Thread synchronization
-- Performance optimized
-- Caching system
+-   Automatic thread-safe methods
+-   Built-in locking mechanism
+-   Thread synchronization
+-   Performance optimized
+-   Caching system
 
 ## Usage
 
 ### Basic Thread-Safe Object
 
-```objc
+``` objc
 @interface MyThreadSafeObject : MulleObject
 @end
 
@@ -33,7 +35,7 @@
 
 ### Lock Configuration
 
-```objc
+``` objc
 @implementation MyCustomObject
 
 - (void)configureLocking
@@ -53,7 +55,7 @@
 
 ### Cache Management
 
-```objc
+``` objc
 @implementation CachedObject
 
 - (id)cachedValue
@@ -74,124 +76,126 @@
 
 ### Core Methods
 
-1. **Locking Control**:
-   ```objc
-   - (void)setLockingMode:(MulleLockingMode)mode;
-   - (MulleLockingMode)lockingMode;
-   - (void)lock;
-   - (void)unlock;
-   ```
+1.  **Locking Control**:
 
-2. **Thread Safety**:
-   ```objc
-   - (BOOL)isThreadSafe;
-   - (void)setThreadSafe:(BOOL)flag;
-   ```
+    ``` objc
+    - (void)setLockingMode:(MulleLockingMode)mode;
+    - (MulleLockingMode)lockingMode;
+    - (void)lock;
+    - (void)unlock;
+    ```
+
+2.  **Thread Safety**:
+
+    ``` objc
+    - (BOOL)isThreadSafe;
+    - (void)setThreadSafe:(BOOL)flag;
+    ```
 
 ### Implementation Details
 
-1. **Lock Management**:
-   ```objc
-   - (void)_initializeLock;
-   - (void)_destroyLock;
-   ```
+1.  **Lock Management**:
+
+    ``` objc
+    - (void)_initializeLock;
+    - (void)_destroyLock;
+    ```
 
 ## Best Practices
 
-1. **Thread Safety**:
-   - Use appropriate locking mode
-   - Keep critical sections short
-   - Avoid deadlocks
-
-2. **Performance**:
-   - Optimize lock granularity
-   - Cache when appropriate
-   - Monitor contention
-
-3. **Error Handling**:
-   - Handle lock failures
-   - Manage timeouts
-   - Clean up resources
+1.  **Thread Safety**:
+    -   Use appropriate locking mode
+    -   Keep critical sections short
+    -   Avoid deadlocks
+2.  **Performance**:
+    -   Optimize lock granularity
+    -   Cache when appropriate
+    -   Monitor contention
+3.  **Error Handling**:
+    -   Handle lock failures
+    -   Manage timeouts
+    -   Clean up resources
 
 ## Important Considerations
 
-1. **Locking Strategy**:
-   - Method-level locking
-   - Lock granularity
-   - Performance impact
-
-2. **Thread Interaction**:
-   - Lock ordering
-   - Deadlock prevention
-   - Resource sharing
-
-3. **Resource Management**:
-   - Lock lifecycle
-   - Cache invalidation
-   - Memory usage
+1.  **Locking Strategy**:
+    -   Method-level locking
+    -   Lock granularity
+    -   Performance impact
+2.  **Thread Interaction**:
+    -   Lock ordering
+    -   Deadlock prevention
+    -   Resource sharing
+3.  **Resource Management**:
+    -   Lock lifecycle
+    -   Cache invalidation
+    -   Memory usage
 
 ## Use Cases
 
-1. **Shared Resource Management**:
-   ```objc
-   @implementation SharedResource
+1.  **Shared Resource Management**:
 
-   - (void)updateResource:(id)newValue
-   {
-       // Automatically thread-safe
-       self.resource = newValue;
-       [self notifyObservers];
-   }
+    ``` objc
+    @implementation SharedResource
 
-   - (id)getResource
-   {
-       // Safe read access
-       return self.resource;
-   }
+    - (void)updateResource:(id)newValue
+    {
+        // Automatically thread-safe
+        self.resource = newValue;
+        [self notifyObservers];
+    }
 
-   @end
-   ```
+    - (id)getResource
+    {
+        // Safe read access
+        return self.resource;
+    }
 
-2. **Cached Operations**:
-   ```objc
-   @implementation CachedProcessor
+    @end
+    ```
 
-   - (id)processData:(id)input
-   {
-       // Thread-safe cache lookup
-       id cached = [self.cache objectForKey:input];
-       if (cached) {
-           return cached;
-       }
-       
-       id result = [self heavyProcessing:input];
-       [self.cache setObject:result forKey:input];
-       return result;
-   }
+2.  **Cached Operations**:
 
-   @end
-   ```
+    ``` objc
+    @implementation CachedProcessor
 
-3. **State Management**:
-   ```objc
-   @implementation StateManager
+    - (id)processData:(id)input
+    {
+        // Thread-safe cache lookup
+        id cached = [self.cache objectForKey:input];
+        if (cached) {
+            return cached;
+        }
 
-   - (void)transitionToState:(State)newState
-   {
-       // Thread-safe state transition
-       State oldState = self.currentState;
-       self.currentState = newState;
-       [self handleTransitionFromState:oldState toState:newState];
-   }
+        id result = [self heavyProcessing:input];
+        [self.cache setObject:result forKey:input];
+        return result;
+    }
 
-   @end
-   ```
+    @end
+    ```
+
+3.  **State Management**:
+
+    ``` objc
+    @implementation StateManager
+
+    - (void)transitionToState:(State)newState
+    {
+        // Thread-safe state transition
+        State oldState = self.currentState;
+        self.currentState = newState;
+        [self handleTransitionFromState:oldState toState:newState];
+    }
+
+    @end
+    ```
 
 ## Advanced Features
 
 ### Custom Lock Behavior
 
-```objc
+``` objc
 @implementation CustomLockObject
 
 - (void)customizeLocking
@@ -207,7 +211,7 @@
 
 ### Performance Optimization
 
-```objc
+``` objc
 @implementation OptimizedObject
 
 - (void)optimizeLocking
@@ -222,7 +226,7 @@
 
 ### Resource Management
 
-```objc
+``` objc
 @implementation ResourceManager
 
 - (void)manageResource

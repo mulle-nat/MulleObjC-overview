@@ -1,60 +1,32 @@
 # MulleObjCDebug
 
-Functions and macros for debugging in mulle-objc.
+Functions for debugging and runtime inspection. Only available when compiled with MULLE_OBJC_DEBUG_SUPPORT.
 
-## Debug Functions
+## HTML Dump Functions
 
-### Object Validation
-```c
-BOOL MulleObjCObjectIsValid(id obj);
-void MulleObjCValidateObject(id obj);
-```
+- `MulleObjCHTMLDumpUniverse()` - Dumps universe to current directory
+- `MulleObjCHTMLDumpUniverseToDirectory(char *directory)` - Dumps universe to specified directory
+- `MulleObjCHTMLDumpUniverseToTmp()` - Dumps universe to temp directory
 
-### Runtime Checks
-```c
-void MulleObjCCheckObjectHeader(id obj);
-void MulleObjCCheckClassHeader(Class cls);
-```
+## DOT Graph Functions
 
-## Debug Logging
+- `MulleObjCDotdumpUniverse()` - Creates DOT graph of universe
+- `MulleObjCDotdumpUniverseToTmp()` - Creates DOT graph in temp directory
+- `MulleObjCDotdumpUniverseFrameToTmp()` - Creates frame DOT graph in temp directory
 
-### Configuration
-```c
-void MulleObjCSetDebugEnabled(BOOL flag);
-void MulleObjCSetDebugLevel(int level);
-```
+## Class Inspection
 
-### Logging Functions
-```c
-void MulleObjCDebugLog(char *format, ...);
-void MulleObjCDebugLogObject(id obj);
-```
+- `MulleObjCDotdumpClass(char *classname)` - Creates DOT graph of class
+- `MulleObjCDotdumpClassToDirectory(char *classname, char *directory)` - Creates class DOT graph in directory
+- `MulleObjCDotdumpClassToTmp(char *classname)` - Creates class DOT graph in temp
 
-## Memory Debugging
+## Hierarchy Visualization
 
-### Allocation Tracking
-```c
-void MulleObjCTrackAllocation(id obj);
-void MulleObjCUntrackAllocation(id obj);
-```
+- `MulleObjCDotdumpInfraHierarchy(char *classname)` - Creates infrastructure hierarchy DOT graph
+- `MulleObjCDotdumpMetaHierarchy(char *classname)` - Creates metaclass hierarchy DOT graph
 
-### Leak Detection
-```c
-void MulleObjCPrintLeaks(void);
-void MulleObjCCheckLeaks(void);
-```
+## Object Inspection
 
-## Best Practices
+- `MulleObjCDumpObject(id obj)` - Prints object details to stderr
 
-1. Enable debugging in development builds
-2. Use appropriate debug level for context
-3. Validate objects in critical sections
-4. Track allocations during memory investigations
-5. Check for leaks in test suites
-
-## Notes
-
-- Debug functions may impact performance
-- Some functions only available in debug builds
-- Use NSDebug.h for higher-level debugging
-- Consider using debugger integration
+Note: All functions output error messages when MULLE_OBJC_DEBUG_SUPPORT is not defined.

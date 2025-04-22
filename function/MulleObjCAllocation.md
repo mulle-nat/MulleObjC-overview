@@ -1,35 +1,31 @@
 # MulleObjCAllocation
 
-Functions for object allocation and memory management in mulle-objc.
+Core functions for object allocation and memory management.
 
-## Core Allocation Functions
+## Instance Memory Management
 
-### Object Allocation
-```c
-id NSAllocateObject(Class cls, NSUInteger extraBytes, NSZone *zone);
-void NSDeallocateObject(id obj);
-```
+- `MulleObjCInstanceGetAllocator(id obj)` - Gets allocator for an instance
+- `MulleObjCInstanceAllocateMemory(id self, NSUInteger size)` - Allocates zeroed memory
+- `MulleObjCInstanceDeallocateMemory(id self, void *p)` - Deallocates memory
+- `MulleObjCInstanceFree(id self)` - Frees an instance
 
-### Extra Memory Management
-```c
-NSUInteger NSExtraInstanceSize(Class cls);
-NSUInteger NSGetExtraBytes(id obj);
-```
+## Class Memory Management 
 
-### Zone Operations
-```c
-NSZone *NSDefaultMallocZone(void);
-NSZone *NSZoneFromPointer(void *ptr);
-```
+- `MulleObjCClassGetAllocator(Class cls)` - Gets allocator for a class
+- `MulleObjCClassAllocateMemory(Class cls, NSUInteger size)` - Allocates zeroed memory
+- `MulleObjCClassDeallocateMemory(Class cls, void *p)` - Deallocates memory
 
-## Memory Zones
+## Legacy API
 
-While zones are supported for compatibility, all zone operations map to standard memory functions in mulle-objc. The zone parameter is typically ignored, maintaining compatibility while eliminating overhead.
+- `NSAllocateObject(Class infra, NSUInteger extra, NSZone *zone)` - Legacy allocation API
+- `NSDeallocateObject(id obj)` - Legacy deallocation API
+- `NSIncrementExtraRefCount(id obj)` - Legacy retain count increment
+- `NSDecrementExtraRefCountWasZero(id obj)` - Legacy retain count decrement
+- `NSExtraRefCount(id obj)` - Legacy retain count access
 
-## Best Practices
+## Thread-Specific Allocation
 
-1. Use `NSAllocateObject` for standard object allocation
-2. Remember to pair allocations with `NSDeallocateObject`
-3. Consider extra bytes when subclassing
-4. Don't rely on zone functionality for optimization
-5. Use modern allocation patterns when possible
+- `MulleObjCThreadSetAllocator(struct mulle_allocator *allocator)` - Sets thread-local allocator
+- `MulleObjCThreadGetAllocator(void)` - Gets thread-local allocator
+
+Note: The legacy API is provided for compatibility but new code should use the MulleObjC functions.

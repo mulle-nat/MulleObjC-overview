@@ -2,21 +2,23 @@
 
 ## Overview
 
-`MulleProxy` is a thread-safe proxy implementation in mulle-objc that provides controlled access to target objects. It features recursive locking, message forwarding, and lock sharing capabilities.
+`MulleProxy` is a thread-safe proxy implementation in mulle-objc that
+provides controlled access to target objects. It features recursive locking,
+message forwarding, and lock sharing capabilities.
 
 ## Key Features
 
-- Thread-safe proxy implementation
-- Recursive locking support
-- Message forwarding
-- Lock sharing
-- Performance optimized
+-   Thread-safe proxy implementation
+-   Recursive locking support
+-   Message forwarding
+-   Lock sharing
+-   Performance optimized
 
 ## Usage
 
 ### Basic Proxy Creation
 
-```objc
+``` objc
 // Create a proxy for an object
 id target = [[MyObject alloc] init];
 MulleProxy *proxy = [[MulleProxy alloc] initWithTarget:target];
@@ -27,7 +29,7 @@ MulleProxy *proxy = [[MulleProxy alloc] initWithTarget:target];
 
 ### Thread-Safe Access
 
-```objc
+``` objc
 // All operations through proxy are thread-safe
 [proxy modifyState];
 [proxy performComplexOperation];
@@ -41,7 +43,7 @@ MulleProxy *proxy = [[MulleProxy alloc] initWithTarget:target];
 
 ### Lock Sharing
 
-```objc
+``` objc
 // Share lock between proxies
 MulleProxy *proxy1 = [[MulleProxy alloc] initWithTarget:target1];
 MulleProxy *proxy2 = [[MulleProxy alloc] initWithTarget:target2];
@@ -52,120 +54,122 @@ MulleProxy *proxy2 = [[MulleProxy alloc] initWithTarget:target2];
 
 ### Core Methods
 
-1. **Initialization**:
-   ```objc
-   - (instancetype)initWithTarget:(id)target;
-   - (void)setTarget:(id)target;
-   - (id)target;
-   ```
+1.  **Initialization**:
 
-2. **Lock Management**:
-   ```objc
-   - (void)lock;
-   - (void)unlock;
-   - (void)shareLockWith:(MulleProxy *)other;
-   ```
+    ``` objc
+    - (instancetype)initWithTarget:(id)target;
+    - (void)setTarget:(id)target;
+    - (id)target;
+    ```
+
+2.  **Lock Management**:
+
+    ``` objc
+    - (void)lock;
+    - (void)unlock;
+    - (void)shareLockWith:(MulleProxy *)other;
+    ```
 
 ### Implementation Details
 
-1. **Message Forwarding**:
-   ```objc
-   - (void)forwardInvocation:(NSInvocation *)invocation;
-   - (NSMethodSignature *)methodSignatureForSelector:(SEL)sel;
-   ```
+1.  **Message Forwarding**:
+
+    ``` objc
+    - (void)forwardInvocation:(NSInvocation *)invocation;
+    - (NSMethodSignature *)methodSignatureForSelector:(SEL)sel;
+    ```
 
 ## Best Practices
 
-1. **Proxy Usage**:
-   - Keep proxy lifecycle clear
-   - Handle target changes safely
-   - Clean up resources
-
-2. **Lock Management**:
-   - Share locks appropriately
-   - Avoid deadlocks
-   - Monitor contention
-
-3. **Performance**:
-   - Optimize message forwarding
-   - Manage lock granularity
-   - Cache when possible
+1.  **Proxy Usage**:
+    -   Keep proxy lifecycle clear
+    -   Handle target changes safely
+    -   Clean up resources
+2.  **Lock Management**:
+    -   Share locks appropriately
+    -   Avoid deadlocks
+    -   Monitor contention
+3.  **Performance**:
+    -   Optimize message forwarding
+    -   Manage lock granularity
+    -   Cache when possible
 
 ## Important Considerations
 
-1. **Thread Safety**:
-   - Proxy synchronization
-   - Target thread safety
-   - Lock ordering
-
-2. **Resource Management**:
-   - Lock lifecycle
-   - Target retention
-   - Memory usage
-
-3. **Message Handling**:
-   - Forwarding overhead
-   - Method signatures
-   - Error handling
+1.  **Thread Safety**:
+    -   Proxy synchronization
+    -   Target thread safety
+    -   Lock ordering
+2.  **Resource Management**:
+    -   Lock lifecycle
+    -   Target retention
+    -   Memory usage
+3.  **Message Handling**:
+    -   Forwarding overhead
+    -   Method signatures
+    -   Error handling
 
 ## Use Cases
 
-1. **Thread-Safe Wrapper**:
-   ```objc
-   @implementation SafeObjectManager
+1.  **Thread-Safe Wrapper**:
 
-   - (id)createSafeWrapper:(id)object
-   {
-       MulleProxy *proxy = [[MulleProxy alloc] initWithTarget:object];
-       [self registerProxy:proxy];
-       return proxy;
-   }
+    ``` objc
+    @implementation SafeObjectManager
 
-   @end
-   ```
+    - (id)createSafeWrapper:(id)object
+    {
+        MulleProxy *proxy = [[MulleProxy alloc] initWithTarget:object];
+        [self registerProxy:proxy];
+        return proxy;
+    }
 
-2. **Shared Resource Access**:
-   ```objc
-   @implementation ResourceManager
+    @end
+    ```
 
-   - (void)setupSharedAccess
-   {
-       MulleProxy *proxy1 = [self proxyForResource1];
-       MulleProxy *proxy2 = [self proxyForResource2];
-       
-       // Share lock for coordinated access
-       [proxy2 shareLockWith:proxy1];
-       
-       [self registerProxies:@[proxy1, proxy2]];
-   }
+2.  **Shared Resource Access**:
 
-   @end
-   ```
+    ``` objc
+    @implementation ResourceManager
 
-3. **Dynamic Target Switching**:
-   ```objc
-   @implementation ProxyManager
+    - (void)setupSharedAccess
+    {
+        MulleProxy *proxy1 = [self proxyForResource1];
+        MulleProxy *proxy2 = [self proxyForResource2];
 
-   - (void)switchTarget:(id)newTarget
-   {
-       [self.proxy lock];
-       @try {
-           [self.proxy setTarget:newTarget];
-           [self updateProxyState];
-       }
-       @finally {
-           [self.proxy unlock];
-       }
-   }
+        // Share lock for coordinated access
+        [proxy2 shareLockWith:proxy1];
 
-   @end
-   ```
+        [self registerProxies:@[proxy1, proxy2]];
+    }
+
+    @end
+    ```
+
+3.  **Dynamic Target Switching**:
+
+    ``` objc
+    @implementation ProxyManager
+
+    - (void)switchTarget:(id)newTarget
+    {
+        [self.proxy lock];
+        @try {
+            [self.proxy setTarget:newTarget];
+            [self updateProxyState];
+        }
+        @finally {
+            [self.proxy unlock];
+        }
+    }
+
+    @end
+    ```
 
 ## Advanced Features
 
 ### Custom Forwarding
 
-```objc
+``` objc
 @implementation CustomProxy
 
 - (void)forwardInvocation:(NSInvocation *)invocation
@@ -191,7 +195,7 @@ MulleProxy *proxy2 = [[MulleProxy alloc] initWithTarget:target2];
 
 ### Lock Coordination
 
-```objc
+``` objc
 @implementation CoordinatedProxy
 
 - (void)coordinateAccess
@@ -216,7 +220,7 @@ MulleProxy *proxy2 = [[MulleProxy alloc] initWithTarget:target2];
 
 ### State Management
 
-```objc
+``` objc
 @implementation StatefulProxy
 
 - (void)manageState

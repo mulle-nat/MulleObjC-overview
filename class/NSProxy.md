@@ -2,20 +2,23 @@
 
 ## Overview
 
-`NSProxy` is a root class in mulle-objc designed for proxy object implementation. It provides essential functionality for message interception and forwarding, making it ideal for creating proxy objects that mediate access to other objects.
+`NSProxy` is a root class in mulle-objc designed for proxy object
+implementation. It provides essential functionality for message interception
+and forwarding, making it ideal for creating proxy objects that mediate
+access to other objects.
 
 ## Key Features
 
-- Message interception and forwarding
-- Protocol conformance support
-- Thread safety features
-- Proxy object identification
+-   Message interception and forwarding
+-   Protocol conformance support
+-   Thread safety features
+-   Proxy object identification
 
 ## Usage
 
 ### Basic Proxy Implementation
 
-```objc
+``` objc
 @interface MyProxy : NSProxy
 {
     id _target;
@@ -47,7 +50,7 @@
 
 ### Creating and Using Proxies
 
-```objc
+``` objc
 // Create target object
 id target = [SomeClass new];
 
@@ -62,95 +65,97 @@ MyProxy *proxy = [[MyProxy alloc] initWithTarget:target];
 
 ### Core Methods
 
-1. **Message Forwarding**:
-   ```objc
-   - (void)forwardInvocation:(NSInvocation *)invocation;
-   - (NSMethodSignature *)methodSignatureForSelector:(SEL)sel;
-   ```
+1.  **Message Forwarding**:
 
-2. **Object Information**:
-   ```objc
-   - (BOOL)isProxy;
-   - (Class)class;
-   - (BOOL)respondsToSelector:(SEL)sel;
-   ```
+    ``` objc
+    - (void)forwardInvocation:(NSInvocation *)invocation;
+    - (NSMethodSignature *)methodSignatureForSelector:(SEL)sel;
+    ```
+
+2.  **Object Information**:
+
+    ``` objc
+    - (BOOL)isProxy;
+    - (Class)class;
+    - (BOOL)respondsToSelector:(SEL)sel;
+    ```
 
 ### Method Resolution
 
-1. **Dynamic Resolution**:
-   ```objc
-   + (BOOL)resolveInstanceMethod:(SEL)sel;
-   + (BOOL)resolveClassMethod:(SEL)sel;
-   ```
+1.  **Dynamic Resolution**:
+
+    ``` objc
+    + (BOOL)resolveInstanceMethod:(SEL)sel;
+    + (BOOL)resolveClassMethod:(SEL)sel;
+    ```
 
 ## Best Practices
 
-1. **Message Forwarding**:
-   - Always implement both forwarding methods
-   - Handle unknown selectors gracefully
-   - Consider caching method signatures
-
-2. **Thread Safety**:
-   - Ensure thread-safe target access
-   - Protect shared resources
-   - Consider using locks when needed
-
-3. **Memory Management**:
-   - Properly retain/release target
-   - Handle autorelease pools
-   - Clean up resources
+1.  **Message Forwarding**:
+    -   Always implement both forwarding methods
+    -   Handle unknown selectors gracefully
+    -   Consider caching method signatures
+2.  **Thread Safety**:
+    -   Ensure thread-safe target access
+    -   Protect shared resources
+    -   Consider using locks when needed
+3.  **Memory Management**:
+    -   Properly retain/release target
+    -   Handle autorelease pools
+    -   Clean up resources
 
 ## Important Considerations
 
-1. **Performance**:
-   - Message forwarding overhead
-   - Method signature caching
-   - Target access efficiency
-
-2. **Thread Safety**:
-   - Target synchronization
-   - State protection
-   - Concurrent access
-
-3. **Error Handling**:
-   - Unrecognized selectors
-   - Invalid targets
-   - Resource cleanup
+1.  **Performance**:
+    -   Message forwarding overhead
+    -   Method signature caching
+    -   Target access efficiency
+2.  **Thread Safety**:
+    -   Target synchronization
+    -   State protection
+    -   Concurrent access
+3.  **Error Handling**:
+    -   Unrecognized selectors
+    -   Invalid targets
+    -   Resource cleanup
 
 ## Use Cases
 
-1. **Remote Object Proxy**:
-   ```objc
-   @implementation RemoteProxy
-   - (void)forwardInvocation:(NSInvocation *)invocation
-   {
-       // Forward to remote object
-       [self sendInvocationToRemoteObject:invocation];
-   }
-   @end
-   ```
+1.  **Remote Object Proxy**:
 
-2. **Lazy Loading Proxy**:
-   ```objc
-   @implementation LazyProxy
-   - (id)target
-   {
-       if ([self _target] == nil)
-           [self _loadTarget];
-       return [self _target];
-   }
-   @end
-   ```
+    ``` objc
+    @implementation RemoteProxy
+    - (void)forwardInvocation:(NSInvocation *)invocation
+    {
+        // Forward to remote object
+        [self sendInvocationToRemoteObject:invocation];
+    }
+    @end
+    ```
 
-3. **Protection Proxy**:
-   ```objc
-   @implementation ProtectionProxy
-   - (void)forwardInvocation:(NSInvocation *)invocation
-   {
-       if ([self isOperationAllowed:invocation])
-           [invocation invokeWithTarget:[self target]];
-       else
-           [self raiseSecurityException];
-   }
-   @end
-   ```
+2.  **Lazy Loading Proxy**:
+
+    ``` objc
+    @implementation LazyProxy
+    - (id)target
+    {
+        if ([self _target] == nil)
+            [self _loadTarget];
+        return [self _target];
+    }
+    @end
+    ```
+
+3.  **Protection Proxy**:
+
+    ``` objc
+    @implementation ProtectionProxy
+    - (void)forwardInvocation:(NSInvocation *)invocation
+    {
+        if ([self isOperationAllowed:invocation])
+            [invocation invokeWithTarget:[self target]];
+        else
+            [self raiseSecurityException];
+    }
+    @end
+    ```

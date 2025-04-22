@@ -5,66 +5,68 @@ Functions for thread management and thread-local storage in mulle-objc.
 ## Thread Management
 
 ### Creation and Control
-```c
-void NSThreadStart(NSThread *thread);
-void NSThreadExit(void);
-void NSThreadDetach(SEL sel, id arg);
+
+``` c
+NSThread *MulleThreadGetCurrentThread(void);
+NSThread *MulleThreadGetOrCreateCurrentThread(void);
+void MulleThreadSetCurrentThreadUserInfo(id info);
 ```
 
 ### Current Thread
-```c
-NSThread *NSCurrentThread(void);
-BOOL NSThreadIsMain(void);
+
+``` c
+id MulleThreadGetCurrentThreadUserInfo(void);
+mulle_thread_t MulleThreadGetCurrentOSThread(void);
 ```
 
 ## Thread Local Storage
 
 ### TLS Management
-```c
-void *NSThreadGetSpecific(NSString *key);
-void NSThreadSetSpecific(NSString *key, void *value);
+
+``` c
+void MulleThreadSetObjectForKeyUTF8String(id value, char *key);
+id MulleThreadObjectForKeyUTF8String(char *key);
 ```
 
 ### Thread Dictionary
-```c
-NSMutableDictionary *NSThreadGetThreadDictionary(void);
-void NSThreadSetThreadDictionary(NSMutableDictionary *dict);
+
+``` c
+mulle_thread_t MulleThreadObjectGetOSThread(NSThread *threadObject);
 ```
 
 ## Thread Priority
 
 ### Priority Control
-```c
-double NSThreadGetPriority(void);
-void NSThreadSetPriority(double priority);
+
+``` c
+// Thread priority control functions are not available
 ```
 
 ### Thread Names
-```c
-void NSThreadSetName(NSString *name);
-NSString *NSThreadGetName(void);
+
+``` c
+// Thread name functions are part of the NSThread class interface
 ```
 
 ## Thread State
 
 ### State Information
-```c
-BOOL NSThreadIsCancelled(void);
-BOOL NSThreadIsExecuting(void);
-BOOL NSThreadIsFinished(void);
+
+``` c
+// Thread state functions are part of the NSThread class interface
 ```
 
 ## Best Practices
 
-1. Clean up thread resources
-2. Use appropriate priorities
-3. Handle cancellation
-4. Manage thread-local storage
-5. Consider thread names for debugging
+1.  Clean up thread resources
+2.  Use appropriate priorities
+3.  Handle cancellation
+4.  Manage thread-local storage
+5.  Consider thread names for debugging
 
 ## Thread Safety
 
-- Thread functions are thread-safe
-- TLS operations are thread-local
-- Thread dictionary is per-thread
-- Consider cross-thread communication
+-   Thread functions are thread-safe
+-   TLS operations are thread-local
+-   Thread dictionary is per-thread
+-   Consider cross-thread communication

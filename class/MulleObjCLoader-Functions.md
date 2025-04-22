@@ -5,13 +5,15 @@ Functions for dynamic loading and initialization in mulle-objc.
 ## Loader Operations
 
 ### Basic Loading
-```c
+
+``` c
 void MulleObjCLoaderInit(struct MulleObjCLoader *loader);
 void MulleObjCLoaderRegister(struct MulleObjCLoader *loader);
 ```
 
 ### Category Loading
-```c
+
+``` c
 void MulleObjCLoaderLoadCategories(struct MulleObjCLoader *loader);
 void MulleObjCLoaderLoadClasses(struct MulleObjCLoader *loader);
 ```
@@ -19,7 +21,8 @@ void MulleObjCLoaderLoadClasses(struct MulleObjCLoader *loader);
 ## Dependency Management
 
 ### Dependency Handling
-```c
+
+``` c
 void MulleObjCLoaderAddDependency(struct MulleObjCLoader *loader, 
                                  struct MulleObjCLoader *dependency);
 void MulleObjCLoaderRemoveDependency(struct MulleObjCLoader *loader, 
@@ -27,7 +30,8 @@ void MulleObjCLoaderRemoveDependency(struct MulleObjCLoader *loader,
 ```
 
 ### Load Order
-```c
+
+``` c
 void MulleObjCLoaderSetLoadPriority(struct MulleObjCLoader *loader, 
                                    NSInteger priority);
 NSInteger MulleObjCLoaderGetLoadPriority(struct MulleObjCLoader *loader);
@@ -36,7 +40,8 @@ NSInteger MulleObjCLoaderGetLoadPriority(struct MulleObjCLoader *loader);
 ## Runtime Support
 
 ### Class Registration
-```c
+
+``` c
 void MulleObjCLoaderRegisterClass(struct MulleObjCLoader *loader, 
                                  Class cls);
 void MulleObjCLoaderRegisterCategory(struct MulleObjCLoader *loader, 
@@ -46,15 +51,15 @@ void MulleObjCLoaderRegisterCategory(struct MulleObjCLoader *loader,
 
 ## Best Practices
 
-1. Handle dependencies properly
-2. Set appropriate load priorities
-3. Register all required classes
-4. Consider initialization order
-5. Document loader requirements
+1.  Handle dependencies properly
+2.  Set appropriate load priorities
+3.  Register all required classes
+4.  Consider initialization order
+5.  Document loader requirements
 
 ## Thread Safety
 
-- Loading is not thread-safe
-- Initialize during startup
-- Consider dependency locks
-- Handle concurrent access
+-   Loading is not thread-safe
+-   Initialize during startup
+-   Consider dependency locks
+-   Handle concurrent access

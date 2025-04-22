@@ -1,40 +1,30 @@
 # NSZone
 
-The `NSZone` structure provides legacy support for zone-based memory allocation. In modern mulle-objc, zones are deprecated and all zone functions are implemented as pass-through to standard memory allocation.
+Legacy compatibility structure for zone-based memory allocation. In modern MulleObjC, all zone operations map to standard memory functions.
 
 ## Structure
-
-```objc
+```c
 typedef struct {
-    void *unused;  // empty would be not C11
+    void *unused;  // Required for C11 compatibility
 } NSZone;
 ```
 
-## Functions
+## Zone Functions
+All return NULL or map to standard allocation:
+- `NSDefaultMallocZone()` - Returns NULL
+- `NSCreateZone(startSize, granularity, canFree)` - Returns NULL
+- `NSRecycleZone(zone)` - No-op
+- `NSSetZoneName(zone, name)` - No-op
+- `NSZoneFromPointer(p)` - Returns NULL
 
-### Zone Management
+## Memory Functions
+Map directly to standard allocation:
+- `NSZoneMalloc(zone, size)` → `mulle_malloc(size)`
+- `NSZoneCalloc(zone, numElems, byteSize)` → `mulle_calloc(numElems, byteSize)`
+- `NSZoneRealloc(zone, p, size)` → `mulle_realloc(p, size)`
+- `NSZoneFree(zone, p)` → `mulle_free(p)`
 
-* `NSDefaultMallocZone()` - Returns the default allocation zone (returns NULL)
-* `NSCreateZone(startSize, granularity, canFree)` - Creates a new zone (returns NULL)
-* `NSRecycleZone(zone)` - Recycles a zone (no-op)
-* `NSSetZoneName(zone, name)` - Sets a zone's name (no-op)
-* `NSZoneFromPointer(p)` - Gets zone containing pointer (returns NULL)
+## Object Zone Access
+- `mulle_objc_object_zone()` - Returns NULL (created by compiler for -zone)
 
-### Memory Allocation
-
-* `NSZoneMalloc(zone, size)` - Allocates memory from a zone (uses mulle_malloc)
-* `NSZoneCalloc(zone, numElems, byteSize)` - Allocates zeroed memory
-* `NSZoneRealloc(zone, p, size)` - Reallocates memory block
-* `NSZoneFree(zone, p)` - Frees memory allocated from zone
-
-### Object Zone Access
-
-* `mulle_objc_object_zone()` - Returns zone of an object (returns NULL)
-
-## Notes
-
-All zone functions are provided for compatibility with legacy code. In modern mulle-objc:
-- Zones are not used for memory management
-- All zone creation functions return NULL
-- Memory allocation functions pass through to standard allocation
-- Zone management functions are no-ops
+Note: All zone functions exist only for legacy compatibility. Modern code should use standard allocation functions.

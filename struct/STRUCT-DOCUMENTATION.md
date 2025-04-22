@@ -1,10 +1,18 @@
 # MulleObjC Struct Documentation
 
+Core data structures used throughout MulleObjC.
+
 ## Core Structures
 
-* [NSRange](NSRange.md) - Structure and functions for handling ranges (location + length pairs)
-* [NSZone](NSZone.md) - Memory zone allocation and management functions (also documented in class documentation)
-* [MulleObjCContainerCallback](MulleObjCContainerCallback.md) - Container callback structure and functions
-* [MulleObjCContainerObjectCallback](MulleObjCContainerObjectCallback.md) - Container object lifecycle management callbacks
+### NSRange
+Location and length pair for representing ranges in collections and strings. Provides extensive operations for range manipulation and comparison.
 
-_All documentation uses traditional function calls rather than dot notation, following mulle-objc conventions._
+### NSZone
+Legacy compatibility structure for memory zones. All operations map to standard memory functions in modern code.
+
+### Container Callbacks
+Structures defining memory management and comparison behavior for container classes:
+- `MulleObjCContainerCallback` - Basic container operations
+- `MulleObjCContainerObjectCallback` - Object lifecycle management in containers
+
+See individual documentation files for detailed information.

@@ -1,87 +1,72 @@
 # MulleObjCTaggedPointer
 
-The `MulleObjCTaggedPointer` protocol provides support for tagged pointers, an optimization technique that allows small values to be stored directly in the pointer bits rather than allocating separate memory.
-
-## Required Methods
-
-* `isTaggedPointerEnabled` - Class method that returns whether tagged pointer optimization is enabled
-
-## Optional Methods (Thread-Safe)
-
-* `retain` - Retains the tagged pointer object
-* `autorelease` - Autoreleases the tagged pointer object
-* `release` - Releases the tagged pointer object
-* `retainCount` - Returns the retain count (always 1 for tagged pointers)
-
-## Registration and Validation
-
-### Class Registration
-```objc
-int MulleObjCTaggedPointerRegisterClassAtIndex(Class cls, unsigned int index);
-```
-* Registers a class for tagged pointer usage
-* Returns -1 on error with errno set:
-  - EINVAL: cls is nil
-  - ENOENT: index not available for architecture
-* Aborts if index is already in use
-
-### Value Validation Functions
-
-1. **Integer Values**
-```objc
-BOOL MulleObjCTaggedPointerIsIntegerValue(NSInteger value);
-BOOL MulleObjCTaggedPointerIsUnsignedIntegerValue(NSUInteger value);
-```
-
-2. **Float Values**
-```objc
-BOOL MulleObjCTaggedPointerIsFloatValue(float value);
-```
-
-### Class Index Management
-```objc
-int MulleObjCTaggedPointerClassGetIndex(Class cls);
-```
-* Returns the tagged pointer index for a class
-* Returns -1 with errno=EINVAL if cls is nil
-
-## Implementation Notes
-
-1. Tagged pointers are immutable by default
-2. Memory management methods are thread-safe
-3. No actual retain/release operations occur
-4. Values are stored directly in pointer bits
-5. Useful for small integers and floats
-
-## Benefits
-
-1. Reduced memory allocation
-2. Improved performance
-3. Automatic thread safety
-4. Zero retain/release overhead
-5. Efficient small value handling
+Protocol for objects that can be represented as tagged pointers. Tagged pointers store small values directly in the pointer bits rather than allocating separate storage.
 
 ## Usage Example
 
 ```objc
-// Register a class for tagged pointers
-Class myClass = [MyNumber class];
-int index = MulleObjCTaggedPointerRegisterClassAtIndex(myClass, 1);
+// Register your class for tagged pointer usage
+@interface MySmallInteger : NSObject <MulleObjCTaggedPointer>
+@end
 
-// Check if a value can be stored as tagged pointer
-NSInteger value = 42;
-if (MulleObjCTaggedPointerIsIntegerValue(value)) {
-    // Value can be stored as tagged pointer
+// Register at index 1 (indexes 0-7 available on 64 bit)
+MulleObjCTaggedPointerRegisterClassAtIndex([MySmallInteger class], 1);
+
+// Create tagged pointer instances
+if (MulleObjCTaggedPointerIsIntegerValue(value))
+{
+   id obj = MulleObjCCreateTaggedPointerWithIntegerValueAndIndex(value, 1);
+   NSInteger val = MulleObjCTaggedPointerGetIntegerValue(obj);
 }
-
-// Get class index
-int classIndex = MulleObjCTaggedPointerClassGetIndex(myClass);
 ```
+
+## Class Methods
+
+### Registration and Configuration
+- `+isTaggedPointerEnabled` - Returns whether tagged pointers are enabled in the runtime
+- `MulleObjCTaggedPointerRegisterClassAtIndex(Class cls, unsigned int index)` - Registers a class for tagged pointer usage at a specific index
+
+### Value Validation
+- `MulleObjCTaggedPointerIsIntegerValue(NSInteger value)` - Tests if value fits in tagged pointer
+- `MulleObjCTaggedPointerIsUnsignedIntegerValue(NSUInteger value)` - Tests if unsigned value fits
+- `MulleObjCTaggedPointerIsFloatValue(float value)` - Tests if float value fits
+- `MulleObjCTaggedPointerIsDoubleValue(double value)` - Tests if double value fits
+
+### Tagged Pointer Creation
+- `MulleObjCCreateTaggedPointerWithIntegerValueAndIndex(NSInteger value, NSUInteger index)`
+- `MulleObjCCreateTaggedPointerWithUnsignedIntegerValueAndIndex(NSUInteger value, NSUInteger index)`
+- `MulleObjCCreateTaggedPointerWithFloatValueAndIndex(float value, NSUInteger index)`
+- `MulleObjCCreateTaggedPointerWithDoubleValueAndIndex(double value, NSUInteger index)`
+
+### Value Extraction
+- `MulleObjCTaggedPointerGetIntegerValue(void *pointer)` - Gets stored integer
+- `MulleObjCTaggedPointerGetUnsignedIntegerValue(void *pointer)` - Gets stored unsigned
+- `MulleObjCTaggedPointerGetFloatValue(void *pointer)` - Gets stored float
+- `MulleObjCTaggedPointerGetDoubleValue(void *pointer)` - Gets stored double
+- `MulleObjCTaggedPointerGetIndex(void *pointer)` - Gets index of tagged pointer
+
+## Memory Management
+
+All these methods are thread-safe:
+- `-retain` - Returns self (tagged pointers are immortal)
+- `-autorelease` - Returns self (no-op)
+- `-release` - No-op
+- `-retainCount` - Returns MULLE_OBJC_NEVER_RELEASE
 
 ## Best Practices
 
-1. Use for small, immutable values
-2. Register classes early in initialization
-3. Verify value ranges before using
-4. Handle registration errors appropriately
-5. Consider architecture limitations
+1. Always check if a value fits before creating a tagged pointer
+2. Register your class early in the program startup
+3. Use small consecutive index values (typically 0-7)
+4. Remember tagged pointers are immutable by design
+5. Leverage thread-safety for concurrent access
+
+## Notes
+
+- Tagged pointers are immutable and immortal - they cannot be deallocated
+- All methods are thread-safe by definition
+- The class must be registered with the runtime using `MulleObjCTaggedPointerRegisterClassAtIndex`
+- Can be disabled in the runtime with universe config `no_tagged_pointer`
+- Attempting to allocate or deallocate a tagged pointer object will abort
+- Commonly used for small integers, characters, and other compact values
+- Provides significant memory and performance benefits for small values

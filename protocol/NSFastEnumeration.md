@@ -1,57 +1,67 @@
 # NSFastEnumeration
 
-The `NSFastEnumeration` protocol provides high-performance enumeration of collections. It's specifically designed to work with the `for...in` loop syntax and offers better performance than traditional enumeration methods.
+Protocol for supporting fast enumeration in collections. This is the modern replacement for traditional NSEnumeration, optimized for the `for`..`in` syntax.
 
 ## Required Methods
 
-* `count` - Returns the number of items in the collection
-* `countByEnumeratingWithState:objects:count:` - Core enumeration method that provides batched access to collection items
-
-## Fast Enumeration State
-
-```objc
-typedef struct {
-    NSUInteger state;        // Enumeration state
-    id *itemsPtr;           // Pointer to enumerated items
-    NSUInteger *mutationsPtr; // Collection modification detection
-    NSUInteger extra[5];    // Reserved for implementation use
-} NSFastEnumerationState;
-```
-
-## Advantages Over Traditional Enumeration
-
-1. Optimized for `for...in` loops
-2. No need to retain enumerated object
-3. Batch processing of items for better performance
-4. Automatic mutation detection during enumeration
+- `countByEnumeratingWithState:objects:count:` - Returns items in batches for enumeration
+- `count` - Returns total number of enumerable items
 
 ## Usage Example
 
 ```objc
-for (id item in collection) {
-    // Process item
+// Implementing the protocol
+@interface MyCollection : NSObject <NSFastEnumeration>
+@end
+
+@implementation MyCollection
+- (NSUInteger) count 
+{
+   return _count;
+}
+
+- (NSUInteger) countByEnumeratingWithState:(NSFastEnumerationState *) state
+                                  objects:(id *) stackbuf
+                                    count:(NSUInteger) len
+{
+   // Return items in batches, updating state
+   NSUInteger  batchCount;
+   
+   // First call: initialize state
+   if (! state->state)
+   {
+      state->mutationsPtr = &_mutations;
+      state->state = 1;
+      state->itemsPtr = _storage;
+   }
+   
+   // Return batch of items or 0 when done
+   batchCount = MIN( len, _count - state->state + 1);
+   state->state += batchCount;
+   return( batchCount);
+}
+@end
+
+// Using fast enumeration
+for( id obj in collection)  
+{
+   // Objects delivered in efficient batches
+   [obj doSomething];
 }
 ```
 
-## Implementation Guidelines
+## Key Features
 
-When implementing NSFastEnumeration:
-
-1. Return items in batches for efficiency
-2. Track mutations to prevent enumeration during modifications
-3. Maintain state between batch requests
-4. Implement count for collection size information
-5. Return 0 when enumeration is complete
-
-## Thread Safety
-
-* Fast enumeration is not inherently thread-safe
-* Mutations during enumeration are detected but not prevented
-* Implement appropriate synchronization if needed
+- Objects are delivered in batches for better performance
+- Mutation detection during enumeration
+- No retain/release of enumerated container required
+- Thread-safe if container is thread-safe
+- Supports the Objective-C `for`..`in` syntax
 
 ## Notes
 
-* Primarily used by collection classes (NSArray, NSSet, etc.)
-* More efficient than NSEnumerator for large collections
-* Mutation detection helps prevent enumeration of modified collections
-* The extra array in NSFastEnumerationState is reserved for implementation details
+- The container is not retained during enumeration
+- Mutations during enumeration will raise an exception
+- State is maintained between batch calls
+- Batch size can be optimized for different collection types
+- Replaces older NSEnumeration protocol

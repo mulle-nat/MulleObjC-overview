@@ -4,7 +4,7 @@ Protocol for object copying in mulle-objc.
 
 ## Required Methods
 
-- [`-copy`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+copy+of+NSCopying+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSCopying.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSCopying.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Creates and returns a copy of the receiver
+- [`-copy`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+copy+of+NSCopying+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSCopying.h) - Creates and returns a copy of the receiver
 
 ## Important Implementation Notes
 

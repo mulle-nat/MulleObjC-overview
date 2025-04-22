@@ -1,16 +1,10 @@
 # MulleObjCException
 
-Protocol for exception handling in mulle-objc. Defines the interface that exception objects must implement.
-
-## Required Methods
-
-- `-name` - Returns the exception name as a string
-- `-reason` - Returns the reason for the exception
-- `-userInfo` - Returns additional information about the exception
+Protocol for exception handling in mulle-objc. Defines the minimal interface that exception objects must implement.
 
 ## Optional Methods
 
-- `-raise` - Raises the exception (default implementation provided)
-- `-mulleRaiseWithStacktrace:` - Raises with a specific stacktrace
+- `-raise` - Raises the exception (default implementation provided by MulleObjCException class)
+- `-UTF8String` - Returns a string representation of the exception (default implementation returns the class name)
 
-Note: NSException is the primary implementor of this protocol.
+Note: This is a minimal protocol that provides basic exception functionality. The actual NSException class in Foundation provides additional features like name, reason and userInfo.

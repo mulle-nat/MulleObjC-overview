@@ -1,50 +1,42 @@
-# MulleObjCStackFrame
+# MulleObjCStackFrame Functions
 
-Functions for managing stack frames and call traces in mulle-objc.
+Functions for stack frame management in mulle-objc.
 
-## Stack Frame Operations
+## Stack Frame Management
 
-### Frame Management
+### Frame Operations
+```c
+// Get stack frame info
+struct _mulle_objc_threadinfo *_mulle_objc_thread_get_threadinfo(struct _mulle_objc_universe *universe);
 
-``` c
-void MulleObjCPushStackFrame(struct MulleObjCStackFrame *frame);
-void MulleObjCPopStackFrame(void);
+// Initialize/destroy thread info
+void _mulle_objc_threadinfo_destructor(struct _mulle_objc_threadinfo *info,
+                                     void *foundationspace);
+void _mulle_objc_threadinfo_initializer(struct _mulle_objc_threadinfo *config);
 ```
 
-### Frame Information
+## Important Notes
 
-``` c
-struct MulleObjCStackFrame *MulleObjCGetCurrentStackFrame(void);
-NSUInteger MulleObjCGetStackFrameCount(void);
-```
+1. Frame Management
+   - Handle thread info
+   - Clean up properly
+   - Initialize correctly
+   - Check state
 
-## Stack Traces
+2. Thread Safety
+   - Thread-local frames
+   - Handle concurrent access
+   - Clean up on exit
+   - Consider lifecycle
 
-### Trace Generation
+3. Best Practices
+   - Initialize properly
+   - Clean up resources
+   - Handle errors
+   - Document usage
 
-``` c
-NSArray *MulleObjCCreateStackTrace(void);
-NSString *MulleObjCStackTraceDescription(void);
-```
-
-### Frame Analysis
-
-``` c
-BOOL MulleObjCStackFrameIsValid(struct MulleObjCStackFrame *frame);
-SEL MulleObjCStackFrameGetSelector(struct MulleObjCStackFrame *frame);
-```
-
-## Best Practices
-
-1.  Use stack frames for debugging
-2.  Clean up frames properly
-3.  Consider performance impact
-4.  Handle frame overflow
-5.  Document frame usage
-
-## Thread Safety
-
--   Stack frames are thread-local
--   Safe for concurrent use
--   Consider async operations
--   Handle cross-thread traces
+4. Performance
+   - Minimize allocations
+   - Cache when possible
+   - Handle cleanup
+   - Consider inlining

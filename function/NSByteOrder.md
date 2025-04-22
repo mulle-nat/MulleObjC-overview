@@ -1,16 +1,42 @@
-# NSByteOrder
+# NSByteOrder Functions
 
-Functions for byte order detection and management.
+Functions for byte order handling in mulle-objc.
 
-## Byte Order Detection
+## Byte Order Operations
 
-- `NSHostByteOrder(void)` - Returns current host byte order (NS_LittleEndian or NS_BigEndian)
+### Basic Functions
+```c
+// Get host byte order
+NSHostByteOrder NSHostByteOrder(void);
 
-## Constants
+// Swap bytes
+uint16_t NSSwapShort(uint16_t x);
+uint32_t NSSwapLong(uint32_t x);
+uint64_t NSSwapLongLong(uint64_t x);
+```
 
-### MulleObjCByteOrder Enum
-- `NS_UnknownByteOrder` - Unknown byte order
-- `NS_LittleEndian` - Little-endian (Intel)
-- `NS_BigEndian` - Big-endian (Power)
+## Important Notes
 
-Note: Implementation relies on compiler macros (__BIG_ENDIAN__) for detection.
+1. Byte Order
+   - Check host order
+   - Handle endianness
+   - Swap when needed
+   - Document usage
+
+2. Performance
+   - Use native order
+   - Minimize swaps
+   - Cache results
+   - Consider alignment
+
+3. Best Practices
+   - Check platform
+   - Handle all cases
+   - Document swaps
+   - Test thoroughly
+
+4. Usage
+   - Network protocols
+   - File formats
+   - Binary data
+   - Cross-platform code

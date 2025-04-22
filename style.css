@@ -1,0 +1,212 @@
+/* Base Typography */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 
+               "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  margin: 2rem;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 1.5em;
+  margin-bottom: 0.75em;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+h1 { font-size: 2.2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.3rem; }
+h5 { font-size: 1.1rem; }
+h6 { font-size: 1rem; }
+
+p {
+  margin-bottom: 1.25em;
+}
+
+/* Lists */
+ul, ol {
+  margin: 1.25rem 0;
+  padding-left: 2rem;
+}
+li {
+  margin-bottom: 0.5rem;
+}
+
+/* Code Blocks */
+pre {
+  background: #f6f8fa;
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.9em;
+  background: #f6f8fa;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+th, td {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+}
+th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+/* Blockquotes */
+blockquote {
+  border-left: 4px solid #ddd;
+  padding: 0.5rem 1rem;
+  margin: 1.5rem 0;
+  color: #666;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  margin: 1rem 0;
+}
+
+/* Horizontal Rule */
+hr {
+  border: 0;
+  border-top: 1px solid #eee;
+  margin: 2rem 0;
+}
+
+/* Forms */
+input, textarea, select {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0.5rem 0;
+}
+button {
+  padding: 0.5rem 1rem;
+  background-color: #0366d6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Accessibility Focus States */
+:focus {
+  outline: 2px solid #0366d6;
+  outline-offset: 2px;
+}
+
+/* Tables with thin borders and subtle hover */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  border: 1px solid #ccc; /* thin outer border */
+  border-radius: 6px;
+  overflow: hidden; /* to round corners */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+table:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+th, td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #eee; /* subtle row separation */
+  border-right: 1px solid #eee;
+}
+
+th:last-child, td:last-child {
+  border-right: none;
+}
+
+th {
+  background-color: #f0f4f8;
+  font-weight: 600;
+  color: #222;
+  text-align: left;
+}
+
+/* Links with subtle gradient and underline animation */
+a {
+  color: #0366d6;
+  text-decoration: none;
+  background-image: linear-gradient(120deg, #0366d6 0%, #0056b3 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 2px;
+  background-position: 0 100%;
+  transition: background-size 0.3s ease, color 0.3s ease;
+  position: relative;
+}
+
+a:hover, a:focus {
+  color: #004080;
+  background-size: 100% 100%;
+  outline: none;
+}
+
+a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background: #0056b3;
+  transition: width 0.3s ease;
+}
+
+a:hover::after, a:focus::after {
+  width: 100%;
+}
+
+pre.objc, pre.c, pre.sh {
+  font-size: 0.85em; /* 15% smaller than base */
+  background: #272822 !important; /* Classic Monokai dark background */
+  color: #f8f8f2; /* Base text color */
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+  border-radius: 4px;
+  position: relative;
+}
+
+/* Add language label (optional) */
+pre.objc::before, pre.c::before, pre.sh::before {
+  content: attr(class);
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: rgba(255,255,255,0.1);
+  color: #66d9ef;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75em;
+  border-bottom-left-radius: 4px;
+}
+
+pre.objc code, pre.c code, pre.sh code {
+  color: #f8f8f2; /* Base text */
+}
+

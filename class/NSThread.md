@@ -1,161 +1,109 @@
 # NSThread
 
-## Overview
+Thread management class in mulle-objc. Provides 1:1 mapping to native threads with thread-local storage and autorelease pool management.
 
-`NSThread` provides thread management capabilities in mulle-objc. It
-implements a 1:1 thread mapping model and integrates deeply with the
-runtime's thread safety mechanisms.
+## Base Class
+NSObject
 
-## Key Features
+## Implemented Protocols
+- MulleObjCThreadSafe
 
--   1:1 thread mapping
--   Thread lifecycle management
--   Resource management
--   Runtime integration
--   Thread-local storage
+## Instance Variables
+```objc
+mulle_atomic_pointer_t   _osThread;           // Native thread handle
+mulle_atomic_pointer_t   _runLoop;            // Associated run loop
+mulle_atomic_pointer_t   _nameUTF8String;     // Thread name
+mulle_atomic_pointer_t   _cancelled;          // Cancellation flag
+NSInvocation            *_invocation;         // Target invocation
+id                       _userInfo;           // Thread-local storage
+MulleThreadFunction_t   *_function;           // C function to run
+void                    *_functionArgument;    // Function argument
+struct mulle__pointerarray _finalizers;       // Cleanup objects
+void                    *_poolconfiguration;   // Autorelease pool config
+struct mulle_map         _map;                // Thread dictionary
+int                      _rval;               // Return value
+char                     _isObjectFunctionArgument;
+char                     _isDetached;
+char                     _threadDidGainAccess;
+```
 
-## Usage
+## Methods
 
 ### Thread Creation
+- `+mainThread` - Returns main thread object
+- `+currentThread` - Returns current thread object
+- `+detachNewThreadSelector:toTarget:withObject:` - Creates and starts new thread
+- `+mulleThreadWithTarget:selector:object:` - Creates thread with target/selector
+- `+mulleThreadWithFunction:argument:` - Creates thread with C function
+- `+mulleThreadWithObjectFunction:object:` - Creates thread with object function
 
-``` objc
-// Create and start a new thread
-[NSThread detachNewThreadSelector:@selector(threadMain:)
-                       toTarget:self
-                     withObject:nil];
+### Thread Control
+- `-mulleStart` - Starts the thread
+- `-mulleJoin` - Waits for thread completion
+- `-start` - Legacy interface (detaches thread)
+- `-cancel` - Marks thread for cancellation
+- `-isCancelled` - Checks cancellation status
 
-// Create without starting
-NSThread *thread = [[NSThread alloc] initWithTarget:self
-                                         selector:@selector(threadMain:)
-                                           object:nil];
-[thread start];
+### Thread Information
+- `+mulleIsMainThread` - Checks if current thread is main thread
+- `+isMultiThreaded` - Checks if multiple threads are running
+- `-mulleReturnStatus` - Gets thread return value
+- `-mulleNameUTF8String` - Gets thread name
+- `-mulleSetNameUTF8String:` - Sets thread name
+
+### Run Loop Integration
+- `-mulleSetRunLoop:` - Sets thread's run loop
+- `-mulleRunLoop` - Gets thread's run loop
+
+### Finalizers
+- `-mulleAddFinalizer:` - Adds cleanup object
+- `-mulleRemoveFinalizer:` - Removes cleanup object
+
+## Usage Example
+
+```objc
+// Create and start thread with selector
+[NSThread detachNewThreadSelector:@selector(doWork:)
+                        toTarget:self
+                      withObject:data];
+
+// Create thread with C function
+NSThread *thread = [NSThread mulleThreadWithFunction:workerFunction 
+                                          argument:data];
+[thread mulleStart];
+[thread mulleJoin];
+
+// Create thread with block
+NSThread *thread = [NSThread mulleThreadWithObjectFunction:^(NSThread *thread, id obj) {
+    // Thread work here
+    return 0;
+} object:data];
+[thread mulleStart];
 ```
 
-### Thread Management
+## Important Notes
 
-``` objc
-// Get current thread
-NSThread *current = [NSThread currentThread];
+1. Thread Safety
+   - Thread objects are thread-safe
+   - Each thread has its own autorelease pool
+   - Careful with non-thread-safe objects
 
-// Thread operations
-[NSThread sleepForTimeInterval:1.0];
-[NSThread exit];
+2. Memory Management
+   - Thread retains target and arguments
+   - Objects passed between threads must be thread-safe
+   - Use finalizers for cleanup
 
-// Thread information
-[thread mulleSetNameUTF8String:"WorkerThread"];
-// Priority control not directly exposed
-```
+3. Thread Lifecycle
+   - Threads can be joined or detached
+   - Detached threads clean up automatically
+   - Join threads to get return values
 
-### Thread-Local Storage
+4. Autorelease Pools
+   - Each thread has root autorelease pool
+   - Pool configuration for debugging
+   - Pools managed automatically
 
-``` objc
-// Store thread-specific data
-[thread setUserInfo:dict];
-id threadInfo = [thread userInfo];
-```
-
-## Technical Details
-
-### Core Methods
-
-1.  **Thread Creation**:
-
-    ``` objc
-    + (void)detachNewThreadSelector:(SEL)selector 
-                          toTarget:(id)target 
-                        withObject:(id)argument;
-    - (id)initWithTarget:(id)target
-                selector:(SEL)selector
-                  object:(id)argument;
-    ```
-
-2.  **Thread Control**:
-
-    ``` objc
-    - (void)start;
-    + (void)exit;
-    + (void)sleepForTimeInterval:(NSTimeInterval)interval;
-    ```
-
-3.  **Thread Information**:
-
-    ``` objc
-    + (NSThread *)currentThread;
-    - (void)mulleSetNameUTF8String:(char *)name;
-    - (char *)mulleNameUTF8String;
-    ```
-
-## Best Practices
-
-1.  **Thread Creation**:
-    -   Use autorelease pools
-    -   Handle exceptions
-    -   Clean up resources
-2.  **Thread Safety**:
-    -   Use proper synchronization
-    -   Avoid shared mutable state
-    -   Handle thread termination
-3.  **Resource Management**:
-    -   Clean up thread-local storage
-    -   Release retained objects
-    -   Handle thread lifecycle
-
-## Important Considerations
-
-1.  **Memory Management**:
-    -   Thread-local autorelease pools
-    -   Resource cleanup
-    -   Memory barriers
-2.  **Performance**:
-    -   Thread creation cost
-    -   Context switching
-    -   Resource contention
-3.  **Safety**:
-    -   Exception handling
-    -   Thread termination
-    -   Resource leaks
-
-## Use Cases
-
-1.  **Worker Thread**:
-
-    ``` objc
-    + (void)threadMain:(id)argument
-    {
-        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-        @try {
-            // Thread work
-            [self processData:argument];
-        }
-        @finally {
-            [pool drain];
-        }
-    }
-    ```
-
-2.  **Background Processing**:
-
-    ``` objc
-    - (void)startBackgroundWork
-    {
-        [NSThread detachNewThreadSelector:@selector(backgroundWork:)
-                               toTarget:self
-                             withObject:nil];
-    }
-    ```
-
-3.  **Thread Pool**:
-
-    ``` objc
-    - (void)setupThreadPool
-    {
-        for (NSUInteger i = 0; i < poolSize; i++)
-        {
-            NSThread *worker = [[NSThread alloc] initWithTarget:self
-                                                     selector:@selector(workerMain:)
-                                                       object:nil];
-            [worker mulleSetNameUTF8String:mulle_sprintf("Worker%lu", i)];
-            [worker start];
-        }
-    }
-    ```
+5. Thread Local Storage
+   - Use _userInfo for thread data
+   - Thread dictionary available
+   - Map for key-value storage

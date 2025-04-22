@@ -1,66 +1,50 @@
 # NSInvocation Functions
 
-Functions for creating and manipulating method invocations in mulle-objc.
+Functions for working with method invocations in mulle-objc.
 
-## Invocation Creation
+## Invocation Support
 
-### Basic Creation
+### Frame Management
+```c
+// Get frame size for MetaABI
+size_t mulle_metaabi_sizeof_union(size_t size);
 
-``` c
-NSInvocation *NSInvocationFromMethodSignature(NSMethodSignature *sig);
-void NSInvocationSetSelector(NSInvocation *inv, SEL sel);
+// Check if type can be stored in pointer
+BOOL mulle_metaabi_is_voidptr_storage_compatible(size_t size);
 ```
 
-### Target Management
+## Memory Management
 
-``` c
-void NSInvocationSetTarget(NSInvocation *inv, id target);
-id NSInvocationGetTarget(NSInvocation *inv);
+### Value Handling
+```c
+// Copy values
+void mulle_id_copy(id *dst, id *src, size_t n);
+
+// Release objects
+void _mulle_objc_objects_release(void **objects, NSUInteger count);
 ```
 
-## Argument Handling
+## Important Notes
 
-### Argument Access
+1. Memory Layout
+   - Follow MetaABI rules
+   - Handle variable sizes
+   - Consider alignment
+   - Manage frames
 
-``` c
-void NSInvocationGetArgument(NSInvocation *inv, void *buffer, NSInteger idx);
-void NSInvocationSetArgument(NSInvocation *inv, void *buffer, NSInteger idx);
-```
+2. Performance
+   - Cache invocations
+   - Minimize copying
+   - Use MetaABI
+   - Batch operations
 
-### Return Value
+3. Best Practices
+   - Check compatibility
+   - Handle memory properly
+   - Release objects
+   - Validate frames
 
-``` c
-void NSInvocationGetReturnValue(NSInvocation *inv, void *buffer);
-void NSInvocationSetReturnValue(NSInvocation *inv, void *buffer);
-```
-
-## Invocation Control
-
-### Execution
-
-``` c
-void NSInvocationInvoke(NSInvocation *inv);
-void NSInvocationInvokeWithTarget(NSInvocation *inv, id target);
-```
-
-### State Management
-
-``` c
-BOOL NSInvocationArgumentsRetained(NSInvocation *inv);
-void NSInvocationRetainArguments(NSInvocation *inv);
-```
-
-## Best Practices
-
-1.  Use appropriate buffer sizes
-2.  Retain arguments when needed
-3.  Handle return values properly
-4.  Check method signatures
-5.  Consider memory management
-
-## Thread Safety
-
--   Invocations are not thread-safe
--   Use separate invocations per thread
--   Synchronize shared invocations
--   Consider argument retention
+4. Restrictions
+   - MetaABI requirements
+   - Size limitations
+   - Storage rules

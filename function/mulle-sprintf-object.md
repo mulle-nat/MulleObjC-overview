@@ -1,53 +1,44 @@
-# mulle-sprintf-object
+# mulle-sprintf-object Functions
 
-Functions for formatted string operations with objects in mulle-objc.
+Functions for object string formatting in mulle-objc.
 
-## Object Formatting
+## Formatting Functions
 
-### Basic Formatting
-
-``` c
-int mulle_sprintf_object(char *buf, size_t len, id obj);
-int mulle_sprintf_object_description(char *buf, size_t len, id obj);
+### Object Formatting
+```c
+// Format object description
+void mulle_sprintf_object_do_format_object(struct mulle_buffer *buffer,
+                                         struct mulle_sprintf_formatcontext *ctxt,
+                                         struct mulle_sprintf_argumentarray *arguments,
+                                         int argc,
+                                         int width,
+                                         int precision,
+                                         int modifier,
+                                         int conversion);
 ```
 
-### Extended Formatting
+## Important Notes
 
-``` c
-int mulle_sprintf_object_debug(char *buf, size_t len, id obj);
-int mulle_sprintf_object_detailed(char *buf, size_t len, id obj);
-```
+1. Formatting
+   - Handle all types
+   - Format properly
+   - Check buffer space
+   - Handle errors
 
-## Format Specifiers
+2. Thread Safety
+   - Thread-safe output
+   - Handle concurrent access
+   - Buffer appropriately
+   - Clean up properly
 
-``` objc
-|----|---------------------------------------------|
-|%@  | Object description                          |
-|%#@ | Colored and non-locking object description  |
-|%bd | `BOOL`                                      |
-```
+3. Best Practices
+   - Check buffer size
+   - Handle NULL values
+   - Format consistently
+   - Document formats
 
-
-## Buffer Management
-
-### Safe Operations
-
-``` c
-int mulle_sprintf_object_snprintf(char *buf, size_t len, const char *format, ...);
-char *mulle_sprintf_object_asprintf(const char *format, ...);
-```
-
-## Best Practices
-
-1.  Check buffer sizes
-2.  Handle nil objects
-3.  Use appropriate format flags
-4.  Free allocated strings
-5.  Consider localization
-
-## Notes
-
--   Part of mulle-sprintf library
--   Thread-safe operations
--   Handles circular references
--   Supports custom formatters
+4. Performance
+   - Buffer output
+   - Minimize allocations
+   - Cache when possible
+   - Clean up buffers

@@ -1,28 +1,52 @@
 # MulleObjCHashFunctions
 
-Functions for computing hash values in mulle-objc. All of these are
-thread safe.
+Core functions for hash computation in mulle-objc.
 
-## Byte Hashing
+## Hash Functions
 
-- `MulleObjCBytesHash(void *buf, NSUInteger length)` - Hashes arbitrary bytes
-- `MulleObjCBytesHashRange(void *buf, NSRange range)` - Hashes bytes in range
-- `MulleObjCBytesPartialHash(void *buf, NSUInteger length)` - Hashes up to 64 bytes
-- `MulleObjCGetHashBytesRange(NSUInteger length)` - Gets optimal range for hashing
+### String Hashing
+```c
+// Hash UTF8 string
+mulle_objc_uniqueid_t mulle_objc_uniqueid_from_string(char *s);
 
-## String Hashing
+// Hash method name
+mulle_objc_methodid_t mulle_objc_methodid_from_string(char *s);
 
-- `MulleObjCHashUTF8String(char *s)` - Hashes UTF8 string
-- `MulleObjCHashUTF8StringWithLength(char *s, size_t len)` - Hashes UTF8 string with known length
-- `MulleObjCHashUnicodeString(unichar *s, size_t len)` - Hashes Unicode string
+// Hash class name
+mulle_objc_classid_t mulle_objc_classid_from_string(char *s);
+```
 
-## Value Hashing
+### Pointer Hashing
+```c
+// Hash pointer value
+uintptr_t _mulle_objc_object_hash(void *obj);
 
-- `MulleObjCHashPointer(void *p)` - Hashes pointer value
-- `MulleObjCHashInt(int value)` - Hashes integer
-- `MulleObjCHashLong(long value)` - Hashes long
-- `MulleObjCHashLongLong(long long value)` - Hashes long long
-- `MulleObjCHashFloat(float value)` - Hashes float
-- `MulleObjCHashDouble(double value)` - Hashes double
+// Hash pointer with mask
+uintptr_t _mulle_objc_object_hash_inline(void *obj, uintptr_t mask);
+```
 
-Note: All hash functions handle NULL input by returning -1. The partial hash function optimizes performance by limiting input size to 64 bytes.
+## Important Notes
+
+1. Hash Properties
+   - Consistent results
+   - Good distribution
+   - Fast computation
+   - Handle NULL values
+
+2. Thread Safety
+   - Functions are thread-safe
+   - No shared state
+   - Safe for concurrent use
+   - Cache results
+
+3. Best Practices
+   - Cache hash values
+   - Handle collisions
+   - Use appropriate function
+   - Consider distribution
+
+4. Performance
+   - Fast computation
+   - Minimal overhead
+   - Cache when possible
+   - Avoid recomputation

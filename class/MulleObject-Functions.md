@@ -1,77 +1,54 @@
 # MulleObject Functions
 
-Core functions for the MulleObject base class in mulle-objc.
+Core functions for MulleObject class in mulle-objc.
 
-## Object Creation
+## Object Management
 
-### Initialization
+### Instance Operations
+```c
+// Get instance allocator
+struct mulle_allocator *MulleObjCInstanceGetAllocator(id obj);
 
-``` c
-id MulleObjectInit(id self);
-id MulleObjectAlloc(Class cls);
-id MulleObjectAllocWithZone(Class cls, NSZone *zone);
+// Get class name
+char *MulleObjCInstanceGetClassNameUTF8String(id obj);
+
+// Set class
+void MulleObjCInstanceSetClass(id obj, Class cls);
 ```
-
-### Object Copying
-
-``` c
-id MulleObjectCopy(id self);
-id MulleObjectCopyWithZone(id self, NSZone *zone);
-```
-
-## Runtime Operations
-
-### Method Resolution
-
-``` c
-BOOL MulleObjectResolveInstanceMethod(Class cls, SEL sel);
-BOOL MulleObjectResolveClassMethod(Class cls, SEL sel);
-```
-
-### Message Forwarding
-
-``` c
-id MulleObjectForwardingTargetForSelector(id self, SEL sel);
-void MulleObjectForwardInvocation(id self, NSInvocation *invocation);
-```
-
-## Object Description
-
-### String Representation
-
-``` c
-char *MulleObjectDescriptionUTF8String(id self);
-char *MulleObjectDebugDescriptionUTF8String(id self);
-```
-
-### Hash and Equality
-
-``` c
-NSUInteger MulleObjectHash(id self);
-BOOL MulleObjectIsEqual(id self, id other);
-```
-
-## Memory Management
-
-### Reference Counting
-
-``` c
-id MulleObjectRetain(id self);
-void MulleObjectRelease(id self);
-id MulleObjectAutorelease(id self);
-```
-
-## Best Practices
-
-1.  Override appropriate methods
-2.  Handle memory management
-3.  Implement proper description
-4.  Consider hash/equality rules
-5.  Document overrides
 
 ## Thread Safety
 
--   Basic operations are thread-safe
--   Consider subclass requirements
--   Handle concurrent access
--   Implement proper synchronization
+### Lock Management
+```c
+// Lock operations
+void MulleObjCLockInstance(id obj);
+void MulleObjCUnlockInstance(id obj);
+BOOL MulleObjCTryLockInstance(id obj);
+
+// Lock sharing
+void MulleObjCInstanceShareLock(id obj, id other);
+```
+
+## Important Notes
+
+1. Thread Safety
+   - Use locks properly
+   - Share locks carefully
+   - Check lock state
+   - Handle recursion
+
+2. Memory Management
+   - Use correct allocator
+   - Handle class changes
+   - Clean up properly
+
+3. Best Practices
+   - Lock appropriately
+   - Share locks safely
+   - Check instances
+   - Handle errors
+
+4. Performance
+   - Cache allocators
+   - Minimize locking
+   - Share locks

@@ -1,199 +1,119 @@
 # NSObject
 
-## Overview
+Root class for most Objective-C objects in mulle-objc. Provides fundamental object behavior and memory management.
 
-`NSObject` is the root class of most Objective-C class hierarchies in
-mulle-objc. It provides fundamental object behavior including memory
-management, method resolution, and runtime interaction capabilities.
+## Base Class
+MulleObject
 
-## Key Features
+## Implemented Protocols
+- NSObject
+- MulleObjCRuntimeObject
+- MulleObjCClassCluster
+- MulleObjCException
+- MulleObjCTaggedPointer
+- MulleObjCSingleton
 
--   Memory management (retain/release/autorelease)
--   Method resolution and forwarding
--   Object comparison and hashing
--   Runtime interaction
--   Object copying support
--   Object description
+## Methods
 
-## Usage
+### Object Lifecycle
+- `+new` - Creates and initializes instance
+- `+alloc` - Allocates instance
+- `-init` - Initializes instance
+- `-dealloc` - Deallocates instance
+- `-finalize` - Called before deallocation
 
-### Object Creation
+### Memory Management (Thread-safe)
+- `-retain` - Increments retain count
+- `-release` - Decrements retain count
+- `-autorelease` - Adds to autorelease pool
+- `-retainCount` - Gets retain count
+- `-zone` - Returns NULL (zones deprecated)
 
-``` objc
-// Create an instance
-id obj = [NSObject object];
+### Class Information (Thread-safe)
+- `+class` - Returns class object
+- `-class` - Returns instance class
+- `-superclass` - Returns superclass
+- `+superclass` - Returns class's superclass
+- `-isKindOfClass:` - Checks class inheritance
+- `-isMemberOfClass:` - Checks exact class match
 
-// Initialize an allocated instance
+### Method Handling (Thread-safe)
+- `-methodForSelector:` - Gets method implementation
+- `+instanceMethodForSelector:` - Gets class method implementation
+- `-respondsToSelector:` - Checks method existence
+- `-conformsToProtocol:` - Checks protocol conformance
+- `-performSelector:` - Invokes method
+- `-performSelector:withObject:` - Invokes method with argument
+- `-performSelector:withObject:withObject:` - Invokes with two arguments
+
+### Forwarding
+- `-forward:` - Legacy forwarding (deprecated)
+- `-forwardInvocation:` - Modern forwarding
+- `-methodSignatureForSelector:` - Gets method signature for forwarding
+
+### Description
+- `-description` - Returns object description
+- `-debugDescription` - Returns debug description
+- `-mulleTestDescription` - Returns test-friendly description
+- `-mulleDebugContents` - Returns internal state description
+
+### Comparison (Thread-safe)
+- `-hash` - Returns hash value
+- `-isEqual:` - Checks equality
+- `-self` - Returns self
+
+### Thread Access (TAO)
+- `-mulleIsThreadSafe` - Returns NO
+- `-mulleIsAccessible` - Returns YES
+- `-mulleIsAccessibleByThread:` - Checks thread access
+- `-mulleTAOStrategy` - Returns TAO strategy
+- `-mulleGainAccess` - Gains thread access
+- `-mulleRelinquishAccess` - Relinquishes thread access
+
+## Usage Example
+
+```objc
+// Basic object creation
 id obj = [[NSObject alloc] init];
-```
+// or
+id obj = [NSObject new];
 
-### Memory Management
-
-``` objc
-// Retain an object
+// Memory management
 [obj retain];
-
-// Release an object
 [obj release];
-
-// Autorelease an object
 [obj autorelease];
+
+// Method invocation
+if ([obj respondsToSelector:@selector(someMethod)])
+    [obj performSelector:@selector(someMethod)];
+
+// Thread access (TAO)
+if ([obj mulleIsAccessibleByThread:thread])
+{
+    [obj mulleGainAccess];
+    // ... use object ...
+    [obj mulleRelinquishAccess];
+}
 ```
 
-### Object Comparison
+## Important Notes
 
-``` objc
-// Compare objects
-if ([obj1 isEqual:obj2])
-    // objects are equal
+1. Thread Safety
+   - Memory management methods are thread-safe
+   - Class/protocol introspection methods are thread-safe
+   - Most other methods are not thread-safe by default
 
-// Get hash value
-NSUInteger hash = [obj hash];
-```
+2. Implementation Details
+   - Uses MulleObject for core functionality
+   - Supports thread access optimization (TAO)
+   - Implements multiple protocols for various behaviors
 
-### Runtime Information
+3. Memory Management
+   - Manual retain/release/autorelease
+   - No garbage collection
+   - Zones are deprecated (always returns NULL)
 
-``` objc
-// Get class information
-Class cls = [obj class];
-Class metaCls = [NSObject class];
-
-// Check class membership
-if ([obj isKindOfClass:[NSObject class]])
-    // obj is NSObject or subclass
-
-if ([obj isMemberOfClass:[NSObject class]])
-    // obj is exactly NSObject
-```
-
-## Technical Details
-
-### Core Methods
-
-1.  **Memory Management**:
-
-    ``` objc
-    - (instancetype) retain;
-    - (void) release;
-    - (instancetype) autorelease;
-    ```
-
-2.  **Object Creation**:
-
-    ``` objc
-    + (instancetype) alloc;
-    - (instancetype) init;
-    + (instancetype) new;
-    ```
-
-3.  **Object Comparison**:
-
-    ``` objc
-    - (BOOL) isEqual:(id)other;
-    - (NSUInteger) hash;
-    ```
-
-4.  **Runtime Information**:
-
-    ``` objc
-    - (Class) class;
-    + (Class) class;
-    - (BOOL) isKindOfClass:(Class)cls;
-    - (BOOL) isMemberOfClass:(Class)cls;
-    ```
-
-### Method Resolution
-
-1.  **Dynamic Method Resolution**:
-
-    ``` objc
-    + (BOOL) resolveInstanceMethod:(SEL)sel;
-    + (BOOL) resolveClassMethod:(SEL)sel;
-    ```
-
-2.  **Message Forwarding**:
-
-    ``` objc
-    - (id) forwardingTargetForSelector:(SEL)sel;
-    - (void) forwardInvocation:(NSInvocation *)invocation;
-    ```
-
-## Best Practices
-
-1.  **Memory Management**:
-    -   Balance retain/release calls
-    -   Use autorelease when returning objects
-    -   Follow ownership semantics
-2.  **Subclassing**:
-    -   Override `isEqual:` and `hash` together
-    -   Implement `description` for debugging
-    -   Call `[super init]` in initializers
-3.  **Method Resolution**:
-    -   Implement forwarding methods correctly
-    -   Handle unknown selectors gracefully
-    -   Document dynamic behavior
-
-## Important Considerations
-
-1.  **Thread Safety**:
-    -   Core methods are thread-safe
-    -   Override carefully in subclasses
-    -   Consider synchronization needs
-2.  **Performance**:
-    -   Cache frequently used values
-    -   Optimize comparison methods
-    -   Consider message forwarding cost
-3.  **Compatibility**:
-    -   Maintain consistent behavior
-    -   Follow runtime conventions
-    -   Consider subclass impact
-
-## Use Cases
-
-1.  **Custom Object Creation**:
-
-    ``` objc
-    @implementation MyObject
-    - (instancetype)init {
-        self = [super init];
-        if ([self init]) {
-            // Initialize instance variables
-        }
-        return self;
-    }
-    @end
-    ```
-
-2.  **Custom Comparison**:
-
-    ``` objc
-    @implementation MyObject
-    - (BOOL)isEqual:(id)other {
-        if (self == other)
-            return YES;
-        if (![other isKindOfClass:[self class]])
-            return NO;
-        // Compare instance variables
-        return YES;
-    }
-
-    - (NSUInteger)hash {
-        // Calculate hash based on instance variables
-        return hash;
-    }
-    @end
-    ```
-
-3.  **Dynamic Method Handling**:
-
-    ``` objc
-    @implementation MyObject
-    + (BOOL)resolveInstanceMethod:(SEL)sel {
-        if ([NSStringFromSelector(sel) hasPrefix:@"dynamic"]) {
-            // Add method dynamically
-            return YES;
-        }
-        return [super resolveInstanceMethod:sel];
-    }
-    @end
-    ```
+4. Forwarding
+   - Legacy forward: is deprecated
+   - Use forwardInvocation: for modern forwarding
+   - Must implement methodSignatureForSelector:

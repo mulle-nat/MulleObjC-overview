@@ -2,70 +2,75 @@
 
 Core functions for object lifecycle and runtime operations in mulle-objc.
 
-## Object Lifecycle
+## Object Creation
 
-### Initialization
+### Instance Management
+```c
+// Create instance with extra bytes
+id _MulleObjCClassAllocateInstance(Class cls, size_t extra);
 
-``` c
-id NSAllocateObject(Class cls, NSUInteger extraBytes, NSZone *zone);
-void NSDeallocateObject(id obj);
-id NSCopyObject(id obj, NSUInteger extraBytes, NSZone *zone);
+// Create non-zeroed instance with extra bytes
+id _MulleObjCClassAllocateNonZeroedObject(Class cls, size_t extra);
+
+// Free instance memory
+void _MulleObjCInstanceFree(id obj);
 ```
 
-### Runtime Operations
+## Memory Management
 
-``` c
-BOOL NSShouldRetainWithZone(NSObject *obj, NSZone *zone);
-void NSIncrementExtraRefCount(id object);
-BOOL NSDecrementExtraRefCountWasZero(id object);
+### Reference Counting
+```c
+// Retain/release operations
+void _mulle_objc_object_retain(void *obj);
+void _mulle_objc_object_release(void *obj);
+
+// Autorelease support
+void *_mulle_objc_object_autorelease(void *obj);
 ```
 
-## Method Resolution
+## Thread Access
 
-### Dynamic Method Handling
+### TAO (Thread Access Optimization)
+```c
+// Thread ownership checks
+BOOL MulleObjCObjectIsOnMainThread(id obj);
+BOOL MulleObjCObjectIsAccessibleByThread(id obj, NSThread *thread);
 
-``` c
-void *NSForwardingTargetForSelector(id self, SEL sel);
-BOOL NSResolveInstanceMethod(Class cls, SEL sel);
-BOOL NSResolveClassMethod(Class cls, SEL sel);
+// Thread affinity management
+void MulleObjCInstanceSetThreadAffinity(id obj, mulle_thread_t thread);
 ```
 
-### Message Forwarding
+## Runtime Information
 
-``` c
-void NSForwardInvocation(id self, NSInvocation *invocation);
-NSMethodSignature *NSMethodSignatureForSelector(id self, SEL sel);
+### Class Access
+```c
+// Get class information
+Class MulleObjCObjectGetClass(id obj);
+char *MulleObjCObjectGetClassNameUTF8String(id obj);
+
+// Get universe
+struct _mulle_objc_universe *_mulle_objc_object_get_universe(void *obj);
 ```
 
-## Object Description
+## Important Notes
 
-### Introspection
+1. Memory Management
+   - Use high-level methods when possible
+   - Handle retain/release properly
+   - Consider autorelease pools
 
-``` c
-NSString *NSStringFromClass(Class cls);
-NSString *NSStringFromSelector(SEL sel);
-NSString *NSStringFromProtocol(Protocol *proto);
-```
+2. Thread Safety
+   - Most functions are thread-safe
+   - TAO ensures proper access
+   - Check thread ownership
 
-### Object Information
+3. Best Practices
+   - Cache class information
+   - Handle memory properly
+   - Check thread access
+   - Use proper allocation
 
-``` c
-Class NSClassFromString(NSString *string);
-SEL NSSelectorFromString(NSString *string);
-Protocol *NSProtocolFromString(NSString *string);
-```
-
-## Best Practices
-
-1.  Use high-level allocation methods
-2.  Handle reference counting properly
-3.  Implement forwarding when needed
-4.  Cache method resolutions
-5.  Consider memory zones
-
-## Thread Safety
-
--   Most functions are thread-safe
--   Reference counting is atomic
--   Method resolution may need locks
--   Consider forwarding implications
+4. Performance
+   - Inline functions available
+   - Cache lookups when possible
+   - Consider TAO overhead

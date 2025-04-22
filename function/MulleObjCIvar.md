@@ -1,30 +1,53 @@
-# MulleObjCIvar
+# MulleObjCIvar Functions
 
-Functions for instance variable access and manipulation.
+Functions for instance variable management in mulle-objc.
 
-## Object Ivar Access
+## Ivar Access
 
-- `MulleObjCObjectGetObjectIvar(id self, mulle_objc_ivarid_t ivarid)` - Gets object ivar
-- `MulleObjCObjectSetObjectIvar(id self, mulle_objc_ivarid_t ivarid, id value)` - Sets object ivar
+### Object Ivars
+```c
+// Get/set object ivar
+void _mulle_objc_object_set_object_inline(struct _mulle_objc_object *obj,
+                                         void **p,
+                                         void *value);
 
-## String Management
+// Get/set nonatomic ivar
+void _mulle_objc_object_set_nonatomic_inline(struct _mulle_objc_object *obj,
+                                            void **p,
+                                            void *value);
+```
 
-- `MulleObjCObjectSetDuplicatedUTF8String(id self, char **ivar, char *s)` - Sets duplicated UTF8 string
+### Thread Access
+```c
+// Get/set thread affinity
+void _mulle_objc_object_set_thread(struct _mulle_objc_object *obj,
+                                  mulle_thread_t thread);
 
-## Thread-Safe Access Macros
+mulle_thread_t _mulle_objc_object_get_thread(struct _mulle_objc_object *obj);
+```
 
-- `MulleObjCAtomicIdGet(mulle_atomic_id_t *ivar)` - Gets atomic id value
-- `MulleObjCAtomicIdSet(mulle_atomic_id_t *ivar, id value)` - Sets atomic id value
-- `MulleObjCAtomicIdSetRetain(mulle_atomic_id_t *ivar, id value)` - Sets and retains atomic id
-- `MulleObjCAtomicIdSetCopy(mulle_atomic_id_t *ivar, id value)` - Sets and copies atomic id
-- `MulleObjCAtomicIdSetAssign(mulle_atomic_id_t *ivar, id value)` - Assigns atomic id
-- `MulleObjCAtomicIdRelease(mulle_atomic_id_t *ivar)` - Releases atomic id
+## Important Notes
 
-## Lazy Loading
+1. Memory Management
+   - Handle retain/release
+   - Clean up properly
+   - Consider ownership
+   - Check thread safety
 
-- `MulleObjCAtomicIdGetLazy(mulle_atomic_id_t *ivar, id obj, SEL lazyLoader)` - Thread-safe lazy loading
-- `MulleObjCAtomicIdGetLazyRetain(mulle_atomic_id_t *ivar, id obj, SEL lazyLoader)` - Lazy load with retain
-- `MulleObjCAtomicIdGetLazyCopy(mulle_atomic_id_t *ivar, id obj, SEL lazyLoader)` - Lazy load with copy
-- `MulleObjCAtomicIdGetLazyAssign(mulle_atomic_id_t *ivar, id obj, SEL lazyLoader)` - Lazy load with assign
+2. Thread Safety
+   - Use atomic operations
+   - Check thread affinity
+   - Handle concurrent access
+   - Consider TAO rules
 
-Note: The atomic operations provide thread-safe access to instance variables.
+3. Best Practices
+   - Use appropriate functions
+   - Check thread ownership
+   - Handle errors
+   - Document usage
+
+4. Performance
+   - Minimize atomic ops
+   - Cache when possible
+   - Consider inlining
+   - Handle contention

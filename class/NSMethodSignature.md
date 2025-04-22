@@ -1,159 +1,102 @@
 # NSMethodSignature
 
-## Overview
+Provides type information about method arguments and return values. Supports MetaABI and method frame layout.
 
-`NSMethodSignature` encapsulates method type information in mulle-objc. It
-provides detailed information about method arguments, return types, and
-frame layouts, with special support for the Meta ABI system.
+## Base Class
+NSObject
 
-## Key Features
+## Implemented Protocols
+- MulleObjCImmutableProtocols
+- NSCopying
 
--   Method type encoding
--   Argument information
--   Return type handling
--   Frame layout calculation
--   Meta ABI support
-
-## Usage
-
-### Creating Method Signatures
-
-``` objc
-// Get signature from a class
-NSMethodSignature *signature = [targetClass instanceMethodSignatureForSelector:@selector(method:)];
-
-// Get signature for current method
-NSMethodSignature *signature = [self methodSignatureForSelector:_cmd];
+## Instance Variables
+```objc
+uint32_t                            _bits;    // Method descriptor bits
+uint16_t                            _count;   // Number of types
+uint16_t                            _extra;   // Extra storage size
+char                               *_types;   // Type encodings
+MulleObjCMethodSignatureTypeInfo   *_infos;  // Type information
 ```
 
-### Accessing Type Information
+## Methods
 
-``` objc
-// Get return and argument types
-const char *returnType = [signature methodReturnType];
-const char *argType = [signature getArgumentTypeAtIndex:1];
+### Creation
+- `+signatureWithObjCTypes:` - Creates signature from type string
+- `+_signatureWithObjCTypes:descriptorBits:` - Internal creation method
 
-// Get frame information
-NSUInteger frameLength = [signature frameLength];
-NSUInteger numberOfArguments = [signature numberOfArguments];
+### Method Information
+- `-isOneway` - Checks if method is oneway
+- `-isVariadic` - Checks if method has variable arguments
+- `-_descriptorBits` - Gets method descriptor bits
+- `-frameLength` - Gets frame storage length
+- `-mulleMetaABIFrameLength` - Gets MetaABI frame length
+
+### Type Information
+- `-methodReturnLength` - Gets return value size
+- `-methodReturnType` - Gets return value type
+- `-getArgumentTypeAtIndex:` - Gets argument type at index
+- `-numberOfArguments` - Gets total argument count
+- `-mulleSignatureTypeInfoAtIndex:` - Gets type info at index
+
+### MetaABI Support
+- `-_methodMetaABIReturnType` - Gets MetaABI return type
+- `-_methodMetaABIParameterType` - Gets MetaABI parameter type
+- `-mulleInvocationSize` - Gets required invocation storage size
+
+## Usage Example
+
+```objc
+// Get method signature
+NSMethodSignature *sig = [target methodSignatureForSelector:@selector(method:)];
+
+// Check argument count
+NSUInteger args = [sig numberOfArguments];  // Includes self and _cmd
+
+// Get argument types
+char *type = [sig getArgumentTypeAtIndex:2];  // First user argument
+
+// Get return type
+char *returnType = [sig methodReturnType];
+
+// Check method properties
+BOOL isOneway = [sig isOneway];
+BOOL hasVarArgs = [sig isVariadic];
+
+// Get sizes for allocation
+NSUInteger frameSize = [sig frameLength];
+NSUInteger metaABISize = [sig mulleMetaABIFrameLength];
 ```
 
-### Method Invocation Support
+## Important Notes
 
-``` objc
-// Check argument compatibility
-if ([signature isOneway]) {
-    // Handle oneway method
-}
+1. Type Encoding
+   - Uses Objective-C type encodings
+   - Includes method qualifiers
+   - Supports complex types
+   - Handles MetaABI types
 
-// Get argument size and alignment
-NSUInteger size, align;
-[signature getArgumentSizeAtIndex:1 size:&size align:&align];
+2. Memory Layout
+   - Provides frame layout info
+   - Supports MetaABI optimization
+   - Handles alignment requirements
+   - Manages variable storage
+
+3. Performance
+   - Caches type information
+   - Optimizes MetaABI access
+   - Minimizes parsing overhead
+   - Reuses type info objects
+
+4. Thread Safety
+   - Thread-safe for reading
+   - Immutable after creation
+   - Safe to share between threads
+
+5. MetaABI Types
+```objc
+typedef enum {
+    MulleObjCMetaABITypeVoid = 0,
+    MulleObjCMetaABITypeVoidPointer = 1,
+    MulleObjCMetaABITypeParameterBlock = 2
+} MulleObjCMetaABIType;
 ```
-
-## Technical Details
-
-### Core Methods
-
-1.  **Type Information**:
-
-    ``` objc
-    - (const char *)methodReturnType;
-    - (const char *)getArgumentTypeAtIndex:(NSUInteger)idx;
-    - (NSUInteger)numberOfArguments;
-    ```
-
-2.  **Frame Layout**:
-
-    ``` objc
-    - (NSUInteger)frameLength;
-    - (void)getArgumentSizeAtIndex:(NSUInteger)index
-                             size:(NSUInteger *)sizep
-                            align:(NSUInteger *)alignp;
-    ```
-
-### Meta ABI Support
-
-1.  **ABI Information**:
-
-    ``` objc
-    - (struct mulle_metaabi *)metaABIStruct;
-    - (BOOL)isMetaABI;
-    ```
-
-## Best Practices
-
-1.  **Type Handling**:
-    -   Validate type encodings
-    -   Handle unknown types
-    -   Check argument bounds
-2.  **Memory Management**:
-    -   Cache signatures when possible
-    -   Handle alignment properly
-    -   Clean up resources
-3.  **Error Handling**:
-    -   Check index bounds
-    -   Validate type strings
-    -   Handle invalid signatures
-
-## Important Considerations
-
-1.  **Performance**:
-    -   Signature caching
-    -   Type encoding cost
-    -   Frame layout computation
-2.  **Compatibility**:
-    -   Type encoding standards
-    -   ABI compatibility
-    -   Platform differences
-3.  **Safety**:
-    -   Bounds checking
-    -   Type validation
-    -   Memory alignment
-
-## Use Cases
-
-1.  **Method Forwarding**:
-
-    ``` objc
-    - (NSMethodSignature *)methodSignatureForSelector:(SEL)sel
-    {
-        NSMethodSignature *signature = [super methodSignatureForSelector:sel];
-        if (!signature) {
-            signature = [self.target methodSignatureForSelector:sel];
-        }
-        return signature;
-    }
-    ```
-
-2.  **Dynamic Method Implementation**:
-
-    ``` objc
-    - (void)handleInvocation:(NSInvocation *)invocation
-    {
-        NSMethodSignature *signature = [invocation methodSignature];
-        const char *returnType = [signature methodReturnType];
-
-        // Handle different return types
-        if (strcmp(returnType, @encode(id)) == 0) {
-            // Handle object return
-        }
-    }
-    ```
-
-3.  **Type Information Inspection**:
-
-    ``` objc
-    - (void)inspectMethod:(SEL)selector
-    {
-        NSMethodSignature *signature = [self methodSignatureForSelector:selector];
-        NSUInteger args = [signature numberOfArguments];
-
-        for (NSUInteger i = 0; i < args; i++) {
-            const char *type = [signature getArgumentTypeAtIndex:i];
-            NSUInteger size, align;
-            [signature getArgumentSizeAtIndex:i size:&size align:&align];
-            // Process argument information
-        }
-    }
-    ```

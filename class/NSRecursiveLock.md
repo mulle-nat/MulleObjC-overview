@@ -1,163 +1,57 @@
 # NSRecursiveLock
 
-## Overview
+A recursive mutex implementation that allows the same thread to acquire the lock multiple times without deadlocking.
 
-`NSRecursiveLock` extends the basic locking functionality of NSLock with
-recursive locking capabilities in mulle-objc. It allows the same thread to
-acquire the lock multiple times without deadlocking.
+## Base Class
+NSLock
 
-## Key Features
+## Instance Variables
+```objc
+mulle_atomic_pointer_t   _thread;  // Current owning thread
+mulle_atomic_pointer_t   _depth;   // Lock recursion depth
+```
 
--   Recursive locking support
--   Thread safety
--   Lock counting
--   Performance optimized
--   Debugging support
+## Methods
 
-## Usage
+All methods are marked with `MULLE_OBJC_THREADSAFE_METHOD`:
 
-### Basic Recursive Locking
+### Locking Operations
+- `-lock` - Acquires or re-acquires the lock, incrementing depth counter
+- `-unlock` - Decrements depth counter, releases lock when depth reaches 0
+- `-tryLock` - Attempts to acquire lock without blocking, returns YES if successful
 
-``` objc
-NSRecursiveLock *lock = [[NSRecursiveLock alloc] init];
+## Usage Example
 
+```objc
+NSRecursiveLock *lock = [NSRecursiveLock new];
+
+// Same thread can acquire multiple times
 [lock lock];
-[lock lock];  // Same thread can acquire lock again
-// Critical section
-[lock unlock];
-[lock unlock];
-```
+[lock lock];  // Increments depth counter
+// ... critical section ...
+[lock unlock];  // Decrements depth counter
+[lock unlock];  // Releases lock
 
-### Conditional Locking
-
-``` objc
-if ([lock tryLock]) {
-    // Nested locking is allowed
-    if ([lock tryLock]) {
-        // More critical code
-        [lock unlock];
-    }
-    [lock unlock];
+// Try lock without blocking
+if ([lock tryLock])
+{
+   if ([lock tryLock])  // Can acquire again
+   {
+      // ... nested critical section ...
+      [lock unlock];
+   }
+   [lock unlock];
 }
 ```
 
-### Timed Locking
+## Important Notes
 
-``` objc
-if ([lock lockBeforeDate:[NSDate dateWithTimeIntervalSinceNow:5.0]]) {
-    // Critical section with possible recursive locks
-    [lock unlock];
-}
-```
+1. Thread Safety
+   - All methods are thread-safe
+   - Only the owning thread can recursively lock
+   - Must balance lock/unlock calls
 
-## Technical Details
-
-### Core Methods
-
-1.  **Lock Operations**:
-
-    ``` objc
-    - (void)lock;
-    - (void)unlock;
-    - (BOOL)tryLock;
-    - (BOOL)lockBeforeDate:(NSDate *)limit;
-    ```
-
-2.  **Lock Information**:
-
-    ``` objc
-    - (void)setName:(NSString *)name;
-    - (NSString *)name;
-    ```
-
-### Implementation Details
-
-1.  **Recursive Handling**:
-
-    ``` objc
-    - (void)_initializeRecursiveLock;
-    - (void)_destroyRecursiveLock;
-    ```
-
-## Best Practices
-
-1.  **Lock Usage**:
-    -   Balance lock/unlock calls
-    -   Track recursion depth
-    -   Use @try/@finally blocks
-2.  **Error Handling**:
-    -   Check tryLock results
-    -   Handle timeouts
-    -   Clean up properly
-3.  **Performance**:
-    -   Minimize recursion depth
-    -   Keep critical sections short
-    -   Consider lock alternatives
-
-## Important Considerations
-
-1.  **Thread Safety**:
-    -   Only recursive in same thread
-    -   Match lock/unlock count
-    -   Handle exceptions
-2.  **Performance**:
-    -   Recursion overhead
-    -   Lock tracking cost
-    -   Memory usage
-3.  **Debugging**:
-    -   Track recursion depth
-    -   Monitor lock ownership
-    -   Detect misuse
-
-## Use Cases
-
-1.  **Recursive Operations**:
-
-    ``` objc
-    - (void)processNode:(Node *)node
-    {
-        [self->lock lock];
-        @try {
-            [self processNodeData:node];
-            for (Node *child in [node children]) {
-                [self processNode:child];  // Recursive call with same lock
-            }
-        }
-        @finally {
-            [self->lock unlock];
-        }
-    }
-    ```
-
-2.  **Reentrant Methods**:
-
-    ``` objc
-    - (void)performOperation
-    {
-        [self->lock lock];
-        @try {
-            [self helperMethod];  // May call back into performOperation
-        }
-        @finally {
-            [self->lock unlock];
-        }
-    }
-    ```
-
-3.  **Safe Recursion**:
-
-    ``` objc
-    - (void)recursiveOperation:(NSUInteger)depth
-    {
-        if ([self->lock tryLock]) {
-            @try {
-                if (depth > 0) {
-                    [self recursiveOperation:(depth - 1)];
-                }
-            }
-            @finally {
-                [self->lock unlock];
-            }
-        }
-    }
-    ```
+2. Implementation Details
+   - Uses atomic operations for thread and depth tracking
+   - Inherits base mutex functionality from NSLock
+   - Validates thread ownership in unlock operations

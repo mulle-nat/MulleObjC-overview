@@ -1,65 +1,58 @@
 # MulleObjCLoader Functions
 
-Functions for dynamic loading and initialization in mulle-objc.
+Core functions for framework initialization and dependency management in mulle-objc.
 
-## Loader Operations
+## Loader Management
 
-### Basic Loading
-
-``` c
+### Basic Operations
+```c
+// Initialize loader
 void MulleObjCLoaderInit(struct MulleObjCLoader *loader);
+
+// Register loader
 void MulleObjCLoaderRegister(struct MulleObjCLoader *loader);
-```
 
-### Category Loading
-
-``` c
+// Load components
 void MulleObjCLoaderLoadCategories(struct MulleObjCLoader *loader);
 void MulleObjCLoaderLoadClasses(struct MulleObjCLoader *loader);
 ```
 
-## Dependency Management
-
-### Dependency Handling
-
-``` c
-void MulleObjCLoaderAddDependency(struct MulleObjCLoader *loader, 
+### Dependency Management
+```c
+// Add/remove dependencies
+void MulleObjCLoaderAddDependency(struct MulleObjCLoader *loader,
                                  struct MulleObjCLoader *dependency);
-void MulleObjCLoaderRemoveDependency(struct MulleObjCLoader *loader, 
+
+void MulleObjCLoaderRemoveDependency(struct MulleObjCLoader *loader,
                                     struct MulleObjCLoader *dependency);
-```
 
-### Load Order
-
-``` c
-void MulleObjCLoaderSetLoadPriority(struct MulleObjCLoader *loader, 
+// Set load priority
+void MulleObjCLoaderSetLoadPriority(struct MulleObjCLoader *loader,
                                    NSInteger priority);
-NSInteger MulleObjCLoaderGetLoadPriority(struct MulleObjCLoader *loader);
 ```
 
-## Runtime Support
+## Important Notes
 
-### Class Registration
+1. Load Order
+   - Dependencies load first
+   - Classes before categories
+   - Handle circular deps
+   - Respect load priorities
 
-``` c
-void MulleObjCLoaderRegisterClass(struct MulleObjCLoader *loader, 
-                                 Class cls);
-void MulleObjCLoaderRegisterCategory(struct MulleObjCLoader *loader, 
-                                    Class cls, 
-                                    const char *name);
-```
+2. Thread Safety
+   - Loading is not thread-safe
+   - Initialize at startup
+   - Single-threaded load
+   - Handle static init
 
-## Best Practices
+3. Best Practices
+   - Declare dependencies
+   - Check load status
+   - Handle failures
+   - Document requirements
 
-1.  Handle dependencies properly
-2.  Set appropriate load priorities
-3.  Register all required classes
-4.  Consider initialization order
-5.  Document loader requirements
-
-## Thread Safety
-
--   Loading is not thread-safe
--   Initialize during startup
--   Consider dependency locks
--   Handle concurrent access
+4. Performance
+   - Load once only
+   - Cache load info
+   - Minimize dependencies
+   - Optimize startup

@@ -1,17 +1,37 @@
 # MulleObjCExceptionHandler
 
-Functions and macros for exception handling in mulle-objc.
+Core exception handling functions for the MulleObjC runtime.
 
-## Exception Throwing Macros
+## Exception Functions
 
-- `MulleObjCThrowInvalidArgumentException(format, ...)` - Throws exception for invalid arguments with formatted message
-- `MulleObjCThrowInternalInconsistencyException(format, ...)` - Throws exception for internal inconsistencies
-- `MulleObjCThrowErrnoException(format, ...)` - Throws exception based on current errno value
-- `MulleObjCThrowInvalidIndexException(index)` - Throws exception for invalid array/collection index
+- `mulle_objc_throw(void *exception)` - Throws an exception through the runtime
+- `mulle_objc_break_exception(void)` - Breakpoint function for catching all exceptions
 
-## Uncaught Exception Handlers
+## Handler Management
 
 - `NSGetUncaughtExceptionHandler()` - Gets current uncaught exception handler
 - `NSSetUncaughtExceptionHandler(NSUncaughtExceptionHandler *handler)` - Sets uncaught exception handler
 
-Note: These macros provide a convenient way to throw standard exceptions with proper formatting and context. They are the preferred way to signal errors in mulle-objc code.
+## Usage Example
+
+```objc
+// Set custom handler
+void MyExceptionHandler(id exception)
+{
+   fprintf(stderr, "Uncaught exception: %s\n", 
+           [exception description]);
+   abort();
+}
+
+NSSetUncaughtExceptionHandler(MyExceptionHandler);
+```
+
+## Important Notes
+
+1. Thread Safety
+   - Exception handling is thread-safe by design
+   - Handlers are stored per-universe
+
+2. Debugging
+   - Set breakpoint on mulle_objc_break_exception to catch all exceptions
+   - Handler is called before program termination

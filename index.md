@@ -29,6 +29,3 @@ Function documentation can also be found in class and protocol sections:
 * [Class Functions](class/MulleObjCLoader-Functions.md)
 * [Protocol Functions](protocol/NSCopying-Functions.md)
 * [Runtime Functions](protocol/MulleObjCRuntimeObject-Functions.md)
-
-_All documentation follows mulle-objc conventions, using traditional method calls rather than dot notation._
-

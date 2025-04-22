@@ -1,71 +1,53 @@
 # NSLock Functions
 
-Functions for synchronization and locking in mulle-objc.
+Core functions for locking and synchronization in mulle-objc.
 
-## Basic Locking
+## Lock Management
 
-### Lock Operations
+### Instance Operations
+```c
+// Lock operations
+void MulleObjCLockInstance(id obj);
+void MulleObjCUnlockInstance(id obj);
+BOOL MulleObjCTryLockInstance(id obj);
 
-``` c
-void NSLockLock(NSLock *lock);
-void NSLockUnlock(NSLock *lock);
-BOOL NSLockTryLock(NSLock *lock);
+// Lock sharing
+void MulleObjCInstanceShareLock(id obj, id other);
 ```
-
-### Timed Locking
-
-``` c
-BOOL NSLockLockBeforeDate(NSLock *lock, NSDate *limit);
-```
-
-## Recursive Locking
-
-### Recursive Operations
-
-``` c
-void NSRecursiveLockLock(NSRecursiveLock *lock);
-void NSRecursiveLockUnlock(NSRecursiveLock *lock);
-BOOL NSRecursiveLockTryLock(NSRecursiveLock *lock);
-```
-
-## Condition Locks
-
-### Condition Operations
-
-``` c
-void NSConditionLockLockWhenCondition(NSConditionLock *lock, NSInteger condition);
-void NSConditionLockUnlockWithCondition(NSConditionLock *lock, NSInteger condition);
-BOOL NSConditionLockTryLockWhenCondition(NSConditionLock *lock, NSInteger condition);
-```
-
-## Condition Variables
-
-### Condition Variable Operations
-
-``` c
-void NSConditionWait(NSCondition *condition);
-void NSConditionSignal(NSCondition *condition);
-void NSConditionBroadcast(NSCondition *condition);
-```
-
-### Timed Waiting
-
-``` c
-BOOL NSConditionWaitUntilDate(NSCondition *condition, NSDate *limit);
-```
-
-## Best Practices
-
-1.  Always pair locks and unlocks
-2.  Use appropriate lock types
-3.  Avoid deadlocks
-4.  Consider timeout values
-5.  Handle lock contention
 
 ## Thread Safety
 
--   All operations are thread-safe
--   Consider lock ordering
--   Avoid recursive deadlocks
--   Handle lock timeouts
--   Use appropriate granularity
+### Lock State
+```c
+// Check if instance is locked
+BOOL MulleObjCInstanceIsLocked(id obj);
+
+// Get lock owner thread
+mulle_thread_t MulleObjCInstanceGetLockThread(id obj);
+```
+
+## Important Notes
+
+1. Lock Usage
+   - Always pair lock/unlock
+   - Check lock ownership
+   - Handle recursion
+   - Share locks carefully
+
+2. Thread Safety
+   - Operations are thread-safe
+   - Check thread ownership
+   - Handle lock contention
+   - Avoid deadlocks
+
+3. Best Practices
+   - Use appropriate lock type
+   - Keep critical sections small
+   - Document lock protocols
+   - Handle lock failures
+
+4. Performance
+   - Minimize lock contention
+   - Share locks when appropriate
+   - Cache lock state
+   - Consider alternatives

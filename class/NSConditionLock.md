@@ -1,168 +1,59 @@
 # NSConditionLock
 
-## Overview
+A synchronization tool that combines a condition variable with an integer value. Used to synchronize threads based on state values.
 
-`NSConditionLock` extends NSCondition with condition-based locking
-capabilities in mulle-objc. It provides state-based thread synchronization
-with atomic operations and flexible signaling mechanisms.
+## Base Class
+NSCondition
 
-## Key Features
+## Instance Variables
+```objc
+mulle_atomic_pointer_t   _currentCondition;  // The current condition value
+```
 
--   State-based synchronization
--   Atomic operations
--   Flexible signaling
--   Thread coordination
--   Condition tracking
+## Methods
 
-## Usage
+### Initialization
+- `-initWithCondition:` - Initialize with starting condition value
 
-### Basic Condition Lock
+### Condition Access
+- `-condition` - Returns current condition value
 
-``` objc
+### Locking Operations
+- `-lockWhenCondition:` - Acquires lock when condition matches value
+- `-mulleLockWhenNotCondition:` - Acquires lock when condition doesn't match value
+- `-tryLockWhenCondition:` - Attempts to acquire lock if condition matches value
+- `-mulleTryLockWhenNotCondition:` - Attempts to acquire lock if condition doesn't match value
+- `-unlockWithCondition:` - Releases lock and sets new condition value
+- `-mulleUnlockWithCondition:broadcast:` - Releases lock, sets condition, optionally broadcasts
+
+## Usage Example
+
+```objc
 NSConditionLock *lock = [[NSConditionLock alloc] initWithCondition:0];
 
 // Wait for condition 0
 [lock lockWhenCondition:0];
-// Process
-[lock unlockWithCondition:1];
+// ... do work ...
+[lock unlockWithCondition:1];  // Signal completion
 
 // Wait for condition 1
 [lock lockWhenCondition:1];
-// Process
+// ... do more work ...
 [lock unlockWithCondition:2];
 ```
 
-### Try Lock with Condition
+## Important Notes
 
-``` objc
-if ([lock tryLockWhenCondition:expectedState]) {
-    // Process
-    [lock unlockWithCondition:newState];
-}
-```
+1. Thread Safety
+   - All methods are thread-safe
+   - Uses atomic operations for condition value
+   - Inherits mutex and condition variable from NSCondition
 
-### Timed Condition Lock
+2. Performance
+   - Keep workload inside lock minimal
+   - Other threads may deadlock in lockWhenCondition:beforeDate:
 
-``` objc
-if ([lock lockWhenCondition:expectedState
-                beforeDate:[NSDate dateWithTimeIntervalSinceNow:5.0]]) {
-    // Process
-    [lock unlockWithCondition:newState];
-}
-```
-
-## Technical Details
-
-### Core Methods
-
-1.  **Lock Operations**:
-
-    ``` objc
-    - (void)lock;
-    - (void)unlock;
-    - (void)lockWhenCondition:(NSInteger)condition;
-    - (void)unlockWithCondition:(NSInteger)condition;
-    ```
-
-2.  **Conditional Operations**:
-
-    ``` objc
-    - (BOOL)tryLock;
-    - (BOOL)tryLockWhenCondition:(NSInteger)condition;
-    - (BOOL)lockWhenCondition:(NSInteger)condition beforeDate:(NSDate *)limit;
-    ```
-
-### State Management
-
-1.  **Condition Handling**:
-
-    ``` objc
-    - (NSInteger)condition;
-    - (void)setCondition:(NSInteger)value;
-    ```
-
-## Best Practices
-
-1.  **State Management**:
-    -   Define clear state transitions
-    -   Document state meanings
-    -   Use constants for states
-2.  **Lock Usage**:
-    -   Check conditions carefully
-    -   Handle timeouts
-    -   Clean up properly
-3.  **Error Handling**:
-    -   Verify state transitions
-    -   Handle lock failures
-    -   Maintain invariants
-
-## Important Considerations
-
-1.  **Thread Safety**:
-    -   Atomic state changes
-    -   Lock ordering
-    -   Deadlock prevention
-2.  **Performance**:
-    -   State checking overhead
-    -   Lock contention
-    -   Wait efficiency
-3.  **Debugging**:
-    -   State tracking
-    -   Transition logging
-    -   Error detection
-
-## Use Cases
-
-1.  **State Machine**:
-
-    ``` objc
-    - (void)advanceState
-    {
-        [lock lockWhenCondition:STATE_READY];
-        @try {
-            [self processCurrentState];
-            [lock unlockWithCondition:STATE_PROCESSING];
-        }
-        @finally {
-            if ([lock condition] == STATE_READY) {
-                [lock unlock];
-            }
-        }
-    }
-    ```
-
-2.  **Resource Management**:
-
-    ``` objc
-    - (void)waitForResource
-    {
-        [lock lockWhenCondition:RESOURCE_AVAILABLE];
-        @try {
-            [self useResource];
-            [lock unlockWithCondition:RESOURCE_IN_USE];
-        }
-        @finally {
-            if ([lock condition] == RESOURCE_AVAILABLE) {
-                [lock unlock];
-            }
-        }
-    }
-    ```
-
-3.  **Pipeline Processing**:
-
-    ``` objc
-    - (void)processStage
-    {
-        [lock lockWhenCondition:STAGE_READY];
-        @try {
-            [self performStageWork];
-            [lock unlockWithCondition:STAGE_COMPLETE];
-        }
-        @finally {
-            if ([lock condition] == STAGE_READY) {
-                [lock unlock];
-            }
-        }
-    }
-    ```
+3. Implementation Details
+   - Uses broadcast by default in unlockWithCondition:
+   - Can control signal vs broadcast with mulleUnlockWithCondition:broadcast:
+   - Condition value is stored atomically

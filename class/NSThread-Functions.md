@@ -1,72 +1,84 @@
 # NSThread Functions
 
-Functions for thread management and thread-local storage in mulle-objc.
+Core functions for thread management and thread-local storage in mulle-objc.
 
-## Thread Management
-
-### Creation and Control
-
-``` c
-NSThread *MulleThreadGetCurrentThread(void);
-NSThread *MulleThreadGetOrCreateCurrentThread(void);
-void MulleThreadSetCurrentThreadUserInfo(id info);
-```
+## Thread Access
 
 ### Current Thread
+```c
+// Get current thread object, may return nil if not a MulleObjC thread
+NSThread *MulleThreadGetCurrentThread(void);
 
-``` c
-id MulleThreadGetCurrentThreadUserInfo(void);
+// Get or create current thread object
+NSThread *MulleThreadGetOrCreateCurrentThread(void);
+
+// Get current thread's native handle
 mulle_thread_t MulleThreadGetCurrentOSThread(void);
 ```
 
-## Thread Local Storage
+## Thread-Local Storage
 
-### TLS Management
+### User Info
+```c
+// Get/set thread-local storage
+id MulleThreadGetCurrentThreadUserInfo(void);
+void MulleThreadSetCurrentThreadUserInfo(id info);
 
-``` c
+// Thread dictionary access
 void MulleThreadSetObjectForKeyUTF8String(id value, char *key);
 id MulleThreadObjectForKeyUTF8String(char *key);
 ```
 
-### Thread Dictionary
-
-``` c
+### Thread Object Access
+```c
+// Get native thread handle from NSThread
 mulle_thread_t MulleThreadObjectGetOSThread(NSThread *threadObject);
 ```
 
-## Thread Priority
+## TAO (Thread Access Optimization)
 
-### Priority Control
+### Failure Handling
+```c
+// Handler for TAO violations
+typedef void MulleObjCTAOFailureHandler(void *obj,
+                                      mulle_thread_t osThread,
+                                      struct _mulle_objc_descriptor *des);
 
-``` c
-// Thread priority control functions are not available
+// Get/set TAO failure handler
+MulleObjCTAOFailureHandler *MulleObjCGetTAOFailureHandler(void);
+void MulleObjCSetTAOFailureHandler(MulleObjCTAOFailureHandler *handler);
+
+// Default handler that logs and aborts
+void MulleObjCTAOLogAndFail(struct _mulle_objc_object *obj,
+                           mulle_thread_t osThread,
+                           struct _mulle_objc_descriptor *desc);
 ```
 
-### Thread Names
-
-``` c
-// Thread name functions are part of the NSThread class interface
+### Testing
+```c
+// Test class for TAO dilemma issues
+void MulleObjCTAOTest(Class cls, id arg);
 ```
 
-## Thread State
+## Important Notes
 
-### State Information
+1. Thread Safety
+   - Functions are thread-safe
+   - Thread-local storage is per-thread
+   - TAO ensures proper thread access
 
-``` c
-// Thread state functions are part of the NSThread class interface
-```
+2. Memory Management
+   - Thread objects retained appropriately
+   - Clean up thread-local storage
+   - Handle autorelease pools
 
-## Best Practices
+3. Best Practices
+   - Check thread ownership
+   - Use TAO for thread safety
+   - Handle failures gracefully
+   - Test thread interactions
 
-1.  Clean up thread resources
-2.  Use appropriate priorities
-3.  Handle cancellation
-4.  Manage thread-local storage
-5.  Consider thread names for debugging
-
-## Thread Safety
-
--   Thread functions are thread-safe
--   TLS operations are thread-local
--   Thread dictionary is per-thread
--   Consider cross-thread communication
+4. Restrictions
+   - Some functions only work in MulleObjC threads
+   - TAO violations cause termination
+   - Thread dictionary keys must be UTF8

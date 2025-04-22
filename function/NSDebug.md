@@ -1,63 +1,50 @@
-# NSDebug
+# NSDebug Functions
 
-High-level debugging functions and variables for mulle-objc applications.
+Functions for debugging support in mulle-objc.
 
-## Debug Variables
+## Debug Support
 
-### Memory Debugging
+### Print Functions
+```c
+// Print for debugger
+void _NSPrintForDebugger(id obj);
 
-``` c
-BOOL NSZombieEnabled;              // Enable zombie object detection
-BOOL NSDebugEnabled;               // Enable debug checks
-BOOL NSAutoreleaseFreedObjectCheckEnabled;  // Check autorelease of freed objects
+// Print warning
+void mulle_objc_warn_printf(char *format, ...);
+
+// Print to stderr
+void mulle_fprintf(FILE *fp, char *format, ...);
 ```
 
-### Allocation Tracking
-
-``` c
-BOOL NSKeepAllocationStatistics;   // Track allocation statistics
-BOOL NSEnumeratorDebugEnabled;     // Debug collection enumerators
+### Environment
+```c
+// Get debug settings
+int mulle_objc_environment_get_int(char *name);
+int mulle_objc_environment_get_yes_no(char *name);
 ```
 
-## Debug Functions
+## Important Notes
 
-### Object Lifecycle
+1. Debug Features
+   - Print readable output
+   - Check environment
+   - Handle NULL values
+   - Format properly
 
-``` c
-void NSDeallocateObject(id object);
-void NSRecordAllocationEvent(unsigned eventCode, id object);
-```
+2. Usage
+   - Debug builds only
+   - Check debug flags
+   - Handle errors
+   - Clean output
 
-### Memory Analysis
+3. Best Practices
+   - Use appropriate functions
+   - Check return values
+   - Handle all cases
+   - Document usage
 
-``` c
-void NSCountFrames(void);
-void NSNameObject(id object, char *name);
-```
-
-## Conditional Compilation
-
-### Debug Macros
-
-``` c
-#if NS_BLOCK_ASSERTIONS
-    // Assertions disabled
-#else
-    // Assertions enabled
-#endif
-```
-
-## Best Practices
-
-1.  Enable appropriate debug flags during development
-2.  Use conditional compilation for debug code
-3.  Track object lifecycles in complex scenarios
-4.  Monitor allocation statistics when optimizing
-5.  Enable zombie detection for dangling pointer issues
-
-## Notes
-
--   Some features may significantly impact performance
--   Debug variables should be set early in application lifecycle
--   Consider environment variable configuration
--   Use in conjunction with MulleObjCDebug functions
+4. Environment
+   - Check debug flags
+   - Use proper variables
+   - Handle defaults
+   - Document settings

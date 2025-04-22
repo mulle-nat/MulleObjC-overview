@@ -1,245 +1,77 @@
 # MulleObject
 
-## Overview
+Base class that provides automatic thread-safe method locking in mulle-objc. Inherits from MulleDynamicObject and adds recursive locking capabilities.
 
-`MulleObject` is the fundamental base class in mulle-objc that provides
-automatic thread-safe method locking. It serves as a foundation for objects
-requiring built-in thread safety and synchronization capabilities.
+## Base Class
+MulleDynamicObject
 
-## Key Features
+## Implemented Protocols
+- NSLocking
+- MulleAutolockingObject (optional)
 
--   Automatic thread-safe methods
--   Built-in locking mechanism
--   Thread synchronization
--   Performance optimized
--   Caching system
-
-## Usage
-
-### Basic Thread-Safe Object
-
-``` objc
-@interface MyThreadSafeObject : MulleObject
-@end
-
-@implementation MyThreadSafeObject
-
-- (void)performOperation
-{
-    // Method is automatically thread-safe
-    [self modifySharedState];
-}
-
-@end
+## Instance Variables
+```objc
+NSRecursiveLock   *__lock;  // Recursive lock for thread safety
 ```
 
-### Lock Configuration
+## Methods
 
-``` objc
-@implementation MyCustomObject
+### Object Creation
+- `+locklessObject` - Creates instance without lock
+- `-initNoLock` - Initializes without lock
+- `-init` - Initializes with lock
 
-- (void)configureLocking
-{
-    // Configure locking behavior
-    [self setLockingMode:MulleThreadSafeLockingMode];
-}
+### Lock Operations (NSLocking)
+- `-lock` - Acquires the lock
+- `-unlock` - Releases the lock
+- `-tryLock` - Attempts to acquire lock without blocking
 
-- (void)performCriticalOperation
-{
-    // Critical section is protected
-    [self updateSharedResource];
-}
+### Lock Sharing
+- `-didShareRecursiveLock:` - Called after lock sharing to update thread affinity
+- `-shareRecursiveLock:` - Shares lock with another lock
+- `-shareRecursiveLockWithObject:` - Shares lock with another MulleObject
 
+### Internal Forwarding
+- `-__lockingForward:` - Handles locking for forwarded methods
+- `-__lockingSuperForward:` - Handles locking for super forwarded methods
+
+## Usage Example
+
+```objc
+// Create thread-safe object
+@interface MyObject : MulleObject <MulleAutolockingObjectProtocols>
 @end
+
+// Create lockless object
+MyObject *obj = [MyObject locklessObject];
+
+// Share lock between objects
+MyObject *obj2 = [MyObject new];
+[obj2 shareRecursiveLockWithObject:obj];
+
+// Methods are automatically locked
+[obj doSomething];  // Thread-safe
 ```
 
-### Cache Management
+## Important Notes
 
-``` objc
-@implementation CachedObject
+1. Thread Safety
+   - Methods are automatically locked when MulleAutolockingObject protocol is used
+   - Lock sharing allows object hierarchies to share synchronization
+   - Lockless objects are thread-affine until given a lock
 
-- (id)cachedValue
-{
-    // Thread-safe cache access
-    id value = [self.cache objectForKey:@"key"];
-    if (!value) {
-        value = [self computeExpensiveValue];
-        [self.cache setObject:value forKey:@"key"];
-    }
-    return value;
-}
+2. Implementation Details
+   - Uses NSRecursiveLock for thread safety
+   - Caches method lookups for performance
+   - Handles exceptions to prevent deadlocks
+   - Supports both locked and lockless instances
 
-@end
-```
+3. Subclassing
+   - Use MulleAutolockingObjectProtocols for thread safety
+   - Override didShareRecursiveLock: carefully
+   - Call [super didShareRecursiveLock:] when overriding
 
-## Technical Details
-
-### Core Methods
-
-1.  **Locking Control**:
-
-    ``` objc
-    - (void)setLockingMode:(MulleLockingMode)mode;
-    - (MulleLockingMode)lockingMode;
-    - (void)lock;
-    - (void)unlock;
-    ```
-
-2.  **Thread Safety**:
-
-    ``` objc
-    - (BOOL)isThreadSafe;
-    - (void)setThreadSafe:(BOOL)flag;
-    ```
-
-### Implementation Details
-
-1.  **Lock Management**:
-
-    ``` objc
-    - (void)_initializeLock;
-    - (void)_destroyLock;
-    ```
-
-## Best Practices
-
-1.  **Thread Safety**:
-    -   Use appropriate locking mode
-    -   Keep critical sections short
-    -   Avoid deadlocks
-2.  **Performance**:
-    -   Optimize lock granularity
-    -   Cache when appropriate
-    -   Monitor contention
-3.  **Error Handling**:
-    -   Handle lock failures
-    -   Manage timeouts
-    -   Clean up resources
-
-## Important Considerations
-
-1.  **Locking Strategy**:
-    -   Method-level locking
-    -   Lock granularity
-    -   Performance impact
-2.  **Thread Interaction**:
-    -   Lock ordering
-    -   Deadlock prevention
-    -   Resource sharing
-3.  **Resource Management**:
-    -   Lock lifecycle
-    -   Cache invalidation
-    -   Memory usage
-
-## Use Cases
-
-1.  **Shared Resource Management**:
-
-    ``` objc
-    @implementation SharedResource
-
-    - (void)updateResource:(id)newValue
-    {
-        // Automatically thread-safe
-        self.resource = newValue;
-        [self notifyObservers];
-    }
-
-    - (id)getResource
-    {
-        // Safe read access
-        return self.resource;
-    }
-
-    @end
-    ```
-
-2.  **Cached Operations**:
-
-    ``` objc
-    @implementation CachedProcessor
-
-    - (id)processData:(id)input
-    {
-        // Thread-safe cache lookup
-        id cached = [self.cache objectForKey:input];
-        if (cached) {
-            return cached;
-        }
-
-        id result = [self heavyProcessing:input];
-        [self.cache setObject:result forKey:input];
-        return result;
-    }
-
-    @end
-    ```
-
-3.  **State Management**:
-
-    ``` objc
-    @implementation StateManager
-
-    - (void)transitionToState:(State)newState
-    {
-        // Thread-safe state transition
-        State oldState = self.currentState;
-        self.currentState = newState;
-        [self handleTransitionFromState:oldState toState:newState];
-    }
-
-    @end
-    ```
-
-## Advanced Features
-
-### Custom Lock Behavior
-
-``` objc
-@implementation CustomLockObject
-
-- (void)customizeLocking
-{
-    [self setLockingMode:MulleCustomLockingMode];
-    [self configureLockWithTimeout:5.0
-                      retryCount:3
-                    failureMode:MulleLockFailureModeWait];
-}
-
-@end
-```
-
-### Performance Optimization
-
-``` objc
-@implementation OptimizedObject
-
-- (void)optimizeLocking
-{
-    // Configure for read-heavy workload
-    [self setLockingMode:MulleReadOptimizedLockingMode];
-    [self setupReadCache];
-}
-
-@end
-```
-
-### Resource Management
-
-``` objc
-@implementation ResourceManager
-
-- (void)manageResource
-{
-    [self lock];
-    @try {
-        [self allocateResource];
-        [self initializeResource];
-    }
-    @finally {
-        [self unlock];
-    }
-}
-
-@end
-```
+4. Cache Management
+   - Maintains separate caches for thread-safe methods
+   - Automatically invalidates caches when needed
+   - Optimizes method lookup performance

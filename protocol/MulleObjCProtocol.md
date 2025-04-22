@@ -1,100 +1,66 @@
-# MulleObjCProtocol
+# MulleObjC Protocol System
 
-The MulleObjCProtocol system defines a hierarchy of thread safety and
-mutability guarantees for objects in mulle-objc. This system helps
-developers reason about thread safety and object behavior across their
-codebase.
+The MulleObjC protocol system defines a hierarchy of protocols for thread safety, mutability, and object behavior guarantees.
 
-## Protocol Hierarchy
-
-  -------------------------------------------------------------------------------------------
-  Protocol                  Description    Thread Safety    State Changes    Return Values
-  ------------------------- -------------- ---------------- ---------------- ----------------
-  `MulleObjCThreadUnsafe`   Default level  Single thread    Mutable          Any
-                                           only                              
-
-  `MulleObjCThreadSafe`     Thread-safe    Multiple threads Mutable          Any
-                            operations                                       
-
-  `MulleObjCImmutable`      Immutable      Multiple threads Immutable        May return
-                            after init                                       unsafe
-
-  `MulleObjCValue`          Fully          Multiple threads Immutable        Only safe values
-                            thread-safe                                      
-                            value                                            
-  -------------------------------------------------------------------------------------------
-
-## Protocol Adoption
+## Thread Safety Protocols
 
 ### MulleObjCThreadSafe
+Objects that can be safely accessed from multiple threads.
 
-``` objc
-@interface Foo <MulleObjCThreadSafe>
-```
-
--   Can be messaged from multiple threads
--   May use internal locks or atomic operations
--   Return values might not be thread-safe
-
-### MulleObjCImmutable
-
-``` objc
-@interface Foo <MulleObjCImmutable, MulleObjCThreadSafe>
-```
-
--   State doesn't change after initialization
--   Thread-safe by nature (no locks needed)
--   May return unsafe objects
-
-### MulleObjCValue
-
-``` objc
-@interface Foo <MulleObjCValue, MulleObjCImmutable, MulleObjCThreadSafe>
-```
-
--   Most robust level
--   Only returns thread-safe values
--   No unsafe pointers returned
-
-## Optional Methods
-
-### MulleObjCThreadSafe
-
--   `mulleIsThreadSafe` - Returns thread safety status
--   `mulleThreadSafeCopy` - Returns retained thread-safe copy
+Optional Methods:
+- `mulleIsThreadSafe` - Returns whether the object is thread-safe
+- `mulleThreadSafeCopy` - Returns a thread-safe copy (returns self retained)
 
 ### MulleObjCThreadUnsafe
+Default protocol for objects that must be accessed from a single thread.
 
--   `mulleIsThreadSafe` - Returns thread safety status
+Optional Methods:
+- `mulleIsThreadSafe` - Returns whether the object is thread-safe (returns NO)
 
-## Implementation Rules
+## Immutability Protocol
 
-1.  **Protocol Removal**
-    -   Cannot remove protocols in subclasses
-    -   Once immutable/value, always immutable/value
-2.  **Thread Safety Changes**
-    -   Can switch between safe/unsafe in inheritance
-    -   Last marker in chain wins
-3.  **Testing Thread Safety**
-    -   Use `-mulleIsThreadSafe`
-    -   Don't use `-conformsToProtocol:`
-    -   Consider inheritance chain
+### MulleObjCImmutable
+Objects whose internal state does not change after initialization.
 
-## Example Inheritance
+Optional Methods:
+- `copy` - Returns a copy of the object
+- `immutableCopy` - Returns an immutable copy
 
-``` objc
-// Thread-safe base class
-NSArray : NSObject <MulleObjCThreadSafe>
+## Value and Container Protocols
 
-// Thread-unsafe subclass
-NSMutableArray : NSArray <MulleObjCThreadUnsafe>
-```
+### MulleObjCValue
+Empty marker protocol indicating the object is a value type.
 
-## Best Practices
+### MulleObjCContainer
+Empty marker protocol indicating the object is a container type.
 
-1.  Be explicit about thread safety
-2.  Consider marking unsafe classes for documentation
-3.  Use appropriate protocol for guarantees needed
-4.  Remember return value safety implications
-5.  Consider locking strategies carefully
-6.  Document thread safety requirements
+### MulleObjCContainerProperty
+Protocol for container property access.
+
+Required Methods:
+- `addObject:` - Adds an object to the container
+- `removeObject:` - Removes an object from the container
+
+## Memory Management Protocol
+
+### MulleObjCPlaceboRetainCount
+Optional protocol for objects with custom retain counting.
+
+Optional Methods:
+- `retain`
+- `autorelease` 
+- `release`
+- `retainCount`
+- `finalize`
+- `dealloc`
+
+## Protocol Combinations
+
+The header provides convenient protocol combinations for common use cases:
+
+- `MulleObjCValueProtocols`: For immutable value types
+- `MulleObjCMutableValueProtocols`: For mutable value types  
+- `MulleObjCContainerProtocols`: For immutable containers
+- `MulleObjCMutableContainerProtocols`: For mutable containers
+- `MulleObjCImmutableProtocols`: For other immutable objects
+- `MulleObjCMutableProtocols`: For other mutable objects

@@ -1,6 +1,6 @@
 # MulleObjCTaggedPointer
 
-Protocol for objects that can be represented as tagged pointers. Tagged pointers store small values directly in the pointer bits rather than allocating separate storage.
+Protocol for objects that can be represented as tagged pointers. Inherits from `MulleObjCImmutable`. Tagged pointers store small values directly in the pointer bits rather than allocating separate storage.
 
 ## Usage Example
 
@@ -22,51 +22,38 @@ if (MulleObjCTaggedPointerIsIntegerValue(value))
 
 ## Class Methods
 
-### Registration and Configuration
-- `+isTaggedPointerEnabled` - Returns whether tagged pointers are enabled in the runtime
-- `MulleObjCTaggedPointerRegisterClassAtIndex(Class cls, unsigned int index)` - Registers a class for tagged pointer usage at a specific index
+- `+isTaggedPointerEnabled` - Returns whether tagged pointers are enabled
+
+## Optional Methods
+
+Memory management methods (all thread-safe):
+- `-retain`
+- `-autorelease`
+- `-release`
+- `-retainCount`
+
+## Helper Functions
+
+### Registration
+- `MulleObjCTaggedPointerRegisterClassAtIndex(Class cls, unsigned int index)` - Registers a class for tagged pointer usage
 
 ### Value Validation
-- `MulleObjCTaggedPointerIsIntegerValue(NSInteger value)` - Tests if value fits in tagged pointer
-- `MulleObjCTaggedPointerIsUnsignedIntegerValue(NSUInteger value)` - Tests if unsigned value fits
-- `MulleObjCTaggedPointerIsFloatValue(float value)` - Tests if float value fits
-- `MulleObjCTaggedPointerIsDoubleValue(double value)` - Tests if double value fits
+- `MulleObjCTaggedPointerIsIntegerValue(NSInteger value)`
+- `MulleObjCTaggedPointerIsUnsignedIntegerValue(NSUInteger value)`
+- `MulleObjCTaggedPointerIsFloatValue(float value)`
+- `MulleObjCTaggedPointerIsDoubleValue(double value)`
 
-### Tagged Pointer Creation
+### Creation
 - `MulleObjCCreateTaggedPointerWithIntegerValueAndIndex(NSInteger value, NSUInteger index)`
 - `MulleObjCCreateTaggedPointerWithUnsignedIntegerValueAndIndex(NSUInteger value, NSUInteger index)`
 - `MulleObjCCreateTaggedPointerWithFloatValueAndIndex(float value, NSUInteger index)`
 - `MulleObjCCreateTaggedPointerWithDoubleValueAndIndex(double value, NSUInteger index)`
 
-### Value Extraction
-- `MulleObjCTaggedPointerGetIntegerValue(void *pointer)` - Gets stored integer
-- `MulleObjCTaggedPointerGetUnsignedIntegerValue(void *pointer)` - Gets stored unsigned
-- `MulleObjCTaggedPointerGetFloatValue(void *pointer)` - Gets stored float
-- `MulleObjCTaggedPointerGetDoubleValue(void *pointer)` - Gets stored double
-- `MulleObjCTaggedPointerGetIndex(void *pointer)` - Gets index of tagged pointer
+### Value Access
+- `MulleObjCTaggedPointerGetIntegerValue(void *pointer)`
+- `MulleObjCTaggedPointerGetUnsignedIntegerValue(void *pointer)`
+- `MulleObjCTaggedPointerGetFloatValue(void *pointer)`
+- `MulleObjCTaggedPointerGetDoubleValue(void *pointer)`
+- `MulleObjCTaggedPointerGetIndex(void *pointer)`
 
-## Memory Management
-
-All these methods are thread-safe:
-- `-retain` - Returns self (tagged pointers are immortal)
-- `-autorelease` - Returns self (no-op)
-- `-release` - No-op
-- `-retainCount` - Returns MULLE_OBJC_NEVER_RELEASE
-
-## Best Practices
-
-1. Always check if a value fits before creating a tagged pointer
-2. Register your class early in the program startup
-3. Use small consecutive index values (typically 0-7)
-4. Remember tagged pointers are immutable by design
-5. Leverage thread-safety for concurrent access
-
-## Notes
-
-- Tagged pointers are immutable and immortal - they cannot be deallocated
-- All methods are thread-safe by definition
-- The class must be registered with the runtime using `MulleObjCTaggedPointerRegisterClassAtIndex`
-- Can be disabled in the runtime with universe config `no_tagged_pointer`
-- Attempting to allocate or deallocate a tagged pointer object will abort
-- Commonly used for small integers, characters, and other compact values
-- Provides significant memory and performance benefits for small values
+Note: Tagged pointers are immutable and thread-safe by design. The class must be registered with the runtime before use.

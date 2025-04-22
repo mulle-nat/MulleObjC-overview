@@ -1,163 +1,98 @@
 # NSAutoreleasePool
 
-## Overview
+Manages temporary objects in mulle-objc. Provides automatic memory management through autorelease pools.
 
-`NSAutoreleasePool` provides automatic object deallocation through
-autorelease pools in mulle-objc. It manages thread-local autorelease pools
-with a hierarchical structure and configurable behavior.
+## Base Class
+None (Root Class)
 
-## Key Features
+## Instance Variables
+```objc
+NSAutoreleasePool   *_owner;     // Parent pool
+void                *_storage;    // Object storage
+char                _mulleNameUTF8String[48];  // Pool name
+```
 
--   Thread-local autorelease pools
--   Hierarchical pool structure
--   Configurable behavior
--   Automatic memory management
--   Pool stack management
+## Methods
 
-## Usage
+### Pool Management
+- `+alloc` - Creates new pool
+- `+new` - Creates and initializes pool
+- `-init` - Initializes pool
+- `-drain` - Releases pool and contained objects
+- `-release` - Releases pool
+- `-mulleReleaseAllPoolObjects` - Releases all objects but keeps pool
 
-### Basic Pool Usage
+### Object Management
+- `+addObject:` - Adds object to current pool
+- `-addObject:` - Adds object to this pool
+- `+mulleAddObjects:count:` - Adds multiple objects
+- `-mulleAddObjects:count:` - Adds multiple objects to this pool
 
-``` objc
-NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-// Code that creates autoreleased objects
+### Pool Information
+- `+mulleDefaultAutoreleasePool` - Gets current thread's top pool
+- `+mulleParentAutoreleasePool` - Gets parent of current pool
+- `-mulleParentAutoreleasePool` - Gets parent pool
+- `-mulleNameUTF8String` - Gets pool name
+- `-mulleSetNameUTF8String:` - Sets pool name
+
+### Object Queries
+- `-mulleContainsObject:` - Checks if pool contains object
+- `-mulleCountObject:` - Counts object occurrences
+- `-mulleCount` - Gets total object count
+
+## Usage Example
+
+```objc
+// Create pool
+NSAutoreleasePool *pool = [NSAutoreleasePool new];
+
+// Use @autoreleasepool block (preferred)
+@autoreleasepool {
+    id obj = [[NSObject alloc] init];
+    [obj autorelease];
+}
+
+// Manual pool management
+NSAutoreleasePool *pool = [NSAutoreleasePool new];
+id obj = [[NSObject alloc] init];
+[obj autorelease];
 [pool drain];
+
+// Add objects directly
+[NSAutoreleasePool addObject:obj];
+
+// Check pool contents
+BOOL hasObj = [pool mulleContainsObject:obj];
+NSUInteger count = [pool mulleCountObject:obj];
 ```
 
-### Nested Pools
+## Important Notes
 
-``` objc
-NSAutoreleasePool *outerPool = [[NSAutoreleasePool alloc] init];
-{
-    NSAutoreleasePool *innerPool = [[NSAutoreleasePool alloc] init];
-    // Code with autoreleased objects
-    [innerPool drain];
-}
-[outerPool drain];
-```
+1. Thread Safety
+   - Each thread has its own pool stack
+   - Thread-safe for basic operations
+   - Pool operations are thread-local
 
-### Thread-Local Pools
+2. Memory Management
+   - Pools form a stack (LIFO)
+   - Objects released when pool drains
+   - Supports nested pools
+   - Automatic cleanup on thread exit
 
-``` objc
-+ (void)threadMain
-{
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    // Thread work with autoreleased objects
-    [pool drain];
-}
-```
+3. Implementation Details
+   - Not a subclass of NSObject
+   - Direct root class implementation
+   - Optimized for performance
+   - Supports debugging features
 
-## Technical Details
+4. Best Practices
+   - Use @autoreleasepool when possible
+   - Keep pool scope as narrow as needed
+   - Don't retain pool objects externally
+   - Clean up pools in reverse order
 
-### Core Methods
-
-1.  **Pool Management**:
-
-    ``` objc
-    + (void)addObject:(id)obj;
-    - (void)addObject:(id)obj;
-    - (void)drain;
-    ```
-
-2.  **Pool Information**:
-
-    ``` objc
-    - (NSAutoreleasePool *)parent;
-    - (BOOL)isValid;
-    ```
-
-### Thread Integration
-
-1.  **Thread Setup**:
-
-    ``` objc
-    + (void)setupThreading;
-    + (void)exitThread;
-    ```
-
-2.  **Pool Configuration**:
-
-    ``` objc
-    + (void)setPoolConfiguration:(struct _mulle_objc_poolconfiguration *)config;
-    + (struct _mulle_objc_poolconfiguration *)poolConfiguration;
-    ```
-
-## Best Practices
-
-1.  **Pool Usage**:
-    -   Create pools at thread entry points
-    -   Use nested pools for memory peaks
-    -   Drain pools promptly
-2.  **Memory Management**:
-    -   Balance pool creation/draining
-    -   Handle exceptions properly
-    -   Clean up thread pools
-3.  **Performance**:
-    -   Use appropriate pool scope
-    -   Consider pool overhead
-    -   Optimize object autoreleasing
-
-## Important Considerations
-
-1.  **Thread Safety**:
-    -   Pools are thread-local
-    -   No cross-thread pool access
-    -   Clean thread termination
-2.  **Resource Management**:
-    -   Pool hierarchy maintenance
-    -   Exception handling
-    -   Resource cleanup
-3.  **Performance Impact**:
-    -   Pool creation cost
-    -   Autorelease overhead
-    -   Memory usage
-
-## Use Cases
-
-1.  **Event Loop**:
-
-    ``` objc
-    - (void)runEventLoop
-    {
-        while ([self isRunning])
-        {
-            NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-            [self processNextEvent];
-            [pool drain];
-        }
-    }
-    ```
-
-2.  **Batch Processing**:
-
-    ``` objc
-    - (void)processBatch:(NSArray *)items
-    {
-        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-        for (id item in items)
-        {
-            if (item % 100 == 0)
-            {
-                [pool drain];
-                pool = [[NSAutoreleasePool alloc] init];
-            }
-            [self processItem:item];
-        }
-        [pool drain];
-    }
-    ```
-
-3.  **Thread Management**:
-
-    ``` objc
-    + (void)threadMain:(id)argument
-    {
-        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-        @try {
-            [self performThreadWork:argument];
-        }
-        @finally {
-            [pool drain];
-        }
-    }
-    ```
+5. Debugging Support
+   - Named pools for tracking
+   - Object counting and verification
+   - Pool hierarchy inspection
+   - CSV dump capabilities

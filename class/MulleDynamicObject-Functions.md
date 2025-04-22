@@ -1,67 +1,74 @@
 # MulleDynamicObject Functions
 
-Functions for dynamic object behavior and method resolution in mulle-objc.
+Functions for dynamic property support in mulle-objc.
 
-## Dynamic Method Resolution
+## Property Management
 
-### Method Handling
+### Value Setting
+```c
+// Set property values
+void _MulleDynamicObjectValueSetter(MulleDynamicObject *self,
+                                  SEL selector,
+                                  void *_param,
+                                  char *objcType);
 
-``` c
-BOOL MulleDynamicObjectResolveInstanceMethod(Class cls, SEL sel);
-BOOL MulleDynamicObjectResolveClassMethod(Class cls, SEL sel);
+void _MulleDynamicObjectNumberSetter(MulleDynamicObject *self,
+                                   SEL selector,
+                                   void *_param,
+                                   char *objcType);
+
+// Get property values
+void _MulleDynamicObjectValueGetter(MulleDynamicObject *self,
+                                  SEL selector,
+                                  void *_param);
 ```
 
-### Method Implementation
+## Property Analysis
 
-``` c
-IMP MulleDynamicObjectGetMethodImplementation(id self, SEL sel);
-void MulleDynamicObjectAddMethod(Class cls, SEL sel, IMP imp);
+### Type Information
+```c
+// Get property type info
+MulleObjCGenericType _MulleObjCGenericTypeOfProperty(struct _mulle_objc_property *property);
+MulleObjCGenericType _MulleObjCGenericTypeOfSignature(char *signature);
+
+// Search for dynamic property
+struct _mulle_objc_property *_MulleObjCClassPointerSearchDynamicProperty(
+    struct _mulle_objc_infraclass **infra_p,
+    mulle_objc_methodid_t methodid);
 ```
 
-## Dynamic Properties
+## Method Generation
 
-### Property Resolution
-
-``` c
-BOOL MulleDynamicObjectResolveInstanceProperty(Class cls, SEL propertyID);
-void MulleDynamicObjectSetPropertyImplementation(Class cls, SEL propertyID, IMP getter, IMP setter);
+### Accessor Creation
+```c
+// Create property methods
+struct _mulle_objc_method *_mulle_objc_infraclass_create_methods_for_property(
+    struct _mulle_objc_infraclass *infra,
+    struct _mulle_objc_property *property,
+    mulle_objc_methodid_t neededSel);
 ```
 
-## Message Forwarding
+## Important Notes
 
-### Forward Handlers
+1. Property Types
+   - Handle all value types
+   - Support objects
+   - Manage memory
+   - Check signatures
 
-``` c
-id MulleDynamicObjectForwardingTargetForSelector(id self, SEL sel);
-void MulleDynamicObjectForwardInvocation(id self, NSInvocation *invocation);
-```
+2. Method Generation
+   - Create accessors
+   - Handle selectors
+   - Cache methods
+   - Update classes
 
-### Signature Management
+3. Best Practices
+   - Validate types
+   - Check properties
+   - Handle errors
+   - Cache lookups
 
-``` c
-NSMethodSignature *MulleDynamicObjectMethodSignatureForSelector(id self, SEL sel);
-```
-
-## Runtime Support
-
-### Class Operations
-
-``` c
-Class MulleDynamicObjectCreateSubclass(Class superclass, const char *name);
-void MulleDynamicObjectRegisterClass(Class cls);
-```
-
-## Best Practices
-
-1.  Cache resolved methods
-2.  Handle unknown selectors
-3.  Implement proper forwarding
-4.  Consider performance impact
-5.  Document dynamic behavior
-
-## Thread Safety
-
--   Method resolution needs locks
--   Consider concurrent access
--   Cache thread-safe lookups
--   Handle dynamic state
+4. Performance
+   - Cache properties
+   - Minimize searches
+   - Reuse methods

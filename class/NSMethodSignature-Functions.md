@@ -1,64 +1,67 @@
 # NSMethodSignature Functions
 
-Functions for working with method signatures and type encoding in
-mulle-objc.
+Functions for working with method signatures and type encoding in mulle-objc.
 
-## Signature Creation
+## Type Information
 
-### Basic Creation
+### Type Analysis
+```c
+// Get type info from signature
+struct mulle_objc_typeinfo *mulle_objc_signature_supply_typeinfo(char *type,
+                                                                size_t *length,
+                                                                struct mulle_objc_typeinfo *info);
 
-``` c
-NSMethodSignature *NSMethodSignatureFromTypes(const char *types);
-NSMethodSignature *NSMethodSignatureForSelector(id self, SEL sel);
+// Count types in signature
+NSUInteger mulle_objc_signature_count_typeinfos(char *types);
 ```
 
-### Type Information
+## MetaABI Support
 
-``` c
-const char *NSGetSizeAndAlignment(const char *typePtr, 
-                                NSUInteger *sizep, 
-                                NSUInteger *alignp);
+### Parameter Types
+```c
+// Get MetaABI parameter type
+enum MulleObjCMetaABIType {
+    MulleObjCMetaABITypeVoid = 0,
+    MulleObjCMetaABITypeVoidPointer = 1,
+    MulleObjCMetaABITypeParameterBlock = 2
+};
+
+// Get parameter/return types
+MulleObjCMetaABIType mulle_objc_signature_get_metaabiparamtype(char *signature);
+MulleObjCMetaABIType mulle_objc_signature_get_metaabireturntype(char *signature);
 ```
 
-## Signature Analysis
+## Type Navigation
 
-### Type Access
+### Type Parsing
+```c
+// Skip type qualifiers
+char *_mulle_objc_signature_skip_type_qualifier(char *signature);
 
-``` c
-const char *NSMethodSignatureGetTypeEncoding(NSMethodSignature *sig);
-NSUInteger NSMethodSignatureGetNumberOfArguments(NSMethodSignature *sig);
-const char *NSMethodSignatureGetArgumentTypeAtIndex(NSMethodSignature *sig, 
-                                                  NSUInteger idx);
+// Get next type in signature
+char *mulle_objc_signature_next_type(char *signature);
 ```
 
-### Return Type
+## Important Notes
 
-``` c
-const char *NSMethodSignatureGetReturnType(NSMethodSignature *sig);
-NSUInteger NSMethodSignatureGetReturnLength(NSMethodSignature *sig);
-```
+1. Type Handling
+   - Parse types carefully
+   - Handle qualifiers properly
+   - Consider alignment
+   - Support MetaABI
 
-## Frame Operations
+2. Memory Layout
+   - Follow MetaABI rules
+   - Handle variable sizes
+   - Consider padding
 
-### Frame Management
+3. Best Practices
+   - Cache type info
+   - Validate signatures
+   - Handle all types
+   - Check alignments
 
-``` c
-void NSMethodSignatureSetFrameLength(NSMethodSignature *sig, 
-                                   NSUInteger length);
-NSUInteger NSMethodSignatureGetFrameLength(NSMethodSignature *sig);
-```
-
-## Best Practices
-
-1.  Cache signatures when possible
-2.  Validate type encodings
-3.  Handle unknown types
-4.  Consider alignment requirements
-5.  Check frame lengths
-
-## Thread Safety
-
--   Signatures are immutable once created
--   Safe for concurrent access
--   Cache access may need synchronization
--   Consider per-thread caching
+4. Performance
+   - Cache parsed info
+   - Minimize parsing
+   - Use MetaABI

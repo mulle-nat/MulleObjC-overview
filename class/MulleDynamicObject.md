@@ -1,196 +1,82 @@
 # MulleDynamicObject
 
-## Overview
+Base class that provides dynamic property support in mulle-objc. Enables dynamic property access and automatic method generation for property accessors.
 
-`MulleDynamicObject` is a specialized base class in mulle-objc that provides
-dynamic property support. It enables flexible property management and value
-type handling with category extension capabilities.
+## Base Class
+NSObject
 
-## Key Features
-
--   Dynamic property support
--   Flexible value handling
--   Category extensions
--   Runtime integration
--   Performance optimized
-
-## Usage
-
-### Basic Property Access
-
-``` objc
-MulleDynamicObject *obj = [[MulleDynamicObject alloc] init];
-
-// Set values
-[obj setValue:@"Hello" forKey:@"greeting"];
-[obj setValue:@42 forKey:@"count"];
-
-// Get values
-char *greeting = [obj valueForKey:"greeting"];
-NSNumber *count = [obj valueForKey:@"count"];
+## Instance Variables
+```objc
+struct mulle__pointermap   __ivars;  // Maps property names to values
 ```
 
-### Key-Value Coding
+## Methods
 
-``` objc
-// Key paths
-[obj setValue:@"World" forKeyPath:@"data.name"];
-id value = [obj valueForKeyPath:@"data.name"];
+### Initialization
+- `-init` - Initializes the dynamic property storage
 
-// Multiple keys
-NSArray *keys = @[@"key1", @"key2"];
-NSDictionary *values = [obj dictionaryWithValuesForKeys:keys];
+### Dynamic Property Support
+- `-forward:` - Handles dynamic property access and method generation
+- `+isFullyDynamic` - Returns NO by default, can be overridden to enable fully dynamic mode
+
+### Internal Support
+- `_MulleDynamicObjectValueSetter` - Sets value for dynamic property
+- `_MulleDynamicObjectNumberSetter` - Sets number value for dynamic property
+- `_MulleDynamicObjectValueGetter` - Gets value from dynamic property
+- `_MulleDynamicObjectForward` - Helper function for subclasses implementing forward:
+
+## Usage Example
+
+```objc
+// Create dynamic object with property
+@interface MyDynamic : MulleDynamicObject
+@property(dynamic) NSString *name;
+@end
+
+@implementation MyDynamic
+@dynamic name;
+@end
+
+// Use dynamic property
+MyDynamic *obj = [MyDynamic new];
+obj.name = @"Hello";  // Uses dynamic setter
+NSString *name = obj.name;  // Uses dynamic getter
 ```
 
-### Dynamic Methods
+## Important Notes
 
-``` objc
-// Handle unknown selectors
-- (void)forwardInvocation:(NSInvocation *)invocation
+1. Property Types
+   - Supports primitive types through NSNumber wrapping
+   - Handles object properties with retain/copy/assign semantics
+   - Manages strings with strdup/free
+   - Supports NSValue for structs/unions
+
+2. Implementation Details
+   - Creates accessor methods on demand
+   - Caches property lookups for performance
+   - Handles memory management automatically
+   - Supports property observation
+
+3. Memory Management
+   - Automatically releases stored objects
+   - Manages memory for C strings
+   - Cleans up in dealloc/finalize
+
+4. Restrictions
+   - Cannot retain variadic method arguments
+   - Cannot retain unions containing id or char*
+   - Fully dynamic mode requires NSValue/NSNumber support
+
+5. Generic Types
+```objc
+typedef NS_ENUM(NSInteger, MulleObjCGenericType)
 {
-    if ([self handleDynamicInvocation:invocation]) {
-        return;
-    }
-    [super forwardInvocation:invocation];
-}
-```
-
-## Technical Details
-
-### Core Methods
-
-1.  **Value Management**:
-
-    ``` objc
-    - (void)setValue:(id)value forKeyUTF8String:(char *)key;
-    - (id)valueForKeyUTF8String:(char *)key;
-    - (void)setValue:(id)value forKeyPathUTF8String:(char *)keyPath;
-    - (id)valueForKeyPathUTF8String:(char *)keyPath;
-    ```
-
-2.  **Property Handling**:
-
-    ``` objc
-    - (BOOL)hasValueForKeyUTF8String:(char *)key;
-    - (void)removeValueForKeyUTF8String:(char *)key;
-    ```
-
-## Best Practices
-
-1.  **Property Management**:
-    -   Use consistent key naming
-    -   Handle nil values
-    -   Clean up unused values
-2.  **Performance**:
-    -   Cache frequent accesses
-    -   Batch operations
-    -   Monitor memory usage
-3.  **Error Handling**:
-    -   Validate keys
-    -   Check value types
-    -   Handle missing values
-
-## Important Considerations
-
-1.  **Memory Management**:
-    -   Value retention
-    -   Cleanup strategy
-    -   Cache invalidation
-2.  **Thread Safety**:
-    -   Synchronize access
-    -   Protect shared data
-    -   Handle concurrent updates
-3.  **Performance Impact**:
-    -   Dynamic lookup cost
-    -   Storage overhead
-    -   Value copying
-
-## Use Cases
-
-1.  **Dynamic Storage**:
-
-    ``` objc
-    - (void)storeUserData:(NSDictionary *)data
-    {
-        for (char *key in data) {
-            [self setValue:data[key] forKey:key];
-        }
-    }
-    ```
-
-2.  **Property Observation**:
-
-    ``` objc
-    - (void)setValue:(id)value forKey:(NSString *)key
-    {
-        id oldValue = [self valueForKey:key];
-        [self willChangeValueForKey:key];
-        [super setValue:value forKey:key];
-        [self didChangeValueForKey:key];
-    }
-    ```
-
-3.  **Custom Accessors**:
-
-    ``` objc
-    - (BOOL)hasCustomAccessorForKeyUTF8String:(char *)key
-    {
-        SEL getter = NSSelectorFromString(key);
-        SEL setter = NSSelectorFromString(mulle_sprintf("set%s:",
-                                         [key capitalizedString]]);
-        return [self respondsToSelector:getter] ||
-               [self respondsToSelector:setter];
-    }
-    ```
-
-## Advanced Features
-
-### Value Transformation
-
-``` objc
-- (id)transformValue:(id)value forKeyUTF8String:(char *)key
-{
-    if ([key isEqualToString:@"date"]) {
-        if (mulle_is_char_string(value)) {
-            // Convert string to date
-            return [self.dateFormatter dateFromString:value];
-        }
-    }
-    return value;
-}
-```
-
-### Bulk Operations
-
-``` objc
-- (void)setValuesForKeysWithDictionary:(NSDictionary *)keyedValues
-{
-    [self willChangeValuesForKeys:[keyedValues allKeys]];
-    
-    for (char *key in keyedValues) {
-        [self setValue:keyedValues[key] forKey:key];
-    }
-    
-    [self didChangeValuesForKeys:[keyedValues allKeys]];
-}
-```
-
-### Type Validation
-
-``` objc
-- (BOOL)validateValue:(id *)ioValue forKeyUTF8String:(char *)key error:(NSError **)outError
-{
-    if ([key isEqualToString:@"age"]) {
-        NSNumber *age = *ioValue;
-        if ([age integerValue] < 0) {
-            if (outError) {
-                *outError = [NSError errorWithDomain:@"ValidationError"
-                                              code:1
-                                          userInfo:@{@"message": @"Age cannot be negative"}];
-            }
-            return NO;
-        }
-    }
-    return YES;
-}
+    MulleObjCGenericTypeVoidPointer = 0,  // as is
+    MulleObjCGenericTypeStrdup,           // strdup/free
+    MulleObjCGenericTypeAssign,           // just like void pointer
+    MulleObjCGenericTypeRetain,           // retain/autorelease
+    MulleObjCGenericTypeCopy,             // copy/autorelease
+    MulleObjCGenericTypeValue,            // wrap into NSValue
+    MulleObjCGenericTypeNumber            // wrap into NSNumber
+};
 ```

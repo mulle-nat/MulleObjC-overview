@@ -2,30 +2,49 @@
 
 Core functions for object allocation and memory management.
 
-## Instance Memory Management
+## Instance Functions
 
-- `MulleObjCInstanceGetAllocator(id obj)` - Gets allocator for an instance
+- `MulleObjCInstanceGetAllocator(id obj)` - Gets allocator for instance
 - `MulleObjCInstanceAllocateMemory(id self, NSUInteger size)` - Allocates zeroed memory
-- `MulleObjCInstanceDeallocateMemory(id self, void *p)` - Deallocates memory
-- `MulleObjCInstanceFree(id self)` - Frees an instance
+- `MulleObjCInstanceAllocateNonZeroedMemory(id self, NSUInteger size)` - Allocates raw memory
+- `MulleObjCInstanceReallocateNonZeroedMemory(id self, void *p, NSUInteger size)` - Resizes memory block
+- `MulleObjCInstanceDeallocateMemory(id self, void *p)` - Frees allocated memory
+- `MulleObjCInstanceDuplicateUTF8String(id self, char *s)` - Copies string using instance allocator
 
-## Class Memory Management 
+## Class Functions
 
-- `MulleObjCClassGetAllocator(Class cls)` - Gets allocator for a class
+- `MulleObjCClassGetAllocator(Class cls)` - Gets allocator for class
 - `MulleObjCClassAllocateMemory(Class cls, NSUInteger size)` - Allocates zeroed memory
-- `MulleObjCClassDeallocateMemory(Class cls, void *p)` - Deallocates memory
+- `MulleObjCClassDeallocateMemory(Class cls, void *p)` - Frees allocated memory
+- `MulleObjCClassDuplicateUTF8String(Class cls, char *s)` - Copies string using class allocator
 
-## Legacy API
-
-- `NSAllocateObject(Class infra, NSUInteger extra, NSZone *zone)` - Legacy allocation API
-- `NSDeallocateObject(id obj)` - Legacy deallocation API
-- `NSIncrementExtraRefCount(id obj)` - Legacy retain count increment
-- `NSDecrementExtraRefCountWasZero(id obj)` - Legacy retain count decrement
-- `NSExtraRefCount(id obj)` - Legacy retain count access
-
-## Thread-Specific Allocation
+## Thread Functions
 
 - `MulleObjCThreadSetAllocator(struct mulle_allocator *allocator)` - Sets thread-local allocator
 - `MulleObjCThreadGetAllocator(void)` - Gets thread-local allocator
 
-Note: The legacy API is provided for compatibility but new code should use the MulleObjC functions.
+## Usage Example
+
+```objc
+// Allocate memory for instance
+id obj = self;
+void *memory = MulleObjCInstanceAllocateMemory(obj, 1024);
+
+// Use memory
+// ...
+
+// Free when done
+MulleObjCInstanceDeallocateMemory(obj, memory);
+```
+
+## Important Notes
+
+1. Memory Management
+   - All allocations must be freed with corresponding deallocate function
+   - Use instance allocator for instance-specific memory
+   - Use class allocator for shared class memory
+
+2. Thread Safety
+   - Allocation functions are thread-safe
+   - Each thread can have its own allocator
+   - Thread allocator affects all allocations in that thread

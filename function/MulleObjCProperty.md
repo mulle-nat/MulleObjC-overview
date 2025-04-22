@@ -1,16 +1,53 @@
-# MulleObjCProperty
+# MulleObjCProperty Functions
 
-Functions for property management and clearing.
+Functions for property management in mulle-objc.
 
 ## Property Management
 
-- `MulleObjCInstanceClearProperties(id obj, BOOL clearReadOnly)` - Clears all properties
-- `MulleObjCClassWalkProperties(Class cls, mulle_objc_walkpropertiescallback_t f, void *userinfo)` - Walks class properties
-- `MulleObjCInstanceWalkProperties(id obj, mulle_objc_walkpropertiescallback_t f, void *userinfo)` - Walks instance properties
+### Property Access
+```c
+// Get property info
+char *_mulle_objc_property_get_name(struct _mulle_objc_property *property);
+char *_mulle_objc_property_get_signature(struct _mulle_objc_property *property);
+unsigned int _mulle_objc_property_get_bits(struct _mulle_objc_property *property);
 
-## Thread-Safe Property Macros
+// Get property IDs
+mulle_objc_propertyid_t _mulle_objc_property_get_propertyid(struct _mulle_objc_property *property);
+mulle_objc_methodid_t _mulle_objc_property_get_getter(struct _mulle_objc_property *property);
+mulle_objc_methodid_t _mulle_objc_property_get_setter(struct _mulle_objc_property *property);
+```
 
-- `MulleObjCAcquirePointerAtomically(mulle_atomic_pointer_t *p)` - Thread-safe pointer acquisition
-- `MulleObjCRecycleObjectAtomically(mulle_atomic_pointer_t *p, id obj)` - Thread-safe object recycling
+### Property State
+```c
+// Check property attributes
+BOOL _mulle_objc_property_is_dynamic(struct _mulle_objc_property *property);
+BOOL _mulle_objc_property_is_readonly(struct _mulle_objc_property *property);
+BOOL _mulle_objc_property_is_settable(struct _mulle_objc_property *property);
+BOOL _mulle_objc_property_is_atomic(struct _mulle_objc_property *property);
+```
 
-Note: Property clearing handles both direct ivar access and setter methods appropriately.
+## Important Notes
+
+1. Property Types
+   - Handle all types
+   - Check attributes
+   - Validate values
+   - Consider atomicity
+
+2. Thread Safety
+   - Check atomic props
+   - Handle concurrent access
+   - Use proper locks
+   - Consider KVO
+
+3. Best Practices
+   - Validate properties
+   - Handle all cases
+   - Document attributes
+   - Clean up properly
+
+4. Performance
+   - Cache lookups
+   - Minimize locks
+   - Use appropriate access
+   - Consider inlining

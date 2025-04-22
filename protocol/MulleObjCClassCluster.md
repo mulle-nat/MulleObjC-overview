@@ -1,14 +1,19 @@
 # MulleObjCClassCluster
 
-Protocol for implementing class clusters. A class cluster is an abstract factory that returns concrete subclasses based on initialization parameters.
+Protocol for implementing class clusters in mulle-objc. A class cluster is an abstract factory pattern that returns concrete subclasses while hiding the implementation details.
 
 ## Required Methods
 
-- `+__classClusterClass__` - Returns the actual class to instantiate
-- `+__classClusterObject__` - Returns a new instance of the appropriate concrete class
+- `+__classClusterClass` - Returns the actual concrete class to instantiate
 
 ## Optional Methods
 
-- `+__classClusterGenericObject__` - Returns a generic instance (used by copy)
+- `+initialize` - Must call `[super initialize]` or `MulleObjCClassMarkAsClassCluster()` if overridden
 
-Note: The class cluster pattern is used extensively in Foundation for collections and strings.
+## Usage
+
+Use this protocol to implement class clusters:
+- Your abstract base class adopts `MulleObjCClassCluster` and will alloc placeholder
+- Your concrete subclasses inherit from your base class and will use NSAllocateObject
+
+Note: The class cluster pattern is used to provide a simpler public interface while allowing multiple specialized implementations internally.

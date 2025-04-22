@@ -1,14 +1,43 @@
-# MulleObjCPrinting
+# MulleObjCPrinting Functions
 
-Functions for string formatting and printing.
+Functions for object printing and description in mulle-objc.
 
-## String Formatting
+## Printing Functions
 
-- `MulleObjC_asprintf(char *format, ...)` - Format string with varargs, returns autoreleased `char *`
-- `MulleObjC_strdup(char *s)` - Duplicate string and autorelease
+### Basic Printing
+```c
+// Print to stderr with format
+void mulle_fprintf(FILE *fp, char *format, ...);
 
-## Buffer Macros
+// Print warning message
+void mulle_objc_warn_printf(char *format, ...);
 
-- `mulle_buffer_do_autoreleased_string(name, allocator, s)` - Creates autoreleased string from buffer
+// Print class name
+char *MulleObjCObjectGetClassNameUTF8String(id obj);
+```
 
-Note: All returned strings are autoreleased. NULL format strings result in EINVAL error.
+## Important Notes
+
+1. Output Formatting
+   - Handle NULL values
+   - Format properly
+   - Clean output
+   - Consider encoding
+
+2. Thread Safety
+   - Thread-safe output
+   - Handle concurrent prints
+   - Buffer appropriately
+   - Clean up properly
+
+3. Best Practices
+   - Use appropriate function
+   - Check return values
+   - Handle errors
+   - Document format
+
+4. Performance
+   - Buffer output
+   - Minimize allocations
+   - Cache when possible
+   - Clean up buffers

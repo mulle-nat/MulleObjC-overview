@@ -1,162 +1,74 @@
 # NSLock
 
-## Overview
+Basic mutex-based lock for thread synchronization in mulle-objc.
+Note that this may be too heavyweight for very contested locks - consider
+using mulle_thread_mutex_t directly in such cases.
 
-`NSLock` provides basic mutex functionality in mulle-objc. It offers a
-simple, efficient mechanism for mutual exclusion in multi-threaded
-applications.
+## Base Class
+NSObject
 
-## Key Features
+## Implemented Protocols
+- NSLocking
+- MulleObjCThreadSafe
 
--   Basic mutex functionality
--   Thread synchronization
--   Performance optimized
--   Debugging support
--   Error handling
+## Instance Variables
+```objc
+mulle_thread_mutex_t    _lock;  // The underlying mutex
+```
 
-## Usage
+## Methods
 
-### Basic Locking
+All methods are marked with `MULLE_OBJC_THREADSAFE_METHOD`:
 
-``` objc
-NSLock *lock = [[NSLock alloc] init];
+### Initialization
+- `-init` - Initializes the lock
 
+### Locking Operations
+- `-lock` - Acquires the lock
+- `-unlock` - Releases the lock
+- `-tryLock` - Attempts to acquire lock without blocking, returns YES if successful
+- `-lockBeforeTimeInterval:` - Attempts to acquire lock before given time interval expires
+
+## Usage Example
+
+```objc
+NSLock *lock = [NSLock new];
+
+// Basic locking
 [lock lock];
-// Critical section
+// ... critical section ...
 [lock unlock];
-```
 
-### Conditional Locking
+// Using convenience macro
+MulleObjCLockDo( lock)
+{
+   // ... critical section ...
+}  // automatically unlocked
 
-``` objc
-if ([lock tryLock]) {
-    // Critical section
-    [lock unlock];
-} else {
-    // Handle lock failure
+// Try lock without blocking
+if ([lock tryLock])
+{
+   // ... got the lock ...
+   [lock unlock];
+}
+
+// Lock with timeout
+if ([lock lockBeforeTimeInterval:1.0])
+{
+   // ... got the lock ...
+   [lock unlock];
 }
 ```
 
-### Timed Locking
+## Important Notes
 
-``` objc
-if ([lock lockBeforeDate:[NSDate dateWithTimeIntervalSinceNow:5.0]]) {
-    // Critical section
-    [lock unlock];
-} else {
-    // Handle timeout
-}
-```
+1. Thread Safety
+   - All methods are thread-safe
+   - The lock itself provides thread safety for critical sections
 
-## Technical Details
+2. Performance Considerations
+   - Consider using mulle_thread_mutex_t directly for high-contention scenarios
+   - The lockBeforeTimeInterval: method uses thread yielding for polling
 
-### Core Methods
-
-1.  **Lock Operations**:
-
-    ``` objc
-    - (void)lock;
-    - (void)unlock;
-    - (BOOL)tryLock;
-    - (BOOL)lockBeforeDate:(NSDate *)limit;
-    ```
-
-2.  **Lock Information**:
-
-    ``` objc
-    - (void)setName:(NSString *)name;
-    - (NSString *)name;
-    ```
-
-### Implementation Details
-
-1.  **Mutex Management**:
-
-    ``` objc
-    - (void)_initializeMutex;
-    - (void)_destroyMutex;
-    ```
-
-## Best Practices
-
-1.  **Lock Usage**:
-    -   Keep critical sections short
-    -   Always unlock in same scope
-    -   Use @try/@finally blocks
-2.  **Error Handling**:
-    -   Check tryLock results
-    -   Handle timeouts
-    -   Clean up properly
-3.  **Performance**:
-    -   Minimize lock contention
-    -   Use appropriate granularity
-    -   Consider lock-free alternatives
-
-## Important Considerations
-
-1.  **Thread Safety**:
-    -   Proper lock/unlock pairing
-    -   Deadlock prevention
-    -   Exception safety
-2.  **Performance**:
-    -   Lock contention
-    -   Critical section length
-    -   Context switching
-3.  **Debugging**:
-    -   Lock naming
-    -   Deadlock detection
-    -   Lock hierarchy
-
-## Use Cases
-
-1.  **Resource Protection**:
-
-    ``` objc
-    - (void)accessSharedResource
-    {
-        [self->lock lock];
-        @try {
-            [self modifySharedResource];
-        }
-        @finally {
-            [self->lock unlock];
-        }
-    }
-    ```
-
-2.  **Conditional Access**:
-
-    ``` objc
-    - (BOOL)attemptOperation
-    {
-        if ([self->lock tryLock]) {
-            @try {
-                [self performOperation];
-                return YES;
-            }
-            @finally {
-                [self->lock unlock];
-            }
-        }
-        return NO;
-    }
-    ```
-
-3.  **Timed Operations**:
-
-    ``` objc
-    - (BOOL)performTimedOperation
-    {
-        NSDate *deadline = [NSDate dateWithTimeIntervalSinceNow:5.0];
-        if ([self->lock lockBeforeDate:deadline]) {
-            @try {
-                [self performOperation];
-                return YES;
-            }
-            @finally {
-                [self->lock unlock];
-            }
-        }
-        return NO;
-    }
-    ```
+3. Platform Specifics
+   - Some platforms need explicit mutex cleanup in dealloc (controlled by MULLE_THREAD_MUTEX_NEEDS_DONE)

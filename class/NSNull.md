@@ -12,15 +12,15 @@ NSObject
 ## Methods
 
 ### Singleton Access
-- [`+null`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+null+of+NSNull+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSNull.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSNull.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Returns the singleton NSNull instance
+- [`+null`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+null+of+NSNull+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://raw.githubusercontent.com/mulle-objc/MulleObjC/refs/heads/master/src/class/NSNull.m+and+the+header+at+https://raw.githubusercontent.com/mulle-objc/MulleObjC/refs/heads/master/src/class/NSNull.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Returns the singleton NSNull instance
 
 ### Comparison
-- [`-compare:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+compare+of+NSNull+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSNull.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSNull.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Compares with other objects:
+- [`-compare:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+compare+of+NSNull+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://raw.githubusercontent.com/mulle-objc/MulleObjC/refs/heads/master/src/class/NSNull.m+and+the+header+at+https://raw.githubusercontent.com/mulle-objc/MulleObjC/refs/heads/master/src/class/NSNull.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Compares with other objects:
   - Returns NSOrderedSame if other is nil or self
   - Returns NSOrderedAscending otherwise
 
 ### Dynamic Method Handling
-- [`-forward:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+forward+of+NSNull+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSNull.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/class/NSNull.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Returns NULL for all unknown method calls
+- [`-forward:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+forward+of+NSNull+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://raw.githubusercontent.com/mulle-objc/MulleObjC/refs/heads/master/src/class/NSNull.m+and+the+header+at+https://raw.githubusercontent.com/mulle-objc/MulleObjC/refs/heads/master/src/class/NSNull.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Returns NULL for all unknown method calls
 
 ## Usage Example
 

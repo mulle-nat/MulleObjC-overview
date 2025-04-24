@@ -4,7 +4,7 @@ Protocol for transferring objects between different allocator schemes in mulle-o
 
 ## Optional Methods
 
-- [`-copyWithAllocator:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+copyWithAllocator+of+NSCopyingWithAllocator+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSCopyingWithAllocator.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSCopyingWithAllocator.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Creates a copy using specified allocator
+- [`-copyWithAllocator:`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+method+copyWithAllocator+of+NSCopyingWithAllocator+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://raw.githubusercontent.com/mulle-objc/MulleObjC/refs/heads/master/src/protocol/NSCopyingWithAllocator.m+and+the+header+at+https://raw.githubusercontent.com/mulle-objc/MulleObjC/refs/heads/master/src/protocol/NSCopyingWithAllocator.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Creates a copy using specified allocator
 
 ## Default Implementation Behavior
 
@@ -33,6 +33,6 @@ Example:
 
 ## Helper Function
 
-- [`_MulleObjCInstanceCopyWithAllocator`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_MulleObjCInstanceCopyWithAllocator+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSCopyingWithAllocator.m+and+the+header+at+https://github.com/mulle-objc/MulleObjC/blob/master/src/protocol/NSCopyingWithAllocator.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Internal support function
+- [`_MulleObjCInstanceCopyWithAllocator`](https://www.perplexity.ai/search?q=Please+create+some+detailed+API+documentation+for+the+function+_MulleObjCInstanceCopyWithAllocator+of+the+MulleObjC+project+https://github.com/mulle-objc/MulleObjC.+You+will+find+source+code+probably+at+https://raw.githubusercontent.com/mulle-objc/MulleObjC/refs/heads/master/src/protocol/NSCopyingWithAllocator.m+and+the+header+at+https://raw.githubusercontent.com/mulle-objc/MulleObjC/refs/heads/master/src/protocol/NSCopyingWithAllocator.h+and+there+may+also+be+tests+for+it+in+the+test/+folder) - Internal support function
 
 Note: MEMO: scheme needs to remember allocator in the instance header

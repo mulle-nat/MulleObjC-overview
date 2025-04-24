@@ -1,46 +1,121 @@
-# MulleObjC Documentation
+# MulleObjC Overview Documentation
 
-MulleObjC is a standalone Objective-C runtime and foundation framework, designed for maximum portability and extensibility. It provides the core functionality needed to build Objective-C applications without external dependencies.
+This document provides an overview of the core classes, functions, protocols, and structures in the MulleObjC runtime.
 
-## Documentation Sections
+## MulleObjC Class Documentation
 
-### [Classes](class/CLASS-DOCUMENTATION.md)
+### Core Classes
 
-The foundation of MulleObjC, providing essential classes like NSObject, NSProxy, and specialized classes for memory management, threading, and runtime support.
+-   [NSObject](class/NSObject.md) - Root class of the runtime system, providing
+    fundamental object behavior
+-   [NSProxy](class/NSProxy.md) - Root class for proxy objects, enabling message
+    interception and forwarding
+-   [MulleObject](class/MulleObject.md) - Base class with automatic thread-safe
+    method locking
+-   [MulleProxy](class/MulleProxy.md) - Thread-safe proxy implementation with
+    recursive locking support
 
-### [Protocols](protocol/PROTOCOL-DOCUMENTATION.md)
+### Memory Management
 
-Fundamental protocols that define object behavior, including NSCoding, NSCopying, NSLocking, and MulleObjC-specific protocols for runtime integration.
+-   [NSAutoreleasePool](class/NSAutoreleasePool.md) - Automatic object
+    deallocation through thread-local pools
+-   [MulleObjCAutoreleasePool](class/MulleObjCAutoreleasePool.md) - Core
+    autorelease functionality with runtime integration
+-   [NSZone](class/NSZone.md) - Legacy memory allocation compatibility layer
 
-### [Structures](struct/STRUCT-DOCUMENTATION.md)
+### Threading and Synchronization
 
-Essential data structures used throughout MulleObjC, including NSRange and container callbacks.
+-   [NSThread](class/NSThread.md) - Thread management with 1:1 thread mapping
+-   [NSLock](class/NSLock.md) - Basic mutex functionality for thread
+    synchronization
+-   [NSRecursiveLock](class/NSRecursiveLock.md) - Mutex that can be locked
+    multiple times by the same thread
+-   [NSCondition](class/NSCondition.md) - POSIX condition variable wrapper for
+    thread coordination
+-   [NSConditionLock](class/NSConditionLock.md) - State-based thread
+    synchronization with condition support
 
-### [Functions](function/FUNCTION-DOCUMENTATION.md)
+### Runtime Support
 
-Supporting C functions for the Objective-C runtime, including:
+-   [NSMethodSignature](class/NSMethodSignature.md) - Method type information and
+    frame layout management
+-   [NSInvocation](class/NSInvocation.md) - Dynamic method invocation and argument
+    handling
+-   [MulleDynamicObject](class/MulleDynamicObject.md) - Base class for objects
+    with dynamic property support
+-   [NSNull](class/NSNull.md) - Singleton representing null values in collections
+-   [MulleObjCLoader](class/MulleObjCLoader.md) - Framework initialization and
+    dependency management
 
-* Runtime support functions
-* Memory management functions
-* Object property access
-* Method invocation helpers
+### Coding Support
 
-Function documentation can also be found in class and protocol sections:
+-   [NSObject+NSCodingSupport](class/NSObject+NSCodingSupport.md) - Object
+    archiving and serialization support
 
-* [MulleDynamicObject Functions](class/MulleDynamicObject-Functions.md)
-* [MulleObjCLoader Functions](class/MulleObjCLoader-Functions.md)
-* [MulleObject Functions](class/MulleObject-Functions.md)
-* [MulleProxy Functions](class/MulleProxy-Functions.md)
 
-* [NSAutoreleasePool Functions](class/NSAutoreleasePool-Functions.md)
-* [NSCondition Functions](class/NSCondition-Functions.md)
-* [NSInvocation Functions](class/NSInvocation-Functions.md)
-* [NSLock Functions](class/NSLock-Functions.md)
-* [NSMethodSignature Functions](class/NSMethodSignature-Functions.md)
-* [NSNull Functions](class/NSNull-Functions.md)
-* [NSObject Functions](class/NSObject-Functions.md)
-* [NSThread Functions](class/NSThread-Functions.md)
+## MulleObjC Protocol Documentation
 
-* [Protocol Functions](protocol/NSCopying-Functions.md)
-* [Runtime Object Functions](protocol/MulleObjCRuntimeObject-Functions.md)
+## Foundation Protocols
 
+-   [NSObjectProtocol](protocol/NSObjectProtocol.md) - Core object behavior protocol
+-   [NSCoding](protocol/NSCoding.md) - Object serialization and archiving
+-   [NSCopying](protocol/NSCopying.md) - Object copying support
+-   [NSCopyingWithAllocator](protocol/NSCopyingWithAllocator.md) - Extended copying
+    with allocator
+-   [NSFastEnumeration](protocol/NSFastEnumeration.md) - Fast iteration over
+    collections
+-   [NSLocking](protocol/NSLocking.md) - Basic locking for thread synchronization
+-   [NSContainer](protocol/NSContainer.md) - Container object behavior
+
+## Mulle-specific Protocols
+
+-   [MulleObjCClassCluster](protocol/MulleObjCClassCluster.md) - Class cluster
+    implementation support
+-   [MulleObjCException](protocol/MulleObjCException.md) - Exception handling
+    protocol
+-   [MulleObjCRootObject](protocol/MulleObjCRootObject.md) - Root object requirements
+-   [MulleObjCRuntimeObject](protocol/MulleObjCRuntimeObject.md) - Runtime object
+    support
+-   [MulleObjCSingleton](protocol/MulleObjCSingleton.md) - Singleton pattern
+    implementation
+-   [MulleObjCTaggedPointer](protocol/MulleObjCTaggedPointer.md) - Tagged pointer
+    optimization
+
+
+## MulleObjC Functions
+
+This document outlines the core functions available in MulleObjC for object
+manipulation, method invocation, and runtime operations.
+
+### Core Functions
+
+-   [MulleObjCAllocation](function/MulleObjCAllocation.md) - Object allocation and
+    deallocation functions
+-   [MulleObjCDebug](function/MulleObjCDebug.md) - Debugging support functions
+-   [MulleObjCExceptionHandler](function/MulleObjCExceptionHandler.md) - Exception
+    handling functions
+-   [MulleObjCHashFunctions](function/MulleObjCHashFunctions.md) - Hash calculation
+    utilities
+-   [MulleObjCIvar](function/MulleObjCIvar.md) - Instance variable manipulation
+-   [MulleObjCPrinting](function/MulleObjCPrinting.md) - Object printing utilities
+-   [MulleObjCProperty](function/MulleObjCProperty.md) - Property access and
+    manipulation
+-   [MulleObjCStackFrame](function/MulleObjCStackFrame.md) - Stack frame utilities
+-   [NSByteOrder](function/NSByteOrder.md) - Byte order conversion functions
+-   [NSDebug](function/NSDebug.md) - Debugging utilities
+-   [mulle-sprintf-object](function/mulle-sprintf-object.md) - Object formatting
+    functions
+
+
+## MulleObjC Struct Documentation
+
+Core data structures used throughout MulleObjC.
+
+## Core Structures
+
+-   [NSRange](struct/NSRange.md) - Location and length pair for representing ranges in collections and strings.
+-   [NSZone](struct/NSZone.md) - Legacy compatibility structure for memory zones.
+-   [MulleObjCContainerCallback](struct/MulleObjCContainerCallback.md) - Basic container operations callback structure.
+-   [MulleObjCContainerObjectCallback](struct/MulleObjCContainerObjectCallback.md) - Object lifecycle management in containers callback structure.
+
+See individual documentation files for detailed information.
